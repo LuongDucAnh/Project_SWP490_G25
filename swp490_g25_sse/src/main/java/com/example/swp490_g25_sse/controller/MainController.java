@@ -4,10 +4,23 @@
  */
 package com.example.swp490_g25_sse.controller;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
 /**
  *
  * @author ADMIN
  */
+@Controller
 public class MainController {
-    
+
+    @GetMapping("/listCourse")
+    private String listCourseController() {
+        return "listCourse";
+    }
+
+    @GetMapping("/login")
+    private String loginController() {
+        return "login";
+    }
 }
