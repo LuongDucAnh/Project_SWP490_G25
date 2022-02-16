@@ -2,7 +2,7 @@ datetime bảng course cần chuyển về date
 
 thiếu userId trong bảng course
 
-thiếu updateTime trong bảng course
+thiếu updateDate trong bảng course
 
 tổ chức thư mục image chuyển thành images
 
