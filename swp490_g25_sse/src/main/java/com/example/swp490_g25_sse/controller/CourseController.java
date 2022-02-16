@@ -28,14 +28,6 @@ public class CourseController {
     @Autowired
     CourseRepositoryCustom courseRepositoryCustom;
 
-    //@ResponseBody
-    @GetMapping("/demoInsert")
-    public String demoInsert() {
-
-        return "Course_Create";
-    }
-
-    //@ResponseBody
     @GetMapping("/showAllCourse")
     public String showAllCourse(Model model) {
         List<Course> course = courseRepository.findAll();
