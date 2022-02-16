@@ -8,8 +8,6 @@ tổ chức thư mục image chuyển thành images
 
 tổ chức thư mục js chuyển thành javascript
 
-thêm folder entity và class course
-
 Lỗi nhỏ (có thể sửa hoặc không)
 file bak khi restore chỉ dùng được với window authentication
 không restore được với sql authentication
