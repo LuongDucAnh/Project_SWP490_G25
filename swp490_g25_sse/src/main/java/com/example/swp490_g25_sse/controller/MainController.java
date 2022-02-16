@@ -23,4 +23,9 @@ public class MainController {
     private String loginController() {
         return "login";
     }
+
+    @GetMapping("/listmenu")
+    private String listCourseMenu() {
+        return "fragments/listcourse-menu";
+    }
 }
