@@ -4,6 +4,7 @@
  */
 package com.example.swp490_g25_sse.model;
 
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,6 +24,7 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "courseId")
     private long courseId;
 
     @Column(name = "courseName")
@@ -32,12 +34,12 @@ public class Course {
     private int ratingId;
 
     @Column(name = "createDate")
-    private Date createDate;
+    private LocalDateTime createDate;
 
     public Course() {
     }
 
-    public Course(long courseId, String courseName, int ratingId, Date createDate) {
+    public Course(long courseId, String courseName, int ratingId, LocalDateTime createDate) {
         this.courseId = courseId;
         this.courseName = courseName;
         this.ratingId = ratingId;
@@ -68,11 +70,11 @@ public class Course {
         this.ratingId = ratingId;
     }
 
-    public Date getCreateDate() {
+    public LocalDateTime getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(LocalDateTime createDate) {
         this.createDate = createDate;
     }
 

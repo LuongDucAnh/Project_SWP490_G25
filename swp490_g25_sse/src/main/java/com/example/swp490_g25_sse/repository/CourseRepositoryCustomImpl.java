@@ -23,7 +23,7 @@ public class CourseRepositoryCustomImpl implements CourseRepositoryCustom {
     @Override
     public Long getMaxId() {
         try {
-            String sql = "";
+            String sql = "select MAX(courseId) AS Max_Id from Course";
             Query query = em.createQuery(sql);
             return (Long) query.getSingleResult();
         } catch (NoResultException e) {

@@ -6,8 +6,8 @@ package com.example.swp490_g25_sse.service;
 
 /**
  *
- * @author ADMIN
+ * @author Admin
  */
-public class MainService {
+public class service {
     
 }

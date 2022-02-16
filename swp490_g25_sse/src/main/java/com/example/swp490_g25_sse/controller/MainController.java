@@ -14,9 +14,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
 
-    @GetMapping("/demoInsert")
+    @GetMapping("/")
+    private String home() {
+        return "index";
+    }
+    
+    @GetMapping("/createCourse")
     private String createCourse() {
-        return "Course_Create";
+        return "courseCreate";
     }
 
     @GetMapping("/login")
