@@ -4,7 +4,7 @@
  */
 package com.example.swp490_g25_sse.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,33 +17,52 @@ import java.util.Date;
  *
  * @author Admin
  */
-
 @Entity
 @Table(name = "Course")
 public class Course {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "courseId")
     private long courseId;
 
     @Column(name = "courseName")
     private String courseName;
 
-    @Column(name = "ratingId")
-    private int ratingId;
-
     @Column(name = "createDate")
-    private LocalDateTime createDate;
+    private LocalDate createDate;
+
+    @Column(name = "updateDate")
+    private LocalDate updateDate;
+
+    @Column(name = "userId")
+    private long userId;
 
     public Course() {
     }
 
-    public Course(long courseId, String courseName, int ratingId, LocalDateTime createDate) {
+    public Course(long courseId, String courseName, LocalDate createDate, LocalDate updateDate, long userId) {
         this.courseId = courseId;
         this.courseName = courseName;
-        this.ratingId = ratingId;
         this.createDate = createDate;
+        this.updateDate = updateDate;
+        this.userId = userId;
+    }
+
+    public LocalDate getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(LocalDate updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public long getCourseId() {
@@ -62,20 +81,16 @@ public class Course {
         this.courseName = courseName;
     }
 
-    public int getRatingId() {
-        return ratingId;
-    }
-
-    public void setRatingId(int ratingId) {
-        this.ratingId = ratingId;
-    }
-
-    public LocalDateTime getCreateDate() {
+    public LocalDate getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(LocalDateTime createDate) {
+    public void setCreateDate(LocalDate createDate) {
         this.createDate = createDate;
     }
 
+//    @Override
+//    public String toString() {
+//        return "Course{" + "courseId=" + courseId + ", courseName=" + courseName + ", ratingId=" + ratingId + ", createDate=" + createDate + '}';
+//    }
 }

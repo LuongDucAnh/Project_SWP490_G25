@@ -16,42 +16,42 @@ import javax.persistence.Table;
  * @author Admin
  */
 @Entity
-@Table(name = "Course_description")
-public class Course_Description {
+@Table(name = "Course_image")
+public class CourseImage {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long desId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long imageId;
     
-    @Column(name = "description")
-    private String description;
+    @Column(name = "imageUrl")
+    private String imageUrl;
     
     @Column(name = "courseId")
     private long courseId;
 
-    public Course_Description() {
+    public CourseImage() {
     }
 
-    public Course_Description(long desId, String description, long courseId) {
-        this.desId = desId;
-        this.description = description;
+    public CourseImage(long imageId, String imageUrl, long courseId) {
+        this.imageId = imageId;
+        this.imageUrl = imageUrl;
         this.courseId = courseId;
     }
 
-    public long getDesId() {
-        return desId;
+    public long getImageId() {
+        return imageId;
     }
 
-    public void setDesId(long desId) {
-        this.desId = desId;
+    public void setImageId(long imageId) {
+        this.imageId = imageId;
     }
 
-    public String getDescription() {
-        return description;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public long getCourseId() {

@@ -11,9 +11,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     </head>
     <body>
         <div>This is Homepage</div>
-        <a th:href="@{/insertCourse}" class="btn btn-primary">insert</a>
-        <form method="get" action="/showAllCourse">
-            <button type="submit">show All Course</button>
-        </form>
+        <a th:href="@{/courseCreate}" class="btn btn-primary">insert</a>
+        <a th:href="@{/courseDisplay}" class="btn btn-primary">Display</a>
     </body>
 </html>

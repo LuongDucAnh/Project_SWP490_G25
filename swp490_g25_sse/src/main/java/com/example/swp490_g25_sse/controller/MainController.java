@@ -18,11 +18,6 @@ public class MainController {
     private String home() {
         return "index";
     }
-    
-    @GetMapping("/createCourse")
-    private String createCourse() {
-        return "courseCreate";
-    }
 
     @GetMapping("/login")
     private String loginController() {
