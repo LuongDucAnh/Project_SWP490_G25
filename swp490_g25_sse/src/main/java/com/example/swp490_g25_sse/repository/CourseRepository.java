@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
  * @author Admin
  */
 
-@Repository
 public interface CourseRepository extends JpaRepository<Course,Long>{
     
 }
