@@ -25,10 +25,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class CourseController {
 
     @Autowired
-    CourseRepository courseRepository;
+    private CourseRepository courseRepository;
 
     @Autowired
-    CourseRepositoryCustom courseRepositoryCustom;
+    private CourseRepositoryCustom courseRepositoryCustom;
+    
+//    @Autowired
+//    CourseService courseService;
+    
+//    @Autowired
+//    CourseImageRepository courseImgRepository;
+    
+//    @Autowired
+//    CourseDescriptionRepository courseDesRepository;
 
     @GetMapping(value = {"/courseCreate"})
     public String read(Model model) {

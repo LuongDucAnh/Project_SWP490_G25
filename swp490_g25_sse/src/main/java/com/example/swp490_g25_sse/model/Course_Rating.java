@@ -21,7 +21,8 @@ import javax.persistence.Table;
 public class Course_Rating {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ratingId")
     private long ratingId;
 
     @Column(name = "ratingStar")

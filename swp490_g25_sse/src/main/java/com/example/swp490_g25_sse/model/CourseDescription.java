@@ -21,6 +21,7 @@ public class CourseDescription {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "desId")
     private long desId;
     
     @Column(name = "description")

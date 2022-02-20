@@ -4,15 +4,13 @@
  */
 package com.example.swp490_g25_sse.repository;
 
-import com.example.swp490_g25_sse.model.Course;
+import com.example.swp490_g25_sse.model.CourseImage;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author Admin
  */
-
-
-public interface CourseRepository extends JpaRepository<Course,Long>{
+public interface CourseImageRepository extends JpaRepository<CourseImage, Long>{
     
 }

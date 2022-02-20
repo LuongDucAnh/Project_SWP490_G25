@@ -18,24 +18,37 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Course_image")
 public class CourseImage {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "imageId")
     private long imageId;
-    
+
+    @Column(name = "desId")
+    private long desId;
+
     @Column(name = "imageUrl")
     private String imageUrl;
-    
+
     @Column(name = "courseId")
     private long courseId;
 
     public CourseImage() {
     }
 
-    public CourseImage(long imageId, String imageUrl, long courseId) {
+    public CourseImage(long imageId, long desId, String imageUrl, long courseId) {
         this.imageId = imageId;
+        this.desId = desId;
         this.imageUrl = imageUrl;
         this.courseId = courseId;
+    }
+
+    public long getDesId() {
+        return desId;
+    }
+
+    public void setDesId(long desId) {
+        this.desId = desId;
     }
 
     public long getImageId() {
@@ -61,6 +74,5 @@ public class CourseImage {
     public void setCourseId(long courseId) {
         this.courseId = courseId;
     }
-    
-    
+
 }
