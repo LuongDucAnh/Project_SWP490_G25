@@ -29,16 +29,13 @@ public class CourseController {
 
     @Autowired
     private CourseRepositoryCustom courseRepositoryCustom;
-    
+
 //    @Autowired
 //    CourseService courseService;
-    
 //    @Autowired
 //    CourseImageRepository courseImgRepository;
-    
 //    @Autowired
 //    CourseDescriptionRepository courseDesRepository;
-
     @GetMapping(value = {"/courseCreate"})
     public String read(Model model) {
         model.addAttribute("course", new Course());
@@ -47,9 +44,17 @@ public class CourseController {
         return "courseCreate";
     }
 
+    @GetMapping(value = {"/courseCreate-menu"})
+    public String html(Model model) {
+        model.addAttribute("course", new Course());
+        model.addAttribute("description", new CourseDescription());
+        model.addAttribute("image", new CourseImage());
+        return "fragments/courseCreate-menu";
+    }
+
     @PostMapping(value = {"/saveCourse"})
     private String saveCourse(@ModelAttribute("course") Course course,
-            @ModelAttribute("description") CourseDescription description, 
+            @ModelAttribute("description") CourseDescription description,
             @ModelAttribute("image") CourseImage image) {
         try {
             course.setCreateDate(LocalDate.now());

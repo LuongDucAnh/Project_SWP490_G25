@@ -9,20 +9,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body>
-        <h1>Create New Course</h1>     
-        <form action="#" th:action="@{/saveCourse}" th:object="${course}" method="POST">
-            <div th:object="${description}">
-                <div th:object="${image}">
-                    UserID: <input type="text" th:field="${course.userId}"/><br/>
-                    Course Name: <input type="text" th:field="${course.courseName}"/><br/>
-                    Course Image: <input type="text" th:field="${image.imageUrl}"/><br/>
-                    Description: <input type="text" th:field="${description.description}"/><br/>
-                    Description Image: <input type="text" th:field="${image.imageUrl}"/><br/>
-                </div>
-            </div>
-            <!--            Course Description: <input type="text" th:field="*{courseName}"/><br/>-->
-            <input type="submit" value="Create" />
-        </form>
-    </body>
+    <body>  
+    <!-- Left column -->
+    <div th:replace="fragments/menu :: navbar"></div>
+    <!-- Java Script -->
+    <script type="text/javascript" th:src="@{/javascript/jquery-1.11.2.min.js}"></script>
+    <script type="text/javascript" th:src="@{/javascript/jquery-migrate-1.2.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/javascript/sf-script.js}"></script>
+</body>
 </html>
