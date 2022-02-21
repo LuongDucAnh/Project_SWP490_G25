@@ -24,11 +24,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class CourseController {
 
-    @Autowired
+//    @Autowired
     private CourseRepository courseRepository;
 
-    @Autowired
+//   @Autowired
     private CourseRepositoryCustom courseRepositoryCustom;
+
+    @Autowired
+    public CourseController(CourseRepository courseRepository, CourseRepositoryCustom courseRepositoryCustom) {
+        this.courseRepository = courseRepository;
+        this.courseRepositoryCustom = courseRepositoryCustom;
+    }
+    
+    
 
 //    @Autowired
 //    CourseService courseService;
@@ -58,7 +66,9 @@ public class CourseController {
             @ModelAttribute("image") CourseImage image) {
         try {
             course.setCreateDate(LocalDate.now());
-            courseRepository.save(course);
+//            courseRepository.save(course);
+            CourseImage cs = new CourseImage();
+            cs.setCourseId(course);
             System.out.println(course.toString());
             return "redirect:/courseDisplay";
         } catch (Exception e) {

@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -30,13 +31,15 @@ public class CourseImage {
     @Column(name = "imageUrl")
     private String imageUrl;
 
+    
+    @OneToOne
     @Column(name = "courseId")
-    private long courseId;
+    private Course courseId;
 
     public CourseImage() {
     }
 
-    public CourseImage(long imageId, long desId, String imageUrl, long courseId) {
+    public CourseImage(long imageId, long desId, String imageUrl, Course courseId) {
         this.imageId = imageId;
         this.desId = desId;
         this.imageUrl = imageUrl;
@@ -67,11 +70,11 @@ public class CourseImage {
         this.imageUrl = imageUrl;
     }
 
-    public long getCourseId() {
+    public Course getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(long courseId) {
+    public void setCourseId(Course courseId) {
         this.courseId = courseId;
     }
 
