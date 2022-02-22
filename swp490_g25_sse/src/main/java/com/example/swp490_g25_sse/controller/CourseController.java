@@ -7,6 +7,7 @@ package com.example.swp490_g25_sse.controller;
 import com.example.swp490_g25_sse.model.Course;
 import com.example.swp490_g25_sse.model.CourseDescription;
 import com.example.swp490_g25_sse.model.CourseImage;
+import com.example.swp490_g25_sse.repository.CourseImageRepository;
 import com.example.swp490_g25_sse.repository.CourseRepository;
 import com.example.swp490_g25_sse.repository.CourseRepositoryCustom;
 import java.time.LocalDate;
@@ -26,17 +27,16 @@ public class CourseController {
 
 //    @Autowired
     private CourseRepository courseRepository;
-
-//   @Autowired
     private CourseRepositoryCustom courseRepositoryCustom;
+    private CourseImageRepository courseImgRepo;
+//   @Autowired
 
     @Autowired
-    public CourseController(CourseRepository courseRepository, CourseRepositoryCustom courseRepositoryCustom) {
+    public CourseController(CourseRepository courseRepository, CourseRepositoryCustom courseRepositoryCustom, CourseImageRepository courseImgRepo) {
         this.courseRepository = courseRepository;
         this.courseRepositoryCustom = courseRepositoryCustom;
+        this.courseImgRepo = courseImgRepo;
     }
-    
-    
 
 //    @Autowired
 //    CourseService courseService;
@@ -52,13 +52,13 @@ public class CourseController {
         return "courseCreate";
     }
 
-    @GetMapping(value = {"/courseCreate-menu"})
-    public String html(Model model) {
-        model.addAttribute("course", new Course());
-        model.addAttribute("description", new CourseDescription());
-        model.addAttribute("image", new CourseImage());
-        return "fragments/courseCreate-menu";
-    }
+//    @GetMapping(value = {"/courseCreate-menu"})
+//    public String html(Model model) {
+//        model.addAttribute("course", new Course());
+//        model.addAttribute("description", new CourseDescription());
+//        model.addAttribute("image", new CourseImage());
+//        return "fragments/courseCreate-menu";
+//    }
 
     @PostMapping(value = {"/saveCourse"})
     private String saveCourse(@ModelAttribute("course") Course course,
@@ -66,16 +66,14 @@ public class CourseController {
             @ModelAttribute("image") CourseImage image) {
         try {
             course.setCreateDate(LocalDate.now());
-//            courseRepository.save(course);
-            CourseImage cs = new CourseImage();
-            cs.setCourseId(course);
-            System.out.println(course.toString());
+            courseRepository.save(course);
             return "redirect:/courseDisplay";
         } catch (Exception e) {
             e.printStackTrace();
             return "errorPage";
         }
     }
+    
 
     @GetMapping(value = "/courseDisplay")
     private String showAllCourse(Model model) {

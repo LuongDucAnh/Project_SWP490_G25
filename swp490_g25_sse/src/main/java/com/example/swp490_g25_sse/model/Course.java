@@ -5,13 +5,15 @@
 package com.example.swp490_g25_sse.model;
 
 import java.time.LocalDate;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.util.Date;
 
 /**
  *
@@ -38,15 +40,33 @@ public class Course {
     @Column(name = "userId")
     private long userId;
 
+    @OneToOne(targetEntity = CourseImage.class, cascade = CascadeType.ALL)
+    @JoinColumn(referencedColumnName = "courseId")
+    private CourseImage courseImg;
+    
+    @OneToOne(targetEntity = CourseDescription.class, cascade = CascadeType.ALL)
+    @JoinColumn(referencedColumnName = "courseId")
+    private CourseDescription courseDes;
+
     public Course() {
     }
 
-    public Course(long courseId, String courseName, LocalDate createDate, LocalDate updateDate, long userId) {
+    public Course(long courseId, String courseName, LocalDate createDate, LocalDate updateDate, long userId, CourseImage courseImg, CourseDescription courseDes) {
         this.courseId = courseId;
         this.courseName = courseName;
         this.createDate = createDate;
         this.updateDate = updateDate;
         this.userId = userId;
+        this.courseImg = courseImg;
+        this.courseDes = courseDes;
+    }
+
+    public CourseImage getCourseImg() {
+        return courseImg;
+    }
+
+    public void setCourseImg(CourseImage courseImg) {
+        this.courseImg = courseImg;
     }
 
     public LocalDate getUpdateDate() {

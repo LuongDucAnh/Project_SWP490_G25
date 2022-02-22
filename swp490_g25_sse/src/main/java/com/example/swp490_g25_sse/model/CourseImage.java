@@ -4,11 +4,13 @@
  */
 package com.example.swp490_g25_sse.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -30,21 +32,33 @@ public class CourseImage {
 
     @Column(name = "imageUrl")
     private String imageUrl;
-
     
-    @OneToOne
-    @Column(name = "courseId")
-    private Course courseId;
+    @OneToOne(mappedBy = "Course")
+    private Course course;
 
     public CourseImage() {
     }
 
-    public CourseImage(long imageId, long desId, String imageUrl, Course courseId) {
-        this.imageId = imageId;
-        this.desId = desId;
-        this.imageUrl = imageUrl;
-        this.courseId = courseId;
-    }
+//    public CourseImage(long imageId, long desId, String imageUrl) {
+//        this.imageId = imageId;
+//        this.desId = desId;
+//        this.imageUrl = imageUrl;
+//    }
+    
+//    public CourseImage(long imageId, long desId, String imageUrl, Course course) {
+//        this.imageId = imageId;
+//        this.desId = desId;
+//        this.imageUrl = imageUrl;
+//        this.course = course;
+//    }
+
+//    public Course getCourse() {
+//        return course;
+//    }
+//
+//    public void setCourse(Course course) {
+//        this.course = course;
+//    }
 
     public long getDesId() {
         return desId;
@@ -68,14 +82,6 @@ public class CourseImage {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
-    }
-
-    public Course getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Course courseId) {
-        this.courseId = courseId;
     }
 
 }
