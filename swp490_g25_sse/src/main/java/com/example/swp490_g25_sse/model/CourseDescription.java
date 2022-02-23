@@ -28,7 +28,6 @@ public class CourseDescription {
     @Column(name = "description")
     private String description;
     
-    @ManyToOne
     @Column(name = "courseId")
     private long courseId;
 

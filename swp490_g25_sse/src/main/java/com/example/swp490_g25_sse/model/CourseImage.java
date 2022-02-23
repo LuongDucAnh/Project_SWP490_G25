@@ -4,17 +4,11 @@
  */
 package com.example.swp490_g25_sse.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -36,38 +30,19 @@ public class CourseImage {
     @Column(name = "imageUrl")
     private String imageUrl;
 
-    private Course course;
+    @Column(name = "courseId")
+    private long courseId;
 
     public CourseImage() {
     }
 
-    public CourseImage(long desId, String imageUrl) {
+    public CourseImage(long imageId, long desId, String imageUrl, long courseId) {
+        this.imageId = imageId;
         this.desId = desId;
         this.imageUrl = imageUrl;
+        this.courseId = courseId;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "courseId", nullable = false)
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
-//    public CourseImage(long imageId, long desId, String imageUrl) {
-//        this.imageId = imageId;
-//        this.desId = desId;
-//        this.imageUrl = imageUrl;
-//    }
-//    public Course getCourse() {
-//        return course;
-//    }
-//
-//    public void setCourse(Course course) {
-//        this.course = course;
-//    }
     public long getDesId() {
         return desId;
     }
@@ -90,6 +65,14 @@ public class CourseImage {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public long getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(long courseId) {
+        this.courseId = courseId;
     }
 
 }

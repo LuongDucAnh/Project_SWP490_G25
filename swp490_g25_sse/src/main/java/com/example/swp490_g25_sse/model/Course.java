@@ -5,17 +5,11 @@
 package com.example.swp490_g25_sse.model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -28,6 +22,7 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "courseId")
     private long courseId;
 
     @Column(name = "courseName")
@@ -36,27 +31,35 @@ public class Course {
     @Column(name = "createDate")
     private LocalDate createDate;
 
+    @Column(name = "courseDuration")
+    private LocalDate courseDuration;
+
     @Column(name = "updateDate")
     private LocalDate updateDate;
 
     @Column(name = "userId")
     private long userId;
 
-    private List<CourseImage> courseImg = new ArrayList<>();
-
-//    @OneToMany
-//    private CourseDescription courseDes;
     public Course() {
     }
 
-    public Course(String courseName, LocalDate createDate, LocalDate updateDate, long userId) {
+    public Course(long courseId, String courseName, LocalDate createDate, LocalDate courseDuration, LocalDate updateDate, long userId) {
+        this.courseId = courseId;
         this.courseName = courseName;
         this.createDate = createDate;
+        this.courseDuration = courseDuration;
         this.updateDate = updateDate;
         this.userId = userId;
     }
 
-    
+    public LocalDate getCourseDuration() {
+        return courseDuration;
+    }
+
+    public void setCourseDuration(LocalDate courseDuration) {
+        this.courseDuration = courseDuration;
+    }
+
     public long getCourseId() {
         return courseId;
     }
@@ -95,15 +98,6 @@ public class Course {
 
     public void setUserId(long userId) {
         this.userId = userId;
-    }
-
-    public List<CourseImage> getCourseImg() {
-        return courseImg;
-    }
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "Course")
-    public void setCourseImg(List<CourseImage> courseImg) {
-        this.courseImg = courseImg;
     }
 
 }
