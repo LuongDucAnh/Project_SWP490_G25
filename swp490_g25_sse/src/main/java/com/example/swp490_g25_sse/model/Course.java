@@ -31,8 +31,11 @@ public class Course {
     @Column(name = "createDate")
     private LocalDate createDate;
 
-    @Column(name = "courseDuration")
-    private LocalDate courseDuration;
+    @Column(name = "startAt")
+    private LocalDate startAt;
+
+    @Column(name = "endAt")
+    private LocalDate endAt;
 
     @Column(name = "updateDate")
     private LocalDate updateDate;
@@ -43,21 +46,30 @@ public class Course {
     public Course() {
     }
 
-    public Course(long courseId, String courseName, LocalDate createDate, LocalDate courseDuration, LocalDate updateDate, long userId) {
+    public Course(long courseId, String courseName, LocalDate createDate, LocalDate startAt, LocalDate endAt, LocalDate updateDate, long userId) {
         this.courseId = courseId;
         this.courseName = courseName;
         this.createDate = createDate;
-        this.courseDuration = courseDuration;
+        this.startAt = startAt;
+        this.endAt = endAt;
         this.updateDate = updateDate;
         this.userId = userId;
     }
 
-    public LocalDate getCourseDuration() {
-        return courseDuration;
+    public LocalDate getStartAt() {
+        return startAt;
     }
 
-    public void setCourseDuration(LocalDate courseDuration) {
-        this.courseDuration = courseDuration;
+    public void setStartAt(LocalDate startAt) {
+        this.startAt = startAt;
+    }
+
+    public LocalDate getEndAt() {
+        return endAt;
+    }
+
+    public void setEndAt(LocalDate endAt) {
+        this.endAt = endAt;
     }
 
     public long getCourseId() {

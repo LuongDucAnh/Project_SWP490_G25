@@ -19,15 +19,15 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Course_description")
 public class CourseDescription {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "desId")
     private long desId;
-    
+
     @Column(name = "description")
     private String description;
-    
+
     @Column(name = "courseId")
     private long courseId;
 
@@ -63,6 +63,5 @@ public class CourseDescription {
     public void setCourseId(long courseId) {
         this.courseId = courseId;
     }
-    
-    
+
 }
