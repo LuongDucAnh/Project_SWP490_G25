@@ -5,14 +5,17 @@
 package com.example.swp490_g25_sse.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -25,7 +28,6 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "courseId")
     private long courseId;
 
     @Column(name = "courseName")
@@ -40,51 +42,21 @@ public class Course {
     @Column(name = "userId")
     private long userId;
 
-    @OneToOne(targetEntity = CourseImage.class, cascade = CascadeType.ALL)
-    @JoinColumn(referencedColumnName = "courseId")
-    private CourseImage courseImg;
-    
-    @OneToOne(targetEntity = CourseDescription.class, cascade = CascadeType.ALL)
-    @JoinColumn(referencedColumnName = "courseId")
-    private CourseDescription courseDes;
+    private List<CourseImage> courseImg = new ArrayList<>();
 
+//    @OneToMany
+//    private CourseDescription courseDes;
     public Course() {
     }
 
-    public Course(long courseId, String courseName, LocalDate createDate, LocalDate updateDate, long userId, CourseImage courseImg, CourseDescription courseDes) {
-        this.courseId = courseId;
+    public Course(String courseName, LocalDate createDate, LocalDate updateDate, long userId) {
         this.courseName = courseName;
         this.createDate = createDate;
         this.updateDate = updateDate;
         this.userId = userId;
-        this.courseImg = courseImg;
-        this.courseDes = courseDes;
     }
 
-    public CourseImage getCourseImg() {
-        return courseImg;
-    }
-
-    public void setCourseImg(CourseImage courseImg) {
-        this.courseImg = courseImg;
-    }
-
-    public LocalDate getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(LocalDate updateDate) {
-        this.updateDate = updateDate;
-    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
-
+    
     public long getCourseId() {
         return courseId;
     }
@@ -109,8 +81,29 @@ public class Course {
         this.createDate = createDate;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Course{" + "courseId=" + courseId + ", courseName=" + courseName + ", ratingId=" + ratingId + ", createDate=" + createDate + '}';
-//    }
+    public LocalDate getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(LocalDate updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public List<CourseImage> getCourseImg() {
+        return courseImg;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "Course")
+    public void setCourseImg(List<CourseImage> courseImg) {
+        this.courseImg = courseImg;
+    }
+
 }
