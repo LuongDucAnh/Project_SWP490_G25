@@ -11,7 +11,6 @@ import com.example.swp490_g25_sse.repository.CourseDescriptionRepository;
 import com.example.swp490_g25_sse.repository.CourseImageRepository;
 import com.example.swp490_g25_sse.repository.CourseRepository;
 import com.example.swp490_g25_sse.repository.CourseRepositoryCustom;
-import java.time.LocalDate;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,6 +50,14 @@ public class CourseController {
         return "courseCreate";
     }
     
+    @GetMapping(value = {"/courseCreate-menu"})
+    public String read2(Model model) {
+        model.addAttribute("course", new Course());
+        model.addAttribute("description", new CourseDescription());
+        model.addAttribute("image", new CourseImage());
+        return "fragments/courseCreate-menu";
+    }
+    
     @GetMapping(value = "/courseDisplay")
     private String showAllCourse(Model model) {
         model.addAttribute("course", courseRepository.findAll());
@@ -74,8 +81,7 @@ public class CourseController {
             course.setStartAt(date);
             course.setEndAt(date);
             course.addImg(image);
-            description.setDescription(description.getDescription());
-            course.addDes(description);
+            //course.addDes(description);
             courseRepository.save(course);
             return "redirect:/courseDisplay";
         } catch (Exception e) {

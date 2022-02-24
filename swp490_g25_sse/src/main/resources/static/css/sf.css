@@ -122,7 +122,7 @@ nav li {
 }
 
 /* Left Column
-  -----------------------------*/
+-----------------------------*/
 .style-sidebar {
   width: 300px;
 }
@@ -248,7 +248,7 @@ nav li {
 }
 
 /* Right Column
-  ------------------------------*/
+------------------------------*/
 .top-nav-container {
   background-color: #1d232a;
   padding: 28px 50px;
@@ -296,7 +296,7 @@ nav li {
 }
 
 /* 7. Preferences
-  -------------------------------*/
+-------------------------------*/
 .has-success .checkbox,
 .has-success .checkbox-inline,
 .has-success .control-label,
@@ -349,7 +349,7 @@ nav li {
 }
 
 /* 8. Media Queries
-  ------------------------------*/
+------------------------------*/
 @media screen and (max-width: 1199px) and (min-width: 991px) {
   .style-site-header {
     margin: 25px;
