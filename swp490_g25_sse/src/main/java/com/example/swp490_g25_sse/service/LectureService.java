@@ -5,25 +5,18 @@
 package com.example.swp490_g25_sse.service;
 
 import com.example.swp490_g25_sse.model.CourseLecture;
-import com.example.swp490_g25_sse.model.LectureAttachement;
-import com.example.swp490_g25_sse.model.LectureContent;
-import com.example.swp490_g25_sse.model.LectureImage;
+import com.example.swp490_g25_sse.repository.LectureRepository;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author ADMIN
  */
 @Service
-public class LectureService {
+@Transactional
+public class LectureService{
 
-    public List<CourseLecture> display() {
-        return List.of(new CourseLecture(1, "Bài học 1", 1,
-                new LectureAttachement(1, "Chưa có"),
-                new LectureContent(1, "Chưa có luôn"),
-                new LectureImage(1, "Chưa có nữa"), 
-                1)
-        );
-    }
 }

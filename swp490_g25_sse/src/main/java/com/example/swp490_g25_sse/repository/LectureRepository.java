@@ -4,10 +4,17 @@
  */
 package com.example.swp490_g25_sse.repository;
 
+import com.example.swp490_g25_sse.model.CourseLecture;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+
+
 /**
  *
  * @author ADMIN
  */
-public class LectureRepository {
+@Repository
+public interface LectureRepository extends JpaRepository<CourseLecture, Integer>{
     
 }
