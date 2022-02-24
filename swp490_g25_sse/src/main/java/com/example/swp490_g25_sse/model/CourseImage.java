@@ -6,9 +6,12 @@ package com.example.swp490_g25_sse.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -19,38 +22,16 @@ import javax.persistence.Table;
 @Table(name = "Course_image")
 public class CourseImage {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "imageId")
     private long imageId;
-
-    @Column(name = "desId")
     private long desId;
-
-    @Column(name = "imageUrl")
     private String imageUrl;
-
-    @Column(name = "courseId")
-    private long courseId;
+    private Course course;
 
     public CourseImage() {
     }
 
-    public CourseImage(long imageId, long desId, String imageUrl, long courseId) {
-        this.imageId = imageId;
-        this.desId = desId;
-        this.imageUrl = imageUrl;
-        this.courseId = courseId;
-    }
-
-    public long getDesId() {
-        return desId;
-    }
-
-    public void setDesId(long desId) {
-        this.desId = desId;
-    }
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long getImageId() {
         return imageId;
     }
@@ -59,6 +40,16 @@ public class CourseImage {
         this.imageId = imageId;
     }
 
+    @Column(name = "desId", nullable = true)
+    public long getDesId() {
+        return desId;
+    }
+
+    public void setDesId(long desId) {
+        this.desId = desId;
+    }
+
+    @Column(name = "imageUrl")
     public String getImageUrl() {
         return imageUrl;
     }
@@ -67,12 +58,14 @@ public class CourseImage {
         this.imageUrl = imageUrl;
     }
 
-    public long getCourseId() {
-        return courseId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "courseId")
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCourseId(long courseId) {
-        this.courseId = courseId;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
 }

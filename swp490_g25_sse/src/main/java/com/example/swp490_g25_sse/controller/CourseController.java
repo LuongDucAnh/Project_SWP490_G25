@@ -12,6 +12,7 @@ import com.example.swp490_g25_sse.repository.CourseImageRepository;
 import com.example.swp490_g25_sse.repository.CourseRepository;
 import com.example.swp490_g25_sse.repository.CourseRepositoryCustom;
 import java.time.LocalDate;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,15 +68,11 @@ public class CourseController {
             @ModelAttribute("image") CourseImage image,
             @ModelAttribute("description") CourseDescription des) {
         try {
-            course.setCreateDate(LocalDate.now());
-            course.setStartAt(LocalDate.now());
-            course.setEndAt(LocalDate.now());
-            courseRepository.save(course);
-            des.setCourseId(course.getCourseId());
-            courseDesRepo.save(des);
-            image.setCourseId(course.getCourseId());
-            image.setDesId(des.getDesId());
-            courseImgRepo.save(image);
+            Date date = new Date();
+            course.setCreateDate(date);
+            course.setStartAt(date);
+            course.setEndAt(date);
+
             return "redirect:/courseDisplay";
         } catch (Exception e) {
             e.printStackTrace();

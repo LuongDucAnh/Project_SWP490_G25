@@ -6,9 +6,11 @@ package com.example.swp490_g25_sse.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -19,27 +21,16 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Course_description")
 public class CourseDescription {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "desId")
+    
     private long desId;
-
-    @Column(name = "description")
     private String description;
-
-    @Column(name = "courseId")
-    private long courseId;
+    private Course course;
 
     public CourseDescription() {
     }
 
-    public CourseDescription(long desId, String description, long courseId) {
-        this.desId = desId;
-        this.description = description;
-        this.courseId = courseId;
-    }
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long getDesId() {
         return desId;
     }
@@ -48,6 +39,7 @@ public class CourseDescription {
         this.desId = desId;
     }
 
+    @Column(name = "description")
     public String getDescription() {
         return description;
     }
@@ -56,12 +48,16 @@ public class CourseDescription {
         this.description = description;
     }
 
-    public long getCourseId() {
-        return courseId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "courseId")
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCourseId(long courseId) {
-        this.courseId = courseId;
+    public void setCourse(Course course) {
+        this.course = course;
     }
+
+
 
 }

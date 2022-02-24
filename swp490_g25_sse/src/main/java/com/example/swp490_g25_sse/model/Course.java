@@ -4,12 +4,16 @@
  */
 package com.example.swp490_g25_sse.model;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -20,58 +24,21 @@ import javax.persistence.Table;
 @Table(name = "Course")
 public class Course {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "courseId")
     private long courseId;
-
-    @Column(name = "courseName")
     private String courseName;
-
-    @Column(name = "createDate")
-    private LocalDate createDate;
-
-    @Column(name = "startAt")
-    private LocalDate startAt;
-
-    @Column(name = "endAt")
-    private LocalDate endAt;
-
-    @Column(name = "updateDate")
-    private LocalDate updateDate;
-
-    @Column(name = "userId")
+    private Date createDate;
+    private Date startAt;
+    private Date endAt;
+    private Date updateDate;
     private long userId;
+    private List<CourseDescription> courseDes = new ArrayList<>();
+    private List<CourseImage> courseImg = new ArrayList<>();
 
     public Course() {
     }
 
-    public Course(long courseId, String courseName, LocalDate createDate, LocalDate startAt, LocalDate endAt, LocalDate updateDate, long userId) {
-        this.courseId = courseId;
-        this.courseName = courseName;
-        this.createDate = createDate;
-        this.startAt = startAt;
-        this.endAt = endAt;
-        this.updateDate = updateDate;
-        this.userId = userId;
-    }
-
-    public LocalDate getStartAt() {
-        return startAt;
-    }
-
-    public void setStartAt(LocalDate startAt) {
-        this.startAt = startAt;
-    }
-
-    public LocalDate getEndAt() {
-        return endAt;
-    }
-
-    public void setEndAt(LocalDate endAt) {
-        this.endAt = endAt;
-    }
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long getCourseId() {
         return courseId;
     }
@@ -80,6 +47,7 @@ public class Course {
         this.courseId = courseId;
     }
 
+    @Column(name = "courseName", nullable = false)
     public String getCourseName() {
         return courseName;
     }
@@ -88,28 +56,67 @@ public class Course {
         this.courseName = courseName;
     }
 
-    public LocalDate getCreateDate() {
+    @Column(name = "createDate", nullable = false)
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(LocalDate createDate) {
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
-    public LocalDate getUpdateDate() {
+    @Column(name = "startAt", nullable = false)
+    public Date getStartAt() {
+        return startAt;
+    }
+
+    public void setStartAt(Date startAt) {
+        this.startAt = startAt;
+    }
+
+    @Column(name = "endAt", nullable = false)
+    public Date getEndAt() {
+        return endAt;
+    }
+
+    public void setEndAt(Date endAt) {
+        this.endAt = endAt;
+    }
+
+    @Column(name = "updateDate", nullable = true)
+    public Date getUpdateDate() {
         return updateDate;
     }
 
-    public void setUpdateDate(LocalDate updateDate) {
+    public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
     }
 
+    @Column(name = "userId", nullable = false)
     public long getUserId() {
         return userId;
     }
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    public List<CourseDescription> getCourseDes() {
+        return courseDes;
+    }
+
+    public void setCourseDes(List<CourseDescription> courseDes) {
+        this.courseDes = courseDes;
+    }
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    public List<CourseImage> getCourseImg() {
+        return courseImg;
+    }
+
+    public void setCourseImg(List<CourseImage> courseImg) {
+        this.courseImg = courseImg;
     }
 
 }
