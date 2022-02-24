@@ -30,6 +30,7 @@ public class CourseLecture {
     private int courseId;
     private boolean markAsRead;
     private List<LectureAttachement> lectureAttachements = new ArrayList<>();
+//    private List<LectureImage> lectureImages = new ArrayList<>();
 
     public CourseLecture() {
     }
@@ -89,8 +90,22 @@ public class CourseLecture {
         this.lectureAttachements = lectureAttachements;
     }
 
-    public void addAttachement(LectureAttachement attachement){
+    public void addAttachement(LectureAttachement attachement) {
         attachement.setCourseLecture(this);
         this.lectureAttachements.add(attachement);
     }
+
+//    @OneToMany(mappedBy = "courseLecture", cascade = CascadeType.PERSIST, orphanRemoval = true)
+//    public List<LectureImage> getLectureImages() {
+//        return lectureImages;
+//    }
+//
+//    public void setLectureImages(List<LectureImage> lectureImages) {
+//        this.lectureImages = lectureImages;
+//    }
+//
+//    public void addImage(LectureImage image) {
+//        image.setCourseLecture(this);
+//        this.lectureImages.add(image);
+//    }
 }

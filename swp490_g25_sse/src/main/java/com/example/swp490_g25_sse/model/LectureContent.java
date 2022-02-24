@@ -4,40 +4,68 @@
  */
 package com.example.swp490_g25_sse.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import org.springframework.stereotype.Component;
 
 /**
  *
  * @author ADMIN
  */
-@Component
+@Entity
+@Table(name = "Lecture_content")
 public class LectureContent {
 
-    private int id;
-    private String content;
+    
+    private int contentId;
+    private String contentText;
+    private List<LectureImage> lectureImages = new ArrayList<>();
 
     public LectureContent() {
     }
 
-    public LectureContent(int id, String content) {
-        this.id = id;
-        this.content = content;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public int getContentId() {
+        return contentId;
     }
 
-    public int getId() {
-        return id;
+    public void setContentId(int contentId) {
+        this.contentId = contentId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    @Column(name = "contentText", nullable = false)
+    public String getContentText() {
+        return contentText;
     }
 
-    public String getContent() {
-        return content;
+    public void setContentText(String contentText) {
+        this.contentText = contentText;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    @OneToMany(mappedBy = "lectureContent", cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<LectureImage> getLectureImages() {
+        return lectureImages;
+    }
+
+    public void setLectureImages(List<LectureImage> lectureImages) {
+        this.lectureImages = lectureImages;
+    }
+    
+  public void addImage(LectureImage image) {
+        image.setLectureContent(this);
+        this.lectureImages.add(image);
     }
 
 }

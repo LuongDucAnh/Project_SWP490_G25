@@ -1,15 +1,14 @@
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>This is index</div>
-    </body>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <meta charset="UTF-8" />
+      <title>Welcome</title>
+      <!--<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>-->
+   </head>
+   <body>
+      <h1>Welcome</h1>
+      <a href="lectures" th:href="@{/lectures}">Lecture List</a>  
+      <a href="lectures/show" th:href="@{/lectures/show}">Create Lecture</a>        
+   </body>
+   
 </html>

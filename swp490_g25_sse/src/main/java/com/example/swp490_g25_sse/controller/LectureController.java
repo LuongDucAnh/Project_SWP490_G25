@@ -12,6 +12,8 @@ import javax.validation.Valid;
 import com.example.swp490_g25_sse.exception.ResourceNotFoundException;
 import com.example.swp490_g25_sse.model.CourseLecture;
 import com.example.swp490_g25_sse.model.LectureAttachement;
+import com.example.swp490_g25_sse.model.LectureContent;
+import com.example.swp490_g25_sse.model.LectureImage;
 import com.example.swp490_g25_sse.repository.LectureRepository;
 import java.util.ArrayList;
 
@@ -37,7 +39,7 @@ public class LectureController {
     @Autowired
     private LectureRepository lectureRepository;
 
-    @GetMapping("")
+    @GetMapping("") 
     public List<CourseLecture> getAllCourseLectures() {
         return lectureRepository.findAll();
     }
@@ -52,12 +54,18 @@ public class LectureController {
 
     @PostMapping("/add")
     public CourseLecture createCourseLecture(@Valid @RequestBody CourseLecture CourseLecture) {
-//        List<LectureAttachement> attachements = new ArrayList<>();
-//        attachements.add(new LectureAttachement("http//dummyrecord", CourseLecture));
-//        CourseLecture.setLectureAttachements(attachements);
         LectureAttachement attachement = new LectureAttachement();
-        attachement.setAttachUrl("okeokeoke");
+        attachement.setAttachUrl("okeokeoke");  
+                
+//        LectureImage image = new LectureImage();
+//        image.setImageUrl("HttpdummyImage");
+//        
+//        LectureContent content = new LectureContent();
+//        content.setContentText("Loremipsupm");
+//        content.addImage(image);
+        
         CourseLecture.addAttachement(attachement);
+//        CourseLecture.addImage(image);
         return lectureRepository.save(CourseLecture);
     }
 
