@@ -9,9 +9,12 @@ import com.example.swp490_g25_sse.exception.ResourceNotFoundException;
 import com.example.swp490_g25_sse.model.CourseLecture;
 import com.example.swp490_g25_sse.model.LectureAttachement;
 import com.example.swp490_g25_sse.repository.LectureRepository;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -70,6 +73,18 @@ public class LectureController {
 
         final CourseLecture updatedCourseLecture = lectureRepository.save(CourseLecture);
         return ResponseEntity.ok(updatedCourseLecture);
+    }
+    
+      @DeleteMapping("/delete/{id}")
+    public Map<String, Boolean> deleteCourseLecture(@PathVariable(value = "id") int CourseLectureId)
+            throws ResourceNotFoundException {
+        CourseLecture CourseLecture = lectureRepository.findById(CourseLectureId)
+                .orElseThrow(() -> new ResourceNotFoundException("CourseLecture not found for this id :: " + CourseLectureId));
+
+        lectureRepository.delete(CourseLecture);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("deleted", Boolean.TRUE);
+        return response;
     }
     
 }
