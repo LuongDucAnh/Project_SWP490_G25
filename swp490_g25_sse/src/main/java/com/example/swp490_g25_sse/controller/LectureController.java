@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,6 +50,26 @@ public class LectureController {
         attachement.setAttachUrl("okeokeoke");
         CourseLecture.addAttachement(attachement);
         return lectureRepository.save(CourseLecture);
+    }
+    
+    @PutMapping("/update/{id}")
+    public ResponseEntity<CourseLecture> updateCourseLecture(@PathVariable(value = "id") int CourseLectureId,
+            @Valid @RequestBody CourseLecture CourseLectureDetails) throws ResourceNotFoundException {
+        CourseLecture CourseLecture = lectureRepository.findById(CourseLectureId)
+                .orElseThrow(() -> new ResourceNotFoundException("CourseLecture not found for this id :: " + CourseLectureId));
+
+        CourseLecture.setLectureName(CourseLectureDetails.getLectureName());
+        CourseLecture.setLectureWeek(CourseLectureDetails.getLectureWeek());
+        CourseLecture.setCourseId(CourseLectureDetails.getCourseId());
+        CourseLecture.setMarkAsRead(CourseLectureDetails.isMarkAsRead());
+        for (LectureAttachement attachement : CourseLecture.getLectureAttachements()) {
+            if (attachement.getAttachId() == 12) {
+                attachement.setAttachUrl("Đã cập nhật thành công");                
+            }
+        }
+
+        final CourseLecture updatedCourseLecture = lectureRepository.save(CourseLecture);
+        return ResponseEntity.ok(updatedCourseLecture);
     }
     
 }
