@@ -3,15 +3,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.example.swp490_g25_sse.controller;
+import javax.validation.Valid;
 
 import com.example.swp490_g25_sse.exception.ResourceNotFoundException;
 import com.example.swp490_g25_sse.model.CourseLecture;
+import com.example.swp490_g25_sse.model.LectureAttachement;
 import com.example.swp490_g25_sse.repository.LectureRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,4 +42,13 @@ public class LectureController {
                 .orElseThrow(() -> new Exception("CourseLecture not found for this id :: " + CourseLectureId));
         return ResponseEntity.ok().body(CourseLecture);
     }
+    
+        @PostMapping("/add")
+    public CourseLecture createCourseLecture(@Valid @RequestBody CourseLecture CourseLecture) {
+        LectureAttachement attachement = new LectureAttachement();
+        attachement.setAttachUrl("okeokeoke");
+        CourseLecture.addAttachement(attachement);
+        return lectureRepository.save(CourseLecture);
+    }
+    
 }
