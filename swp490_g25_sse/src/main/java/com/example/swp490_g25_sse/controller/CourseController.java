@@ -41,7 +41,7 @@ public class CourseController {
         this.courseImgRepo = courseImgRepo;
         this.courseDesRepo = courseDesRepo;
     }
-
+    
     @GetMapping(value = {"/courseCreate"})
     public String read(Model model) {
         model.addAttribute("course", new Course());
@@ -49,7 +49,7 @@ public class CourseController {
         model.addAttribute("image", new CourseImage());
         return "courseCreate";
     }
-
+    
     @GetMapping(value = "/courseDisplay")
     private String showAllCourse(Model model) {
         model.addAttribute("course", courseRepository.findAll());
@@ -72,7 +72,9 @@ public class CourseController {
             course.setCreateDate(date);
             course.setStartAt(date);
             course.setEndAt(date);
-
+            course.addDes(des);
+            course.addImg(image);
+            courseRepository.save(course);
             return "redirect:/courseDisplay";
         } catch (Exception e) {
             e.printStackTrace();

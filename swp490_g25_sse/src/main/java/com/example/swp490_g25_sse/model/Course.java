@@ -101,7 +101,7 @@ public class Course {
         this.userId = userId;
     }
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     public List<CourseDescription> getCourseDes() {
         return courseDes;
     }
@@ -110,13 +110,23 @@ public class Course {
         this.courseDes = courseDes;
     }
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     public List<CourseImage> getCourseImg() {
         return courseImg;
     }
 
     public void setCourseImg(List<CourseImage> courseImg) {
         this.courseImg = courseImg;
+    }
+    
+    public void addImg(CourseImage img){
+        img.setCourse(this);
+        this.courseImg.add(img);
+    }
+    
+    public void addDes(CourseDescription des){
+        des.setCourse(this);
+        this.courseDes.add(des);
     }
 
 }

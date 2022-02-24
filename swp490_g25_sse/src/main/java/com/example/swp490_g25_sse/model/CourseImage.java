@@ -23,7 +23,6 @@ import javax.persistence.Table;
 public class CourseImage {
 
     private long imageId;
-    private long desId;
     private String imageUrl;
     private Course course;
 
@@ -38,15 +37,6 @@ public class CourseImage {
 
     public void setImageId(long imageId) {
         this.imageId = imageId;
-    }
-
-    @Column(name = "desId", nullable = true)
-    public long getDesId() {
-        return desId;
-    }
-
-    public void setDesId(long desId) {
-        this.desId = desId;
     }
 
     @Column(name = "imageUrl")
