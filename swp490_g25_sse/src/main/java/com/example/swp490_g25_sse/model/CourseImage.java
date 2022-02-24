@@ -4,29 +4,33 @@
  */
 package com.example.swp490_g25_sse.model;
 
-import org.springframework.stereotype.Component;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author ADMIN
  */
-@Component
+@Entity
+@Table(name = "Course_image")
 public class CourseImage {
     private int imgId;
     private int desId;
     private String imgUrl;
-    private int courseId;
+    private Course course;
 
     public CourseImage() {
     }
 
-    public CourseImage(int imgId, int desId, String imgUrl, int courseId) {
-        this.imgId = imgId;
-        this.desId = desId;
-        this.imgUrl = imgUrl;
-        this.courseId = courseId;
-    }
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getImgId() {
         return imgId;
     }
@@ -35,6 +39,7 @@ public class CourseImage {
         this.imgId = imgId;
     }
 
+    @Column(name = "desId", nullable = true)
     public int getDesId() {
         return desId;
     }
@@ -43,6 +48,7 @@ public class CourseImage {
         this.desId = desId;
     }
 
+    @Column(name = "imageUrl")
     public String getImgUrl() {
         return imgUrl;
     }
@@ -51,12 +57,18 @@ public class CourseImage {
         this.imgUrl = imgUrl;
     }
 
-    public int getCourseId() {
-        return courseId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "courseId")
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
+    public void setCourse(Course course) {
+        this.course = course;
     }
+
+    
+
+    
     
 }

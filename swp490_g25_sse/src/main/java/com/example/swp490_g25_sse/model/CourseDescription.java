@@ -4,50 +4,60 @@
  */
 package com.example.swp490_g25_sse.model;
 
-import org.springframework.stereotype.Component;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author ADMIN
  */
-@Component
+@Entity
+@Table(name = "Course_description")
 public class CourseDescription {
 
-    private int desId;
-    private String descripttion;
-    private int courseId;
+   private long desId;
+    private String description;
+    private Course course;
 
     public CourseDescription() {
     }
 
-    public CourseDescription(int desId, String descripttion, int courseId) {
-        this.desId = desId;
-        this.descripttion = descripttion;
-        this.courseId = courseId;
-    }
-
-    public int getDesId() {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public long getDesId() {
         return desId;
     }
 
-    public void setDesId(int desId) {
+    public void setDesId(long desId) {
         this.desId = desId;
     }
 
-    public String getDescripttion() {
-        return descripttion;
+    @Column(name = "description", nullable = false)
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescripttion(String descripttion) {
-        this.descripttion = descripttion;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public int getCourseId() {
-        return courseId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "courseId")
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
+    public void setCourse(Course course) {
+        this.course = course;
     }
+
+    
 
 }
