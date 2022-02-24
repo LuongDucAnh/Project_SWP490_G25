@@ -21,8 +21,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Course_image")
 public class CourseImage {
-    private int imgId;
-    private int desId;
+    private long imgId;
+    private long desId;
     private String imgUrl;
     private Course course;
 
@@ -31,7 +31,7 @@ public class CourseImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int getImgId() {
+    public long getImgId() {
         return imgId;
     }
 
@@ -40,7 +40,7 @@ public class CourseImage {
     }
 
     @Column(name = "desId", nullable = true)
-    public int getDesId() {
+    public long getDesId() {
         return desId;
     }
 
