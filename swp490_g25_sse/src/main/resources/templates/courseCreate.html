@@ -13,8 +13,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <h1>Create New Course</h1>     
         <div>
             <form action="#" th:action="@{/saveCourse}" th:object="${course}" method="POST">
-                <div th:object="${description}">
-                    <div th:object="${image}">
+                <div th:object="${image}">
+                    <div th:object="${description}">
                         UserID: <input type="text" th:field="${course.userId}"/><br/>
                         Course Name: <input type="text" th:field="${course.courseName}"/><br/>
                         Course Image: <input type="text" th:field="${image.imageUrl}"/><br/>

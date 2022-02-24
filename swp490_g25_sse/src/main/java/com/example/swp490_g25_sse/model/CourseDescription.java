@@ -21,12 +21,18 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Course_description")
 public class CourseDescription {
-    
+
     private long desId;
     private String description;
     private Course course;
 
     public CourseDescription() {
+    }
+
+    public CourseDescription(long desId, String description, Course course) {
+        this.desId = desId;
+        this.description = description;
+        this.course = course;
     }
 
     @Id
@@ -57,7 +63,5 @@ public class CourseDescription {
     public void setCourse(Course course) {
         this.course = course;
     }
-
-
 
 }

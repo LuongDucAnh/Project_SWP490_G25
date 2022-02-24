@@ -29,6 +29,11 @@ public class CourseImage {
     public CourseImage() {
     }
 
+    public CourseImage(String imageUrl, Course course) {
+        this.imageUrl = imageUrl;
+        this.course = course;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long getImageId() {

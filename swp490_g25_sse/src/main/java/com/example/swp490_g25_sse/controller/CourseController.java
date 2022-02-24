@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  *
@@ -66,14 +67,15 @@ public class CourseController {
     @PostMapping(value = {"/saveCourse"})
     private String saveCourse(@ModelAttribute("course") Course course,
             @ModelAttribute("image") CourseImage image,
-            @ModelAttribute("description") CourseDescription des) {
+            @ModelAttribute("description") CourseDescription description) {
         try {
             Date date = new Date();
             course.setCreateDate(date);
             course.setStartAt(date);
             course.setEndAt(date);
-            course.addDes(des);
             course.addImg(image);
+            description.setDescription(description.getDescription());
+            course.addDes(description);
             courseRepository.save(course);
             return "redirect:/courseDisplay";
         } catch (Exception e) {
@@ -81,4 +83,5 @@ public class CourseController {
             return "errorPage";
         }
     }
+    
 }
