@@ -4,39 +4,59 @@
  */
 package com.example.swp490_g25_sse.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import org.springframework.stereotype.Component;
 
 /**
  *
  * @author ADMIN
  */
-@Component
+@Entity
+@Table(name = "Lecture_attachement")
 public class LectureAttachement {
-private int id;
-private String attachUrl;
+
+    private int attachId;
+    private String attachUrl;
+    private CourseLecture courseLecture;
 
     public LectureAttachement() {
     }
 
-    public LectureAttachement(int id, String imgUrl) {
-        this.id = id;
-        this.attachUrl = imgUrl;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public int getAttachId() {
+        return attachId;
     }
 
-    public int getId() {
-        return id;
+    public void setAttachId(int attachId) {
+        this.attachId = attachId;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
+    @Column(name = "attachUrl", nullable = false)
     public String getAttachUrl() {
         return attachUrl;
     }
 
     public void setAttachUrl(String attachUrl) {
         this.attachUrl = attachUrl;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lectureId")
+    public CourseLecture getCourseLecture() {
+        return courseLecture;
+    }
+
+    public void setCourseLecture(CourseLecture courseLecture) {
+        this.courseLecture = courseLecture;
     }
 
 }
