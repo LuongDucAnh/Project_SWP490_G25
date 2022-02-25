@@ -29,12 +29,9 @@ public class CourseLecture {
     private int lectureWeek;
     private int courseId;
     private boolean markAsRead;
-    @Autowired
-    private List<LectureAttachement> lectureAttachements;
-    @Autowired
-    private List<LectureImage> lectureImages;
-    @Autowired
-    private List<LectureContent> lectureContents;
+    private List<LectureAttachement> lectureAttachements = new ArrayList<>();
+    private List<LectureImage> lectureImages = new ArrayList<>();
+    private List<LectureContent> lectureContents = new ArrayList<>();
 
     public CourseLecture() {
     }

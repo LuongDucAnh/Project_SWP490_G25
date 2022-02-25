@@ -1,15 +1,32 @@
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>This is index</div>
-    </body>
+<!DOCTYPE HTML>
+<html lang="vi-VN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <meta charset="UTF-8" />
+      <title>Add Person</title>
+      <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+   </head>
+   <body>
+      <h1>Create a lecture</h1>   
+         
+      <form th:action="@{/lectures/add}"
+         th:object="${lectureForm}" method="POST">
+         First Name:
+         <input type="text" th:field="*{firstName}" />    
+         <br/>
+         Last Name:
+         <input type="text" th:field="*{lastName}" />     
+         <br/>
+         <input type="submit" value="Create" />
+      </form>
+      
+      <br/>
+      
+      <!-- Check if errorMessage is not null and not empty -->
+      
+      <div th:if="${errorMessage}" th:utext="${errorMessage}"
+         style="color:red;font-style:italic;">
+         ...
+      </div>
+      
+   </body>
 </html>

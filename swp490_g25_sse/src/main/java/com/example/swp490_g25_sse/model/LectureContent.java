@@ -4,6 +4,7 @@
  */
 package com.example.swp490_g25_sse.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -30,8 +31,7 @@ public class LectureContent {
     private int contentId;
     private String contentText;
     private CourseLecture courseLecture;
-    @Autowired
-    private List<LectureImage> lectureImages;
+    private List<LectureImage> lectureImages = new ArrayList<>();
 
     public LectureContent() {
     }

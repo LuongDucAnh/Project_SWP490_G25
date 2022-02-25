@@ -3,11 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.example.swp490_g25_sse.controller;
+
 import javax.validation.Valid;
 
 import com.example.swp490_g25_sse.exception.ResourceNotFoundException;
 import com.example.swp490_g25_sse.model.CourseLecture;
 import com.example.swp490_g25_sse.model.LectureAttachement;
+import com.example.swp490_g25_sse.model.LectureContent;
+import com.example.swp490_g25_sse.model.LectureImage;
 import com.example.swp490_g25_sse.repository.LectureRepository;
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/lectures")
 public class LectureController {
-    
+
     @Autowired
     private LectureRepository lectureRepository;
 
@@ -38,7 +41,7 @@ public class LectureController {
     public List<CourseLecture> getAllCourseLectures() {
         return lectureRepository.findAll();
     }
-    
+
     @GetMapping("/{id}")
     public ResponseEntity<CourseLecture> getCourseLectureById(@PathVariable(value = "id") int CourseLectureId)
             throws ResourceNotFoundException, Exception {
@@ -46,15 +49,25 @@ public class LectureController {
                 .orElseThrow(() -> new Exception("CourseLecture not found for this id :: " + CourseLectureId));
         return ResponseEntity.ok().body(CourseLecture);
     }
-    
-        @PostMapping("/add")
+
+    @PostMapping("/add")
     public CourseLecture createCourseLecture(@Valid @RequestBody CourseLecture CourseLecture) {
         LectureAttachement attachement = new LectureAttachement();
         attachement.setAttachUrl("okeokeoke");
+//Add Image
+        LectureImage lectureImage = new LectureImage();
+        lectureImage.setImageUrl("URL new image");
+//Add lecture
+        LectureContent lectureContent = new LectureContent();
+        lectureContent.setContentText("This is the new content");
+        lectureContent.addImage(lectureImage);
+//Add image and lecture to course
         CourseLecture.addAttachement(attachement);
+        CourseLecture.addContent(lectureContent);
+        CourseLecture.addImage(lectureImage);
         return lectureRepository.save(CourseLecture);
     }
-    
+
     @PutMapping("/update/{id}")
     public ResponseEntity<CourseLecture> updateCourseLecture(@PathVariable(value = "id") int CourseLectureId,
             @Valid @RequestBody CourseLecture CourseLectureDetails) throws ResourceNotFoundException {
@@ -67,15 +80,15 @@ public class LectureController {
         CourseLecture.setMarkAsRead(CourseLectureDetails.isMarkAsRead());
         for (LectureAttachement attachement : CourseLecture.getLectureAttachements()) {
             if (attachement.getAttachId() == 12) {
-                attachement.setAttachUrl("Đã cập nhật thành công");                
+                attachement.setAttachUrl("Đã cập nhật thành công");
             }
         }
 
         final CourseLecture updatedCourseLecture = lectureRepository.save(CourseLecture);
         return ResponseEntity.ok(updatedCourseLecture);
     }
-    
-      @DeleteMapping("/delete/{id}")
+
+    @DeleteMapping("/delete/{id}")
     public Map<String, Boolean> deleteCourseLecture(@PathVariable(value = "id") int CourseLectureId)
             throws ResourceNotFoundException {
         CourseLecture CourseLecture = lectureRepository.findById(CourseLectureId)
@@ -86,5 +99,5 @@ public class LectureController {
         response.put("deleted", Boolean.TRUE);
         return response;
     }
-    
+
 }
