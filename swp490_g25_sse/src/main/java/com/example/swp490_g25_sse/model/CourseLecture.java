@@ -33,6 +33,8 @@ public class CourseLecture {
     private List<LectureAttachement> lectureAttachements;
     @Autowired
     private List<LectureImage> lectureImages;
+    @Autowired
+    private List<LectureContent> lectureContents;
 
     public CourseLecture() {
     }
@@ -101,14 +103,28 @@ public class CourseLecture {
         this.lectureImages = lectureImages;
     }
 
+    @OneToMany(mappedBy = "courseLecture", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    public List<LectureContent> getLectureContents() {
+        return lectureContents;
+    }
+
+    public void setLectureContents(List<LectureContent> lectureContents) {
+        this.lectureContents = lectureContents;
+    }
+
     public void addAttachement(LectureAttachement attachement) {
         attachement.setCourseLecture(this);
         this.lectureAttachements.add(attachement);
     }
-    
+
     public void addImage(LectureImage image) {
         image.setCourseLecture(this);
         this.lectureImages.add(image);
     }
     
+        public void addContent(LectureContent content) {
+        content.setCourseLecture(this);
+        this.lectureContents.add(content);
+    }
+
 }

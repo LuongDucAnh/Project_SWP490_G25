@@ -8,9 +8,12 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,16 +29,11 @@ public class LectureContent {
 
     private int contentId;
     private String contentText;
+    private CourseLecture courseLecture;
     @Autowired
     private List<LectureImage> lectureImages;
 
     public LectureContent() {
-    }
-
-    public LectureContent(int contentId, String contentText, List<LectureImage> lectureImages) {
-        this.contentId = contentId;
-        this.contentText = contentText;
-        this.lectureImages = lectureImages;
     }
 
     @Id
@@ -57,6 +55,16 @@ public class LectureContent {
         this.contentText = contentText;
     }
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lectureId")
+    public CourseLecture getCourseLecture() {
+        return courseLecture;
+    }
+
+    public void setCourseLecture(CourseLecture courseLecture) {
+        this.courseLecture = courseLecture;
+    }
+    
     @OneToMany(mappedBy = "lectureContent", cascade = CascadeType.PERSIST, orphanRemoval = true)
     public List<LectureImage> getLectureImages() {
         return lectureImages;

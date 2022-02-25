@@ -15,8 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author ADMIN
  */
-@Service
-@Transactional
+//@Service
+//@Transactional
 public class LectureService{
 
 }

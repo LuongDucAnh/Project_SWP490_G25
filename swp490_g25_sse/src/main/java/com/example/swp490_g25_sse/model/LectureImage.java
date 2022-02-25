@@ -37,13 +37,6 @@ public class LectureImage {
     public LectureImage() {
     }
 
-    public LectureImage(int imageId, String imageUrl, CourseLecture courseLecture, LectureContent lectureContent) {
-        this.imageId = imageId;
-        this.imageUrl = imageUrl;
-        this.courseLecture = courseLecture;
-        this.lectureContent = lectureContent;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getImageId() {
