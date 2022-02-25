@@ -16,9 +16,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <div th:object="${description}">
                     <div th:object="${image}">
                         UserID: <input type="text" th:field="${course.userId}"/><br/>
-                        Course Name: <input type="text" th:field="${course.courseName}"/><br/>
-                        Course Image: <input type="text" th:field="${image.imageUrl}"/><br/>
-                        Description: <input type="text" th:field="${description.description}"/><br/>
+                        Tên khoá học: <input type="text" th:field="${course.courseName}"/><br/>
+                        Ảnh đại diện khoá học: <input type="text" th:field="${image.imageUrl}"/><br/>
+                        <!--Description: <input type="text" th:field="${description.description}"/><br/>-->
+                        <label>Mô tả</label><br/>
+                        <textarea  th:field="${description.content}" rows="10" cols="50"></textarea>
                     </div>
                 </div>
                 <!--            Course Description: <input type="text" th:field="*{courseName}"/><br/>-->

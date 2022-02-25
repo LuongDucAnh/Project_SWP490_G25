@@ -23,15 +23,15 @@ import javax.persistence.Table;
 public class CourseDescription {
 
     private long desId;
-    private String description;
+    private String content;
     private Course course;
 
     public CourseDescription() {
     }
 
-    public CourseDescription(long desId, String description, Course course) {
+    public CourseDescription(long desId, String content, Course course) {
         this.desId = desId;
-        this.description = description;
+        this.content = content;
         this.course = course;
     }
 
@@ -45,13 +45,13 @@ public class CourseDescription {
         this.desId = desId;
     }
 
-    @Column(name = "description")
-    public String getDescription() {
-        return description;
+    @Column(name = "content")
+    public String getContent() {
+        return content;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)

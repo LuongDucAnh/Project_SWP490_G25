@@ -121,11 +121,13 @@ public class Course {
     
     public void addImg(CourseImage img){
         img.setCourse(this);
+        img.getCourse().setCourseId(this.courseId);
         this.courseImg.add(img);
     }
     
     public void addDes(CourseDescription des){
         des.setCourse(this);
+        des.getCourse().setCourseId(this.courseId);
         this.courseDes.add(des);
     }
 
