@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -28,10 +29,19 @@ public class LectureImage {
 
     private int imageId;
     private String imageUrl;
+    @Autowired
     private CourseLecture courseLecture;
+    @Autowired
     private LectureContent lectureContent;
 
     public LectureImage() {
+    }
+
+    public LectureImage(int imageId, String imageUrl, CourseLecture courseLecture, LectureContent lectureContent) {
+        this.imageId = imageId;
+        this.imageUrl = imageUrl;
+        this.courseLecture = courseLecture;
+        this.lectureContent = lectureContent;
     }
 
     @Id
@@ -72,4 +82,5 @@ public class LectureImage {
     public void setLectureContent(LectureContent lectureContent) {
         this.lectureContent = lectureContent;
     }
+
 }

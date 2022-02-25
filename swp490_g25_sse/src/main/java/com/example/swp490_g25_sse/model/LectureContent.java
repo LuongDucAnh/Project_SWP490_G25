@@ -4,19 +4,16 @@
  */
 package com.example.swp490_g25_sse.model;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -27,12 +24,18 @@ import org.springframework.stereotype.Component;
 @Table(name = "Lecture_content")
 public class LectureContent {
 
-    
     private int contentId;
     private String contentText;
-    private List<LectureImage> lectureImages = new ArrayList<>();
+    @Autowired
+    private List<LectureImage> lectureImages;
 
     public LectureContent() {
+    }
+
+    public LectureContent(int contentId, String contentText, List<LectureImage> lectureImages) {
+        this.contentId = contentId;
+        this.contentText = contentText;
+        this.lectureImages = lectureImages;
     }
 
     @Id
@@ -54,7 +57,7 @@ public class LectureContent {
         this.contentText = contentText;
     }
 
-    @OneToMany(mappedBy = "lectureContent", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "lectureContent", cascade = CascadeType.PERSIST, orphanRemoval = true)
     public List<LectureImage> getLectureImages() {
         return lectureImages;
     }
@@ -62,10 +65,9 @@ public class LectureContent {
     public void setLectureImages(List<LectureImage> lectureImages) {
         this.lectureImages = lectureImages;
     }
-    
-  public void addImage(LectureImage image) {
+
+    public void addImage(LectureImage image) {
         image.setLectureContent(this);
         this.lectureImages.add(image);
     }
-
 }

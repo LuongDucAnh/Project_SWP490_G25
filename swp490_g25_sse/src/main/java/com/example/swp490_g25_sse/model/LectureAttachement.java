@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
@@ -24,6 +26,7 @@ public class LectureAttachement {
 
     private int attachId;
     private String attachUrl;
+    @Autowired
     private CourseLecture courseLecture;
 
     public LectureAttachement() {

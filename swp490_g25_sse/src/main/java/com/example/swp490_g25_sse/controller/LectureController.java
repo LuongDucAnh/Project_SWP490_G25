@@ -3,20 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.example.swp490_g25_sse.controller;
-
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
 import javax.validation.Valid;
 
 import com.example.swp490_g25_sse.exception.ResourceNotFoundException;
 import com.example.swp490_g25_sse.model.CourseLecture;
 import com.example.swp490_g25_sse.model.LectureAttachement;
-import com.example.swp490_g25_sse.model.LectureContent;
-import com.example.swp490_g25_sse.model.LectureImage;
 import com.example.swp490_g25_sse.repository.LectureRepository;
-import java.util.ArrayList;
-
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,15 +30,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/lectures")
 public class LectureController {
-
+    
     @Autowired
     private LectureRepository lectureRepository;
 
-    @GetMapping("") 
+    @GetMapping("")
     public List<CourseLecture> getAllCourseLectures() {
         return lectureRepository.findAll();
     }
-
+    
     @GetMapping("/{id}")
     public ResponseEntity<CourseLecture> getCourseLectureById(@PathVariable(value = "id") int CourseLectureId)
             throws ResourceNotFoundException, Exception {
@@ -51,24 +46,15 @@ public class LectureController {
                 .orElseThrow(() -> new Exception("CourseLecture not found for this id :: " + CourseLectureId));
         return ResponseEntity.ok().body(CourseLecture);
     }
-
-    @PostMapping("/add")
+    
+        @PostMapping("/add")
     public CourseLecture createCourseLecture(@Valid @RequestBody CourseLecture CourseLecture) {
         LectureAttachement attachement = new LectureAttachement();
-        attachement.setAttachUrl("okeokeoke");  
-                
-//        LectureImage image = new LectureImage();
-//        image.setImageUrl("HttpdummyImage");
-//        
-//        LectureContent content = new LectureContent();
-//        content.setContentText("Loremipsupm");
-//        content.addImage(image);
-        
+        attachement.setAttachUrl("okeokeoke");
         CourseLecture.addAttachement(attachement);
-//        CourseLecture.addImage(image);
         return lectureRepository.save(CourseLecture);
     }
-
+    
     @PutMapping("/update/{id}")
     public ResponseEntity<CourseLecture> updateCourseLecture(@PathVariable(value = "id") int CourseLectureId,
             @Valid @RequestBody CourseLecture CourseLectureDetails) throws ResourceNotFoundException {
@@ -88,8 +74,8 @@ public class LectureController {
         final CourseLecture updatedCourseLecture = lectureRepository.save(CourseLecture);
         return ResponseEntity.ok(updatedCourseLecture);
     }
-
-    @DeleteMapping("/delete/{id}")
+    
+      @DeleteMapping("/delete/{id}")
     public Map<String, Boolean> deleteCourseLecture(@PathVariable(value = "id") int CourseLectureId)
             throws ResourceNotFoundException {
         CourseLecture CourseLecture = lectureRepository.findById(CourseLectureId)
@@ -100,5 +86,5 @@ public class LectureController {
         response.put("deleted", Boolean.TRUE);
         return response;
     }
-
+    
 }
