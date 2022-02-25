@@ -23,7 +23,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Course")
 public class Course {
-    
+
     private long courseId;
     private String courseName;
     private Date createDate;
@@ -46,6 +46,7 @@ public class Course {
     public void setCourseId(long courseId) {
         this.courseId = courseId;
     }
+
     @Column(name = "courseName", nullable = false)
     public String getCourseName() {
         return courseName;
@@ -54,6 +55,7 @@ public class Course {
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
+
     @Column(name = "createDate", nullable = false)
     public Date getCreateDate() {
         return createDate;
@@ -62,6 +64,7 @@ public class Course {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
+
     @Column(name = "startAt", nullable = false)
     public Date getStartAt() {
         return startAt;
@@ -70,7 +73,8 @@ public class Course {
     public void setStartAt(Date startAt) {
         this.startAt = startAt;
     }
-     @Column(name = "endAt", nullable = false)
+
+    @Column(name = "endAt", nullable = false)
     public Date getEndAt() {
         return endAt;
     }
@@ -78,6 +82,7 @@ public class Course {
     public void setEndAt(Date endAt) {
         this.endAt = endAt;
     }
+
     @Column(name = "updateDate", nullable = true)
     public Date getUpdateDate() {
         return updateDate;
@@ -86,6 +91,7 @@ public class Course {
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
     }
+
     @Column(name = "userId", nullable = false)
     public long getUserId() {
         return userId;
@@ -94,6 +100,7 @@ public class Course {
     public void setUserId(long userId) {
         this.userId = userId;
     }
+
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     public List<CourseDescription> getCourseDes() {
         return courseDes;
@@ -102,6 +109,7 @@ public class Course {
     public void setCourseDes(List<CourseDescription> courseDes) {
         this.courseDes = courseDes;
     }
+
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     public List<CourseImage> getCourseImg() {
         return courseImg;
@@ -110,15 +118,17 @@ public class Course {
     public void setCourseImg(List<CourseImage> courseImg) {
         this.courseImg = courseImg;
     }
-    public void addImg(CourseImage img){
+
+    public void addImg(CourseImage img) {
         img.setCourse(this);
+        img.getCourse().setCourseId(this.courseId);
         this.courseImg.add(img);
     }
-    
-    public void addDes(CourseDescription des){
+
+    public void addDes(CourseDescription des) {
         des.setCourse(this);
+        des.getCourse().setCourseId(this.courseId);
         this.courseDes.add(des);
     }
-    
-    
+
 }

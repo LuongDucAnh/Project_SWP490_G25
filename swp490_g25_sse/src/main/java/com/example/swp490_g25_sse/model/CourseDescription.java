@@ -22,8 +22,8 @@ import javax.persistence.Table;
 @Table(name = "Course_description")
 public class CourseDescription {
 
-   private long desId;
-    private String description;
+    private long desId;
+    private String content;
     private Course course;
 
     public CourseDescription() {
@@ -39,13 +39,13 @@ public class CourseDescription {
         this.desId = desId;
     }
 
-    @Column(name = "description", nullable = false)
-    public String getDescription() {
-        return description;
+    @Column(name = "content", nullable = false)
+    public String getContent() {
+        return content;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -57,7 +57,5 @@ public class CourseDescription {
     public void setCourse(Course course) {
         this.course = course;
     }
-
-    
 
 }

@@ -21,9 +21,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Course_image")
 public class CourseImage {
-    private long imgId;
+
+    private long imageId;
     private long desId;
-    private String imgUrl;
+    private String imageUrl;
     private Course course;
 
     public CourseImage() {
@@ -31,12 +32,12 @@ public class CourseImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getImgId() {
-        return imgId;
+    public long getImageId() {
+        return imageId;
     }
 
-    public void setImgId(int imgId) {
-        this.imgId = imgId;
+    public void setImageId(long imageId) {
+        this.imageId = imageId;
     }
 
     @Column(name = "desId", nullable = true)
@@ -49,12 +50,12 @@ public class CourseImage {
     }
 
     @Column(name = "imageUrl")
-    public String getImgUrl() {
-        return imgUrl;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -67,8 +68,4 @@ public class CourseImage {
         this.course = course;
     }
 
-    
-
-    
-    
 }

@@ -22,15 +22,15 @@ import org.springframework.web.bind.annotation.PostMapping;
  */
 @Controller
 public class CourseController {
-    
-     private CourseRepository courseRepository;
-     
-     @Autowired
+
+    private CourseRepository courseRepository;
+
+    @Autowired
     public CourseController(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
 
     }
-    
+
     @GetMapping(value = {"/courseCreate"})
     public String read(Model model) {
         model.addAttribute("course", new Course());
@@ -38,7 +38,7 @@ public class CourseController {
         model.addAttribute("image", new CourseImage());
         return "courseCreate";
     }
-    
+
     @GetMapping(value = "/courseDisplay")
     private String showAllCourse(Model model) {
         model.addAttribute("course", courseRepository.findAll());
@@ -61,9 +61,8 @@ public class CourseController {
             course.setCreateDate(date);
             course.setStartAt(date);
             course.setEndAt(date);
-            course.addImg(image);
-            description.setDescription(description.getDescription());
             course.addDes(description);
+            course.addImg(image);
             courseRepository.save(course);
             return "redirect:/courseDisplay";
         } catch (Exception e) {
