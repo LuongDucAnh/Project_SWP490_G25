@@ -10,11 +10,17 @@
          
       <form th:action="@{/lectures/add}"
          th:object="${lectureForm}" method="POST">
-         First Name:
-         <input type="text" th:field="*{firstName}" />    
+         Lecture name:
+         <input type="text" th:field="*{lectureName}" />    
          <br/>
-         Last Name:
-         <input type="text" th:field="*{lastName}" />     
+         Lecture week:
+         <input type="text" th:field="*{lectureWeek}" />     
+         <br/>
+         Course id:
+         <input type="text" th:field="*{courseId}" />     
+         <br/>
+         Mark as read
+         <input type="text" th:field="*{markAsRead}" />     
          <br/>
          <input type="submit" value="Create" />
       </form>
@@ -23,10 +29,10 @@
       
       <!-- Check if errorMessage is not null and not empty -->
       
-      <div th:if="${errorMessage}" th:utext="${errorMessage}"
+<!--      <div th:if="${errorMessage}" th:utext="${errorMessage}"
          style="color:red;font-style:italic;">
          ...
-      </div>
+      </div>-->
       
    </body>
 </html>

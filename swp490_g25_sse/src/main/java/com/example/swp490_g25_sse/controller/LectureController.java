@@ -78,9 +78,20 @@ public class LectureController {
         CourseLecture.setLectureWeek(CourseLectureDetails.getLectureWeek());
         CourseLecture.setCourseId(CourseLectureDetails.getCourseId());
         CourseLecture.setMarkAsRead(CourseLectureDetails.isMarkAsRead());
+        
+        for (LectureContent content : CourseLecture.getLectureContents()) {
+            if (content.getContentId() == 2) {
+                content.setContentText("Chưa cập nhật thành công");
+            }
+        }
+        for (LectureImage image : CourseLecture.getLectureImages()) {
+            if (image.getImageId() == 1) {
+                image.setImageUrl("Chưa cập nhật thành công");
+            }
+        }
         for (LectureAttachement attachement : CourseLecture.getLectureAttachements()) {
-            if (attachement.getAttachId() == 12) {
-                attachement.setAttachUrl("Đã cập nhật thành công");
+            if (attachement.getAttachId() == 24) {
+                attachement.setAttachUrl("Chưa cập nhật thành công");
             }
         }
 
