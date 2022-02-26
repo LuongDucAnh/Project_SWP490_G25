@@ -19,12 +19,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  *
  * @author Admin
  */
 @Controller
+@RequestMapping("/course")
 public class CourseController {
 
 //    @Autowired
@@ -42,7 +44,7 @@ public class CourseController {
         this.courseDesRepo = courseDesRepo;
     }
 
-    @GetMapping(value = {"/courseCreate"})
+    @GetMapping(value = {"/add"})
     public String read(Model model) {
         model.addAttribute("course", new Course());
         model.addAttribute("description", new CourseDescription());
@@ -58,7 +60,7 @@ public class CourseController {
         return "fragments/courseCreate-menu";
     }
 
-    @GetMapping(value = "/courseDisplay")
+    @GetMapping(value = "/display")
     private String showAllCourse(Model model) {
         model.addAttribute("course", courseRepository.findAll());
         return "Course_Display";
@@ -71,7 +73,7 @@ public class CourseController {
 //        return "fragments/courseCreate-menu";
 //    }
 
-    @PostMapping(value = {"/saveCourse"})
+    @PostMapping(value = {"/add"})
     private String saveCourse(@ModelAttribute("course") Course course,
             @ModelAttribute("image") CourseImage image,
             @ModelAttribute("description") CourseDescription description) {
@@ -83,7 +85,7 @@ public class CourseController {
             course.addDes(description);
             course.addImg(image);
             courseRepository.save(course);
-            return "redirect:/courseDisplay";
+            return "redirect:/course/display";
         } catch (Exception e) {
             e.printStackTrace();
             return "errorPage";
