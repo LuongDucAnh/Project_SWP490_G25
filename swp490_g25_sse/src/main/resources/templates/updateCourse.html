@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Update Course</h1>     
+        <div>
+            <form action="#" th:action="@{/course/update/{courseId}(courseId=${course.courseId})}" th:object="${course}" method="POST">
+                <div th:object="${course1}">                        
+                    Tên khoá học: <input type="text" th:field="${course.courseName}" th:text="*{course1.courseName}"/><br/>
+                    <!--Ảnh đại diện khoá học: <input type="text" th:field="${image.imageUrl}"/><br/>-->
+                    <!--Description: <input type="text" th:field="${description.description}"/><br/>-->
+                    <!--                    <label>Mô tả</label><br/>
+                                        <textarea  th:field="${description.content}" rows="10" cols="50"></textarea>-->
+                </div>
+                <!--            Course Description: <input type="text" th:field="*{courseName}"/><br/>-->
+                <input type="submit" value="Create" />
+            </form>
+        </div>
+    </body>
+</html>

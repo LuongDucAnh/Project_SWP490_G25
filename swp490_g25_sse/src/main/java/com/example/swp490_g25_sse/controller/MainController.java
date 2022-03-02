@@ -24,4 +24,9 @@ public class MainController {
         return "login";
     }
     
+    @GetMapping("/demo")
+    private String demo() {
+        return "home-screen";
+    }
+    
 }

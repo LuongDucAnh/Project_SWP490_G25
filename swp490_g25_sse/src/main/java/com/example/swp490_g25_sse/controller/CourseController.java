@@ -17,8 +17,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -50,6 +51,16 @@ public class CourseController {
         model.addAttribute("description", new CourseDescription());
         model.addAttribute("image", new CourseImage());
         return "courseCreate";
+    }
+
+    @GetMapping(value = {"/update/{courseId}"})
+    public String read3(Model model, @PathVariable Long courseId) {
+        model.addAttribute("course", new Course());
+        //model.addAttribute("course", new Course());
+        model.addAttribute("course1", courseRepository.getById(courseId));
+//        model.addAttribute("description", courseDesRepo.findAll());
+//        model.addAttribute("image", courseImgRepo.findAll());
+        return "updateCourse";
     }
 
     @GetMapping(value = {"/courseCreate-menu"})
@@ -85,6 +96,16 @@ public class CourseController {
             course.addDes(description);
             course.addImg(image);
             courseRepository.save(course);
+            return "redirect:/course/display";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "errorPage";
+        }
+    }
+
+    @PutMapping(value = {"/update/{courseId}"})
+    private String updateCourse(@PathVariable Long courseId) {
+        try {
             return "redirect:/course/display";
         } catch (Exception e) {
             e.printStackTrace();
