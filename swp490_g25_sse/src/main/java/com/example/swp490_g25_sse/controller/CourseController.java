@@ -7,12 +7,10 @@ package com.example.swp490_g25_sse.controller;
 import com.example.swp490_g25_sse.model.Course;
 import com.example.swp490_g25_sse.model.CourseDescription;
 import com.example.swp490_g25_sse.model.CourseImage;
-import com.example.swp490_g25_sse.repository.CourseDescriptionRepository;
-import com.example.swp490_g25_sse.repository.CourseImageRepository;
 import com.example.swp490_g25_sse.repository.CourseRepository;
-import com.example.swp490_g25_sse.repository.CourseRepositoryCustom;
 import com.example.swp490_g25_sse.service.CourseService;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,19 +31,13 @@ public class CourseController {
 
 //    @Autowired
     private CourseRepository courseRepository;
-    private CourseRepositoryCustom courseRepositoryCustom;
-    private CourseImageRepository courseImgRepo;
-    private CourseDescriptionRepository courseDesRepo;
-    private CourseService cs;
+    private CourseService courseService;
 //   @Autowired
 
     @Autowired
-    public CourseController(CourseRepository courseRepository, CourseRepositoryCustom courseRepositoryCustom, CourseImageRepository courseImgRepo, CourseDescriptionRepository courseDesRepo, CourseService cs) {
+    public CourseController(CourseRepository courseRepository, CourseService courseService) {
         this.courseRepository = courseRepository;
-        this.courseRepositoryCustom = courseRepositoryCustom;
-        this.courseImgRepo = courseImgRepo;
-        this.courseDesRepo = courseDesRepo;
-        this.cs = cs;
+        this.courseService = courseService;
     }
 
     @GetMapping(value = {"/add"})
@@ -60,22 +52,19 @@ public class CourseController {
     public String read3(Model model, @PathVariable("courseId") Long courseId) {
         Optional<Course> c = courseRepository.findById(courseId);
         Course course = null;
-        CourseDescription cd = null;
-        CourseImage ci = null;
         course = c.get();
         model.addAttribute("course", course);
-        Optional<CourseDescription> d = cs.findCourseDesById(courseId);
-        cd = d.get();
-        model.addAttribute("description", cd);
-        Optional<CourseImage> i = cs.findCourseImgById(courseId);
-        ci = i.get();
-        model.addAttribute("image", ci);
-//        model.addAttribute("course", new Course());
-        //model.addAttribute("course", new Course());
-//        model.addAttribute("course1", courseRepository.getById(courseId));
-//        model.addAttribute("description", courseDesRepo.findAll());
-//        model.addAttribute("image", courseImgRepo.findAll());
+//        List<CourseImage> ci = courseService.findCourseImgById(courseId);
+//        List<CourseDescription> cd = courseService.findCourseDesById(courseId);
+        model.addAttribute("description", new CourseDescription());
+        model.addAttribute("image", new CourseImage());
         return "updateCourse";
+    }
+
+    @GetMapping(value = {"/delete/{courseId}"})
+    public String deleteCourse(@PathVariable("courseId") Long courseId) {
+        courseRepository.deleteById(courseId);
+        return "redirect:/course/display";
     }
 
     @GetMapping(value = {"/courseCreate-menu"})

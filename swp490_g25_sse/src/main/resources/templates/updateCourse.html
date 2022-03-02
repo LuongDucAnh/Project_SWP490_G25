@@ -18,12 +18,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                         <input type="hidden" th:field="${course.courseId}"/><br/>
                         Tên khoá học: <input type="text" th:field="${course.courseName}"/><br/>
                         Ảnh đại diện khoá học: <input type="text" th:field="${image.imageUrl}"/><br/>
-                        <!--Description: <input type="text" th:field="${description.description}"/><br/>-->
                         <label>Mô tả</label><br/>
                         <textarea  th:field="${description.content}" rows="10" cols="50"></textarea>
                     </div>
                 </div>
-                <!--            Course Description: <input type="text" th:field="*{courseName}"/><br/>-->
                 <input type="submit" value="Update" />
             </form>
         </div>

@@ -4,9 +4,10 @@
  */
 package com.example.swp490_g25_sse.service;
 
+import com.example.swp490_g25_sse.dto.CourseDTO;
 import com.example.swp490_g25_sse.model.CourseDescription;
 import com.example.swp490_g25_sse.model.CourseImage;
-import java.util.Optional;
+import java.util.List;
 
 /**
  *
@@ -14,7 +15,9 @@ import java.util.Optional;
  */
 public interface CourseService {
 
-    Optional<CourseImage> findCourseImgById(Long id);
+    List<CourseImage> findCourseImgById(Long id);
 
-    Optional<CourseDescription> findCourseDesById(Long id);
+    List<CourseDescription> findCourseDesById(Long id);
+    
+    CourseDTO getCourseDetailsById(Long id);
 }
