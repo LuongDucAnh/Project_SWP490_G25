@@ -11,6 +11,7 @@ import com.example.swp490_g25_sse.repository.CourseDescriptionRepository;
 import com.example.swp490_g25_sse.repository.CourseImageRepository;
 import com.example.swp490_g25_sse.repository.CourseRepository;
 import com.example.swp490_g25_sse.repository.CourseRepositoryCustom;
+import com.example.swp490_g25_sse.service.CourseService;
 import java.util.Date;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -36,14 +36,16 @@ public class CourseController {
     private CourseRepositoryCustom courseRepositoryCustom;
     private CourseImageRepository courseImgRepo;
     private CourseDescriptionRepository courseDesRepo;
+    private CourseService cs;
 //   @Autowired
 
     @Autowired
-    public CourseController(CourseRepository courseRepository, CourseRepositoryCustom courseRepositoryCustom, CourseImageRepository courseImgRepo, CourseDescriptionRepository courseDesRepo) {
+    public CourseController(CourseRepository courseRepository, CourseRepositoryCustom courseRepositoryCustom, CourseImageRepository courseImgRepo, CourseDescriptionRepository courseDesRepo, CourseService cs) {
         this.courseRepository = courseRepository;
         this.courseRepositoryCustom = courseRepositoryCustom;
         this.courseImgRepo = courseImgRepo;
         this.courseDesRepo = courseDesRepo;
+        this.cs = cs;
     }
 
     @GetMapping(value = {"/add"})
@@ -56,10 +58,18 @@ public class CourseController {
 
     @GetMapping(value = {"/update/{courseId}"})
     public String read3(Model model, @PathVariable("courseId") Long courseId) {
-        Optional<Course> optional = courseRepository.findById(courseId);
+        Optional<Course> c = courseRepository.findById(courseId);
         Course course = null;
-        course = optional.get();
+        CourseDescription cd = null;
+        CourseImage ci = null;
+        course = c.get();
         model.addAttribute("course", course);
+        Optional<CourseDescription> d = cs.findCourseDesById(courseId);
+        cd = d.get();
+        model.addAttribute("description", cd);
+        Optional<CourseImage> i = cs.findCourseImgById(courseId);
+        ci = i.get();
+        model.addAttribute("image", ci);
 //        model.addAttribute("course", new Course());
         //model.addAttribute("course", new Course());
 //        model.addAttribute("course1", courseRepository.getById(courseId));
@@ -119,5 +129,4 @@ public class CourseController {
 //            return "errorPage";
 //        }
 //    }
-
 }
