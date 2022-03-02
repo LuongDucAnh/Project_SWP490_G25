@@ -12,6 +12,7 @@ import com.example.swp490_g25_sse.repository.CourseImageRepository;
 import com.example.swp490_g25_sse.repository.CourseRepository;
 import com.example.swp490_g25_sse.repository.CourseRepositoryCustom;
 import java.util.Date;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,10 +55,14 @@ public class CourseController {
     }
 
     @GetMapping(value = {"/update/{courseId}"})
-    public String read3(Model model, @PathVariable Long courseId) {
-        model.addAttribute("course", new Course());
+    public String read3(Model model, @PathVariable("courseId") Long courseId) {
+        Optional<Course> optional = courseRepository.findById(courseId);
+        Course course = null;
+        course = optional.get();
+        model.addAttribute("course", course);
+//        model.addAttribute("course", new Course());
         //model.addAttribute("course", new Course());
-        model.addAttribute("course1", courseRepository.getById(courseId));
+//        model.addAttribute("course1", courseRepository.getById(courseId));
 //        model.addAttribute("description", courseDesRepo.findAll());
 //        model.addAttribute("image", courseImgRepo.findAll());
         return "updateCourse";
@@ -103,14 +108,16 @@ public class CourseController {
         }
     }
 
-    @PutMapping(value = {"/update/{courseId}"})
-    private String updateCourse(@PathVariable Long courseId) {
-        try {
-            return "redirect:/course/display";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "errorPage";
-        }
-    }
+//    @PutMapping(value = {"/update/{courseId}"})
+//    private String updateCourse(@PathVariable("courseId") Long courseId) {
+//        try {
+//            Course course = courseRepository.findById(courseId);
+//
+//            return "redirect:/course/display";
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return "errorPage";
+//        }
+//    }
 
 }

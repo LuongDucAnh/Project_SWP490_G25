@@ -12,16 +12,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     <body>
         <h1>Update Course</h1>     
         <div>
-            <form action="#" th:action="@{/course/update/{courseId}(courseId=${course.courseId})}" th:object="${course}" method="POST">
-                <div th:object="${course1}">                        
-                    Tên khoá học: <input type="text" th:field="${course.courseName}" th:text="*{course1.courseName}"/><br/>
-                    <!--Ảnh đại diện khoá học: <input type="text" th:field="${image.imageUrl}"/><br/>-->
-                    <!--Description: <input type="text" th:field="${description.description}"/><br/>-->
-                    <!--                    <label>Mô tả</label><br/>
-                                        <textarea  th:field="${description.content}" rows="10" cols="50"></textarea>-->
-                </div>
+            <form action="#" th:action="@{/course/add}" th:object="${course}" method="POST">
+
+                <input type="hidden" th:field="${course.courseId}"/><br/>
+                Tên khoá học: <input type="text" th:field="${course.courseName}"/><br/>
+                <!--Ảnh đại diện khoá học: <input type="text" th:field="${image.imageUrl}"/><br/>-->
+                <!--Description: <input type="text" th:field="${description.description}"/><br/>-->
+                <!--                    <label>Mô tả</label><br/>
+                                    <textarea  th:field="${description.content}" rows="10" cols="50"></textarea>-->
+
                 <!--            Course Description: <input type="text" th:field="*{courseName}"/><br/>-->
-                <input type="submit" value="Create" />
+                <input type="submit" value="Update" />
             </form>
         </div>
     </body>
