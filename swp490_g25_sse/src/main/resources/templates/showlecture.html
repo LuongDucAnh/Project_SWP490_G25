@@ -10,10 +10,25 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-    <th:block th:each="lecture : ${lectures}">
-        <tr>
-            <td th:text="${lectures.}">A Smoke Test'</td>
-        </tr>
-    </th:block>
+        <table border="1">
+            <tr>
+                <th>LectureId</th>
+                <th>LectureName</th>
+                <th>LectureWeek</th>
+                <th>CourseId</th>
+                <th>MarkAsRead</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr th:each="lecture : ${lectures}">
+                <td th:text="*{lecture.lectureId}"></td>
+                <td th:text="*{lecture.lectureName}"></td>
+                <td th:text="*{lecture.lectureWeek}"></td>
+                <td th:text="*{lecture.courseId}"></td>
+                <td th:text="*{lecture.markAsRead}"></td>
+                <td><a th:href="@{/lecture/{lectureId}(lectureId=${lecture.lectureId})}">Update</a></td>
+                <td><a th:href="@{/lecture/delete/{lectureId}(lectureId=${lecture.lectureId})}">Delete</a></td>
+            </tr>
+        </table>
 </body>
 </html>

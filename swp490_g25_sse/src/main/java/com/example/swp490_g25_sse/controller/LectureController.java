@@ -7,14 +7,12 @@ package com.example.swp490_g25_sse.controller;
 import javax.validation.Valid;
 
 import com.example.swp490_g25_sse.exception.ResourceNotFoundException;
-import com.example.swp490_g25_sse.form.LectureForm;
 import com.example.swp490_g25_sse.model.CourseLecture;
 import com.example.swp490_g25_sse.model.LectureAttachement;
 import com.example.swp490_g25_sse.model.LectureContent;
 import com.example.swp490_g25_sse.model.LectureImage;
 import com.example.swp490_g25_sse.repository.LectureRepository;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,15 +26,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
  * @author ADMIN
  */
 @Controller
-@RequestMapping("/lectures")
+@RequestMapping("/lecture")
 public class LectureController {
 
     @GetMapping("/add")
@@ -55,11 +51,13 @@ public class LectureController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CourseLecture> getCourseLectureById(@PathVariable(value = "id") int CourseLectureId)
+    public String getCourseLectureById(@PathVariable(value = "id") int CourseLectureId, Model model)
             throws ResourceNotFoundException, Exception {
-        CourseLecture CourseLecture = lectureRepository.findById(CourseLectureId)
+        CourseLecture courseLecture = new CourseLecture();
+        courseLecture = lectureRepository.findById(CourseLectureId)
                 .orElseThrow(() -> new Exception("CourseLecture not found for this id :: " + CourseLectureId));
-        return ResponseEntity.ok().body(CourseLecture);
+        model.addAttribute("lecture", courseLecture);
+        return "updatelecture";
     }
 
     @PostMapping("/add")

@@ -10,21 +10,21 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <form th:action="@{/lecture/add}"
-         th:object="${lecture}" method="POST">
+        <form th:action="@{/lectures/update/{lectureId}(lectureId=${lecture.lectureId})}"
+              method="PUT">
          Lecture name:
-         <input type="text" th:field="*{lectureName}" />    
+         <input type="text" th:text="*{lecture.lectureName}" />    
          <br/>
          Lecture week:
-         <input type="text" th:field="*{lectureWeek}" />     
+         <input type="text" th:field="*{lecture.lectureWeek}" />     
          <br/>
          Course id:
-         <input type="text" th:field="*{courseId}" />     
+         <input type="text" th:field="*{lecture.courseId}" />     
          <br/>
          Mark as read
-         <input type="text" th:field="*{markAsRead}" />     
+         <input type="text" th:field="*{lecture.markAsRead}" />     
          <br/>
-         <input type="submit" value="Create" />
+         <input type="submit" value="Update" />
       </form>
     </body>
 </html>
