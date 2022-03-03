@@ -9,6 +9,7 @@ import com.example.swp490_g25_sse.model.CourseDescription;
 import com.example.swp490_g25_sse.model.CourseImage;
 import com.example.swp490_g25_sse.repository.CourseRepository;
 import com.example.swp490_g25_sse.service.CourseService;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -41,9 +42,9 @@ public class CourseController {
 
     @GetMapping(value = {"/add"})
     public String read(Model model) {
-//        model.addAttribute("course", new Course());
-//        model.addAttribute("description", new CourseDescription());
-//        model.addAttribute("image", new CourseImage());
+        model.addAttribute("course", new Course());
+        model.addAttribute("description", new CourseDescription());
+        model.addAttribute("image", new CourseImage());
         return "courseCreate";
     }
 
@@ -60,6 +61,28 @@ public class CourseController {
         return "updateCourse";
     }
 
+    @PostMapping(value = {"/update/{courseId}"})
+    public String read31(Model model, @PathVariable("courseId") Long courseId,
+            @ModelAttribute("course") Course course,
+            @ModelAttribute("image") CourseImage image,
+            @ModelAttribute("description") CourseDescription description) {
+        try {
+            Course c = courseRepository.getById(courseId);
+            CourseImage img = new CourseImage();
+            CourseDescription des = new CourseDescription();
+            Date date = new Date();
+            c.setUserId(1);
+            c.setUpdateDate(date);
+            c.setCourseName(course.getCourseName());
+            c.addDes(description);
+            c.addImg(image);
+            courseRepository.save(c);
+            return "redirect:/display";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "errorPage";
+        }
+    }
 
     @GetMapping(value = {"/delete/{courseId}"})
     public String deleteCourse(@PathVariable("courseId") Long courseId) {
@@ -112,10 +135,11 @@ public class CourseController {
             course.setCreateDate(date);
             course.setStartAt(date);
             course.setEndAt(date);
+            //course.setDes(description);
             course.addDes(description);
             course.addImg(image);
             courseRepository.save(course);
-            return "redirect:/";
+            return "redirect:/display";
         } catch (Exception e) {
             e.printStackTrace();
             return "errorPage";

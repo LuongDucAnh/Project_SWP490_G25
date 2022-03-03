@@ -72,7 +72,7 @@
 
                         <div class="borderMain">
                             <div class="container">
-                                <form action="#" th:action="@{/add}" th:object="${course}" method="POST">
+                                <form action="#" th:action="@{/update/{courseId}(courseId=${course.courseId})}" th:object="${course}" method="POST">
                                     <div th:object="${description}">
                                         <div th:object="${image}">
                                             <div class="mb-3">
