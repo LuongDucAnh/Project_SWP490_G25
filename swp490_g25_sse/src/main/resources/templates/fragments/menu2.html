@@ -6,13 +6,15 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" th:href="@{css/bootstrap-theme.min.css}">
-        <link rel="stylesheet" th:href="@{css/fontawesome.css}">
-        <link rel="stylesheet" th:href="@{css/light-box.css}">
-        <link rel="stylesheet" th:href="@{css/owl-carousel.css}">
-        <link rel="stylesheet" th:href="@{css/listcourse-menu.css}">
-        <link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
+        <link rel="stylesheet"  th:href="@{/css/bootstrap-theme.min.css}">
+        <link rel="stylesheet"  th:href="@{/css/fontawesome.css}">
+        <link rel="stylesheet"  th:href="@{/css/light-box.css}">
+        <link rel="stylesheet"  th:href="@{/css/owl-carousel.css}">
+        <link rel="stylesheet"  th:href="@{/css/listcourse-menu.css}">
+        <link  th:href="@{css/bootstrap.min.css}" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+        <link  th:href="@{/css/all.css}" rel="stylesheet">
+        <link  th:href="@{/css/create.css}" rel="stylesheet">
     </head>
 
     <body>  
@@ -25,7 +27,7 @@
                         <h1>Soft skill learning</h1>
                     </header>
                     <div class="profile-photo-container">
-                        <img th:src="@{images/profile-photo.jpg}" alt="Profile Photo" class="img-responsive">  
+                        <img th:src="@{/images/profile-photo.jpg}" alt="Profile Photo" class="img-responsive">  
                         <div class="profile-photo-overlay"></div>
                     </div>      
                     <!-- Search box -->
@@ -65,7 +67,32 @@
                     </div>
                     <!-- add iframe here th:each--> 
                     <!--<iframe th:src="@{/para}" style="width: 100%; height: 100%;"></iframe> -->
-                    <iframe th:src="@{/courseCreate-menu}" style="width: 100%; height: 100%;"></iframe>
+                    <div>
+                        <h1>Cập nhật khóa học</h1>
+                        <div class="borderMain">
+                            <div class="container">
+                                <form action="#" th:action="@{/add}" th:object="${course}" method="POST">
+                                    <div th:object="${description}">
+                                        <div th:object="${image}">
+                                            <div class="mb-3">
+                                                <label for="inputCourseName" class="form-label">Tên khóa học</label><br/>
+                                                <input type="text" th:field="${course.courseName}"/><br/>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="formFileMultiple" class="form-label">Ảnh đại diện khóa học</label><br/>
+                                                <input type="text" th:field="${image.imageUrl}"/><br/>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="inputTextArea" class="form-label">Mô tả</label><br/>
+                                                <textarea  th:field="${description.content}" rows="10" cols="50"></textarea><br/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-info">Cập nhật khóa học</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

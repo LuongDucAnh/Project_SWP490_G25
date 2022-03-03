@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-<!--
+<!--<!DOCTYPE html>
+
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
--->
+
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>TODO supply a title</title>
@@ -25,5 +25,30 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <input type="submit" value="Update" />
             </form>
         </div>
+    </body>
+</html>-->
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
+        <link th:href="@{/css/all.css}" rel="stylesheet">
+        <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+        <link th:href="@{/css/sf.css}" rel="stylesheet">
+    </head>
+    <body>  
+        <!-- Left column -->
+        <div th:replace="fragments/menu2 :: navbar"></div>
+        <!-- Java Script -->
+        <script type="text/javascript" th:src="@{/javascript/jquery-1.11.2.min.js}"></script>
+        <script type="text/javascript" th:src="@{/javascript/jquery-migrate-1.2.1.min.js}"></script>
+        <script type="text/javascript" th:src="@{/javascript/sf-script.js}"></script>
     </body>
 </html>

@@ -23,10 +23,10 @@ public class MainController {
     private String loginController() {
         return "login";
     }
-    
+
     @GetMapping("/demo")
     private String demo() {
         return "home-screen";
     }
-    
+
 }

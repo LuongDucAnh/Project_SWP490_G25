@@ -33,8 +33,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <td th:text="*{course.createDate}"></td>
                 <td th:text="*{course.updateDate}"></td>
                 <td th:text="*{course.userId}"></td>
-                <td><a th:href="@{/course/update/{courseId}(courseId=${course.courseId})}">Update</a></td>
-                <td><a th:href="@{/course/delete/{courseId}(courseId=${course.courseId})}">Delete</a></td>
+                <td><a th:href="@{/update/{courseId}(courseId=${course.courseId})}">Update</a></td>
+                <td><a th:href="@{/delete/{courseId}(courseId=${course.courseId})}">Delete</a></td>
             </tr>
         </table>
 

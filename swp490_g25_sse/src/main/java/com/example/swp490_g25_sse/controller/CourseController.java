@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Admin
  */
 @Controller
-@RequestMapping("/course")
 public class CourseController {
 
 //    @Autowired
@@ -42,9 +41,9 @@ public class CourseController {
 
     @GetMapping(value = {"/add"})
     public String read(Model model) {
-        model.addAttribute("course", new Course());
-        model.addAttribute("description", new CourseDescription());
-        model.addAttribute("image", new CourseImage());
+//        model.addAttribute("course", new Course());
+//        model.addAttribute("description", new CourseDescription());
+//        model.addAttribute("image", new CourseImage());
         return "courseCreate";
     }
 
@@ -61,10 +60,11 @@ public class CourseController {
         return "updateCourse";
     }
 
+
     @GetMapping(value = {"/delete/{courseId}"})
     public String deleteCourse(@PathVariable("courseId") Long courseId) {
         courseRepository.deleteById(courseId);
-        return "redirect:/course/display";
+        return "redirect:/display";
     }
 
     @GetMapping(value = {"/courseCreate-menu"})
@@ -75,6 +75,20 @@ public class CourseController {
         return "fragments/courseCreate-menu";
     }
 
+//    @GetMapping(value = {"/courseUpdate-menu"})
+//    public String read5(Model model) {
+//        model.addAttribute("course", new Course());
+//        model.addAttribute("description", new CourseDescription());
+//        model.addAttribute("image", new CourseImage());
+//        return "fragments/courseUpdate-menu";
+//    }
+//    @GetMapping(value = {"/courseUpdate-menu"})
+//    public String read4(Model model) {
+//        model.addAttribute("course", new Course());
+//        model.addAttribute("description", new CourseDescription());
+//        model.addAttribute("image", new CourseImage());
+//        return "fragments/courseUpdate-menu";
+//    }
     @GetMapping(value = "/display")
     private String showAllCourse(Model model) {
         model.addAttribute("course", courseRepository.findAll());
@@ -94,13 +108,14 @@ public class CourseController {
             @ModelAttribute("description") CourseDescription description) {
         try {
             Date date = new Date();
+            course.setUserId(1);
             course.setCreateDate(date);
             course.setStartAt(date);
             course.setEndAt(date);
             course.addDes(description);
             course.addImg(image);
             courseRepository.save(course);
-            return "redirect:/course/display";
+            return "redirect:/";
         } catch (Exception e) {
             e.printStackTrace();
             return "errorPage";
