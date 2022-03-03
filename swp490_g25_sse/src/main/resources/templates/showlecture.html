@@ -1,29 +1,19 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-   <head>
-      <meta charset="UTF-8" />
-      <title>Person List</title>
-      <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
-   </head>
-   <body>
-      <h1>Person List</h1>
-      <a href="secondpage">Add Lecture</a>
-<!--      <br/><br/>
-      <div>
-         <table border="1">
-            <tr>
-               <th>Lecture Name</th>
-               <th>Lecture Week</th>
-               <th>Course Id</th>
-               <th>Is Read</th>
-            </tr>
-            <tr th:each ="lectureForm : ${lectureForms}">
-               <td th:utext="${lectureForm.lectureName}">...</td>
-               <td th:utext="${lectureForm.lectureWeek}">...</td>
-               <td th:utext="${lectureForm.courseId}">...</td>
-               <td th:utext="${lectureForm.markAsRead}">...</td>
-            </tr>
-         </table>
-      </div>-->
-   </body>
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+    <th:block th:each="lecture : ${lectures}">
+        <tr>
+            <td th:text="${lectures.}">A Smoke Test'</td>
+        </tr>
+    </th:block>
+</body>
 </html>

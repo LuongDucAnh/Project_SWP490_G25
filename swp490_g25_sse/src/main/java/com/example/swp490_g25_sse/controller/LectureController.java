@@ -7,6 +7,7 @@ package com.example.swp490_g25_sse.controller;
 import javax.validation.Valid;
 
 import com.example.swp490_g25_sse.exception.ResourceNotFoundException;
+import com.example.swp490_g25_sse.form.LectureForm;
 import com.example.swp490_g25_sse.model.CourseLecture;
 import com.example.swp490_g25_sse.model.LectureAttachement;
 import com.example.swp490_g25_sse.model.LectureContent;
@@ -17,29 +18,40 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
  * @author ADMIN
  */
-@RestController
+@Controller
 @RequestMapping("/lectures")
 public class LectureController {
 
+    @GetMapping("/add")
+    public String index(Model model) {
+        model.addAttribute("lecture", new CourseLecture());
+        return "createlecture";
+    }
+    
     @Autowired
     private LectureRepository lectureRepository;
 
-    @GetMapping("")
-    public List<CourseLecture> getAllCourseLectures() {
-        return lectureRepository.findAll();
+    @GetMapping("/show")
+    public String showList(Model model) {
+        model.addAttribute("lectures", lectureRepository.findAll());
+        return "showlecture";
     }
 
     @GetMapping("/{id}")
@@ -51,7 +63,7 @@ public class LectureController {
     }
 
     @PostMapping("/add")
-    public CourseLecture createCourseLecture(@Valid @RequestBody CourseLecture CourseLecture) {
+    public String createCourseLecture(@ModelAttribute("lectureForm") CourseLecture CourseLecture) {
         LectureAttachement attachement = new LectureAttachement();
         attachement.setAttachUrl("okeokeoke");
 //Add Image
@@ -65,7 +77,8 @@ public class LectureController {
         CourseLecture.addAttachement(attachement);
         CourseLecture.addContent(lectureContent);
         CourseLecture.addImage(lectureImage);
-        return lectureRepository.save(CourseLecture);
+        lectureRepository.save(CourseLecture);
+        return "Ok";
     }
 
     @PutMapping("/update/{id}")
@@ -78,7 +91,7 @@ public class LectureController {
         CourseLecture.setLectureWeek(CourseLectureDetails.getLectureWeek());
         CourseLecture.setCourseId(CourseLectureDetails.getCourseId());
         CourseLecture.setMarkAsRead(CourseLectureDetails.isMarkAsRead());
-        
+
         for (LectureContent content : CourseLecture.getLectureContents()) {
             if (content.getContentId() == 2) {
                 content.setContentText("Chưa cập nhật thành công");

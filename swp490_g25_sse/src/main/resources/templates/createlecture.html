@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html lang="vi-VN" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <form th:action="@{/lectures/add}"
+         th:object="${lecture}" method="POST">
+         Lecture name:
+         <input type="text" th:field="*{lectureName}" />    
+         <br/>
+         Lecture week:
+         <input type="text" th:field="*{lectureWeek}" />     
+         <br/>
+         Course id:
+         <input type="text" th:field="*{courseId}" />     
+         <br/>
+         Mark as read
+         <input type="text" th:field="*{markAsRead}" />     
+         <br/>
+         <input type="submit" value="Create" />
+      </form>
+    </body>
+</html>
