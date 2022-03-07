@@ -8,6 +8,6 @@ package com.example.swp490_g25_sse.service;
  *
  * @author Admin
  */
-public class CourseService {
+public interface CourseService {
     
 }

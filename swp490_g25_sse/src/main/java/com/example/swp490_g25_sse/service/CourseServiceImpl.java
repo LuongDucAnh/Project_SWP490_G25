@@ -4,10 +4,20 @@
  */
 package com.example.swp490_g25_sse.service;
 
+import javax.persistence.EntityManager;
+import org.springframework.beans.factory.annotation.Autowired;
+
 /**
  *
  * @author Admin
  */
-public class CourseServiceImpl {
-    
+public class CourseServiceImpl implements CourseService {
+
+    private EntityManager em;
+
+    @Autowired
+    public CourseServiceImpl(EntityManager em) {
+
+        this.em = em;
+    }
 }
