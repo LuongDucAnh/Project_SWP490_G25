@@ -4,10 +4,17 @@
  */
 package com.example.swp490_g25_sse.service;
 
+import com.example.swp490_g25_sse.model.CourseDescription;
+import com.example.swp490_g25_sse.model.CourseImage;
+import java.util.List;
+
 /**
  *
  * @author Admin
  */
 public interface CourseService {
-    
+
+    List<CourseImage> findCourseImgById(Long id);
+
+    List<CourseDescription> findCourseDesById(Long id);
 }
