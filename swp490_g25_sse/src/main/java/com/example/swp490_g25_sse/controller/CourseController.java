@@ -153,4 +153,57 @@ public class CourseController {
 //            return "errorPage";
 //        }
 //    }
+    //    @GetMapping(value = {"/courseUpdate-menu"})
+//    public String read5(Model model) {
+//        model.addAttribute("course", new Course());
+//        model.addAttribute("description", new CourseDescription());
+//        model.addAttribute("image", new CourseImage());
+//        return "fragments/courseUpdate-menu";
+//    }
+//    @GetMapping(value = {"/courseUpdate-menu"})
+//    public String read4(Model model) {
+//        model.addAttribute("course", new Course());
+//        model.addAttribute("description", new CourseDescription());
+//        model.addAttribute("image", new CourseImage());
+//        return "fragments/courseUpdate-menu";
+//    }//    @GetMapping(value = {"/courseUpdate-menu"})
+//    public String read5(Model model) {
+//        model.addAttribute("course", new Course());
+//        model.addAttribute("description", new CourseDescription());
+//        model.addAttribute("image", new CourseImage());
+//        return "fragments/courseUpdate-menu";
+//    }
+//    @GetMapping(value = {"/courseUpdate-menu"})
+//    public String read4(Model model) {
+//        model.addAttribute("course", new Course());
+//        model.addAttribute("description", new CourseDescription());
+//        model.addAttribute("image", new CourseImage());
+//        return "fragments/courseUpdate-menu";
+//    }//    @GetMapping(value = {"/courseUpdate-menu"})
+//    public String read5(Model model) {
+//        model.addAttribute("course", new Course());
+//        model.addAttribute("description", new CourseDescription());
+//        model.addAttribute("image", new CourseImage());
+//        return "fragments/courseUpdate-menu";
+//    }
+//    @GetMapping(value = {"/courseUpdate-menu"})
+//    public String read4(Model model) {
+//        model.addAttribute("course", new Course());
+//        model.addAttribute("description", new CourseDescription());
+//        model.addAttribute("image", new CourseImage());
+//        return "fragments/courseUpdate-menu";
+//    }//    @GetMapping(value = {"/courseUpdate-menu"})
+//    public String read5(Model model) {
+//        model.addAttribute("course", new Course());
+//        model.addAttribute("description", new CourseDescription());
+//        model.addAttribute("image", new CourseImage());
+//        return "fragments/courseUpdate-menu";
+//    }
+//    @GetMapping(value = {"/courseUpdate-menu"})
+//    public String read4(Model model) {
+//        model.addAttribute("course", new Course());
+//        model.addAttribute("description", new CourseDescription());
+//        model.addAttribute("image", new CourseImage());
+//        return "fragments/courseUpdate-menu";
+//    }
 }
