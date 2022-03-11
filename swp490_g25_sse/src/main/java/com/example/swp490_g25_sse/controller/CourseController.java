@@ -8,9 +8,7 @@ import com.example.swp490_g25_sse.model.Course;
 import com.example.swp490_g25_sse.model.CourseDescription;
 import com.example.swp490_g25_sse.model.CourseImage;
 import com.example.swp490_g25_sse.repository.CourseRepository;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  *
@@ -155,5 +152,58 @@ public class CourseController {
 //            e.printStackTrace();
 //            return "errorPage";
 //        }
+//    }
+    //    @GetMapping(value = {"/courseUpdate-menu"})
+//    public String read5(Model model) {
+//        model.addAttribute("course", new Course());
+//        model.addAttribute("description", new CourseDescription());
+//        model.addAttribute("image", new CourseImage());
+//        return "fragments/courseUpdate-menu";
+//    }
+//    @GetMapping(value = {"/courseUpdate-menu"})
+//    public String read4(Model model) {
+//        model.addAttribute("course", new Course());
+//        model.addAttribute("description", new CourseDescription());
+//        model.addAttribute("image", new CourseImage());
+//        return "fragments/courseUpdate-menu";
+//    }//    @GetMapping(value = {"/courseUpdate-menu"})
+//    public String read5(Model model) {
+//        model.addAttribute("course", new Course());
+//        model.addAttribute("description", new CourseDescription());
+//        model.addAttribute("image", new CourseImage());
+//        return "fragments/courseUpdate-menu";
+//    }
+//    @GetMapping(value = {"/courseUpdate-menu"})
+//    public String read4(Model model) {
+//        model.addAttribute("course", new Course());
+//        model.addAttribute("description", new CourseDescription());
+//        model.addAttribute("image", new CourseImage());
+//        return "fragments/courseUpdate-menu";
+//    }//    @GetMapping(value = {"/courseUpdate-menu"})
+//    public String read5(Model model) {
+//        model.addAttribute("course", new Course());
+//        model.addAttribute("description", new CourseDescription());
+//        model.addAttribute("image", new CourseImage());
+//        return "fragments/courseUpdate-menu";
+//    }
+//    @GetMapping(value = {"/courseUpdate-menu"})
+//    public String read4(Model model) {
+//        model.addAttribute("course", new Course());
+//        model.addAttribute("description", new CourseDescription());
+//        model.addAttribute("image", new CourseImage());
+//        return "fragments/courseUpdate-menu";
+//    }//    @GetMapping(value = {"/courseUpdate-menu"})
+//    public String read5(Model model) {
+//        model.addAttribute("course", new Course());
+//        model.addAttribute("description", new CourseDescription());
+//        model.addAttribute("image", new CourseImage());
+//        return "fragments/courseUpdate-menu";
+//    }
+//    @GetMapping(value = {"/courseUpdate-menu"})
+//    public String read4(Model model) {
+//        model.addAttribute("course", new Course());
+//        model.addAttribute("description", new CourseDescription());
+//        model.addAttribute("image", new CourseImage());
+//        return "fragments/courseUpdate-menu";
 //    }
 }
