@@ -4,62 +4,68 @@
  */
 package com.example.swp490_g25_sse.model;
 
-import java.util.Date;
-import org.springframework.stereotype.Component;
+import java.util.Collection;
 
-/**
- *
- * @author ADMIN
- */
-@Component
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.persistence.JoinColumn;
+
+@Entity()
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User {
-    private int userId;
-    private String userName;
-    private String userPassword;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "first_name")
     private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
-    private String userEmail;
-    private String userPhone;
-    private Date createDate;
-    private int role;
+
+    private String email;
+
+    private String password;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"))
+
+    private Collection<Role> roles;
 
     public User() {
+
     }
 
-    public User(int userId, String userName, String userPassword, String firstName, String lastName, String userEmail, String userPhone, Date createDate, int role) {
-        this.userId = userId;
-        this.userName = userName;
-        this.userPassword = userPassword;
+    public User(String firstName, String lastName, String email, String password, Collection<Role> roles) {
+        super();
         this.firstName = firstName;
         this.lastName = lastName;
-        this.userEmail = userEmail;
-        this.userPhone = userPhone;
-        this.createDate = createDate;
-        this.role = role;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
     }
 
-    public int getUserId() {
-        return userId;
+    public Long getId() {
+        return id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUserPassword() {
-        return userPassword;
-    }
-
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -78,37 +84,28 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getUserPhone() {
-        return userPhone;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUserPhone(String userPhone) {
-        this.userPhone = userPhone;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Collection<Role> getRoles() {
+        return roles;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
     }
 
-    public int getRole() {
-        return role;
-    }
-
-    public void setRole(int role) {
-        this.role = role;
-    }
-    
-    
 }
