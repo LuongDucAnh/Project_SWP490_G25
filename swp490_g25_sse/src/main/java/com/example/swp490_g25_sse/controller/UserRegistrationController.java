@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
+/**
+ *
+ * @author bettafish15
+ */
 @Controller
 @RequestMapping("/registration")
 public class UserRegistrationController {

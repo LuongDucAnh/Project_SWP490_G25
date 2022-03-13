@@ -1,32 +1,26 @@
-package com.example.swp490_g25_sse.dto;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+package com.example.swp490_g25_sse.dto;
+
 /**
  *
- * @author bettafish15
+ * @author vupham
  */
-public class UserRegistrationDto {
-
+public class UserInfoDto {
     private String firstName;
     private String lastName;
     private String email;
-    private String password;
-    private String role;
-
-    public UserRegistrationDto() {
-
+    
+    
+    public UserInfoDto() {
+       
     }
-
-    public UserRegistrationDto(String firstName, String lastName, String email, String password, String role) {
-        super();
+    public UserInfoDto(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.password = password;
-        this.role = role;
     }
 
     public String getFirstName() {
@@ -52,21 +46,4 @@ public class UserRegistrationDto {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
 }
