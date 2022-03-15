@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author ADMIN
+ * @author msi
  */
 @RestController
 @RequestMapping("/lectures")

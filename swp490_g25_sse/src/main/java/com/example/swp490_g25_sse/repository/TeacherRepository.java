@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
- * @author bettafish15
+ * @author msi
  */
 public interface TeacherRepository extends JpaRepository<Teacher, Long> {
 
