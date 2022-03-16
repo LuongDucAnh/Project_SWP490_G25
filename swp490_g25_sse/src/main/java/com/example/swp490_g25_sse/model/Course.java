@@ -4,8 +4,7 @@
  */
 package com.example.swp490_g25_sse.model;
 
-import java.util.ArrayList;
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -20,115 +21,105 @@ import javax.persistence.Table;
  *
  * @author ADMIN
  */
-@Entity
-@Table(name = "Course")
+@Entity()
+@Table(name = "courses")
 public class Course {
 
-    private long courseId;
-    private String courseName;
-    private Date createDate;
-    private Date startAt;
-    private Date endAt;
-    private Date updateDate;
-    private long userId;
-    private List<CourseDescription> courseDes = new ArrayList<>();
-    private List<CourseImage> courseImg = new ArrayList<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "teacher_id", nullable = false)
+    @JsonIgnore
+    private Teacher teacher;
+
+    @Column(name = "image_url")
+    private String imageUrl;
+
+    private String title;
+
+    private String content;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    private List<Lecture> lectures;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    private List<Test> tests;
 
     public Course() {
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getCourseId() {
-        return courseId;
+    public Course(Teacher teacher, String imageUrl, String title, String content) {
+        this.teacher = teacher;
+        this.imageUrl = imageUrl;
+        this.title = title;
+        this.content = content;
     }
 
-    public void setCourseId(long courseId) {
-        this.courseId = courseId;
+    public Course(Teacher teacher, String imageUrl, String title, String content, List<Lecture> lectures, List<Test> tests) {
+        this.teacher = teacher;
+        this.imageUrl = imageUrl;
+        this.title = title;
+        this.content = content;
+        this.lectures = lectures;
+        this.tests = tests;
     }
 
-    @Column(name = "courseName", nullable = false)
-    public String getCourseName() {
-        return courseName;
+    public Long getId() {
+        return id;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    @Column(name = "createDate", nullable = false)
-    public Date getCreateDate() {
-        return createDate;
+    public Teacher getTeacher() {
+        return teacher;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
-    @Column(name = "startAt", nullable = false)
-    public Date getStartAt() {
-        return startAt;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setStartAt(Date startAt) {
-        this.startAt = startAt;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    @Column(name = "endAt", nullable = false)
-    public Date getEndAt() {
-        return endAt;
+    public String getTitle() {
+        return title;
     }
 
-    public void setEndAt(Date endAt) {
-        this.endAt = endAt;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    @Column(name = "updateDate", nullable = true)
-    public Date getUpdateDate() {
-        return updateDate;
+    public String getContent() {
+        return content;
     }
 
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    @Column(name = "userId", nullable = false)
-    public long getUserId() {
-        return userId;
+    public List<Lecture> getLectures() {
+        return lectures;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setLectures(List<Lecture> lectures) {
+        this.lectures = lectures;
     }
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
-    public List<CourseDescription> getCourseDes() {
-        return courseDes;
+    public List<Test> getTests() {
+        return tests;
     }
 
-    public void setCourseDes(List<CourseDescription> courseDes) {
-        this.courseDes = courseDes;
-    }
-
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
-    public List<CourseImage> getCourseImg() {
-        return courseImg;
-    }
-
-    public void setCourseImg(List<CourseImage> courseImg) {
-        this.courseImg = courseImg;
-    }
-
-    public void addImg(CourseImage img) {
-        img.setCourse(this);
-        img.getCourse().setCourseId(this.courseId);
-        this.courseImg.add(img);
-    }
-
-    public void addDes(CourseDescription des) {
-        des.setCourse(this);
-        des.getCourse().setCourseId(this.courseId);
-        this.courseDes.add(des);
+    public void setTests(List<Test> tests) {
+        this.tests = tests;
     }
 
 }
