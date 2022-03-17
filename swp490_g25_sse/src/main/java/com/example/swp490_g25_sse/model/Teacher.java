@@ -35,8 +35,35 @@ public class Teacher {
     @OneToMany(mappedBy = "teacher")
     private Set<Course> courses;
 
+    public Teacher() {
+    }
+
     public Teacher(User user) {
         this.user = user;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Set<Course> getCourses() {
+        return this.courses;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
     }
 
 }
