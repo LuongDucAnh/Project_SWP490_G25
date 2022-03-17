@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author bettafish15
+ * @author Admin
  */
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  *
- * @author bettafish15
+ * @author Admin
  */
 @Controller
 @RequestMapping("/registration")

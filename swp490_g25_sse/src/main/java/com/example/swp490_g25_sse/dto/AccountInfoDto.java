@@ -6,7 +6,7 @@ package com.example.swp490_g25_sse.dto;
 
 /**
  *
- * @author vupham
+ * @author Admin
  */
 public class AccountInfoDto {
     private String currentPassword;
