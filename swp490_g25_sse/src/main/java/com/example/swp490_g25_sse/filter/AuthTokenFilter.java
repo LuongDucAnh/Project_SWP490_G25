@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.util.StringUtils;
 import javax.servlet.*;
 import com.example.swp490_g25_sse.service.UserServiceImpl;
-import com.example.swp490_g25_sse.util.JwtUtils;
+//import com.example.swp490_g25_sse.util.JwtUtils;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -26,8 +26,8 @@ import org.springframework.security.core.Authentication;
 
 public class AuthTokenFilter implements Filter {
 
-    @Autowired
-    private JwtUtils jwtUtils;
+//    @Autowired
+//    private JwtUtils jwtUtils;
     @Autowired
     private UserServiceImpl userDetailsService;
     private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
