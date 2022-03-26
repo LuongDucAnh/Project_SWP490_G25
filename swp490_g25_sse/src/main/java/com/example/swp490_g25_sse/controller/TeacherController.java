@@ -28,14 +28,5 @@ public class TeacherController {
     private String createCourse() {
         return "create-course";
     }
-    
-//       @GetMapping("")
-//    private String index() {
-//        return "home-course";
-//    }
-//
-//    @GetMapping("/create-course")
-//    private String createCourse() {
-//        return "create-course";
-//    }
+
 }
