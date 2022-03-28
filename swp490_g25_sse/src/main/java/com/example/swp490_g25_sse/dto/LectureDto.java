@@ -16,6 +16,9 @@ public class LectureDto {
     public String resourceUrl;
     public String content;
     public String name;
+    public String image;
+    public String rating;
+    public String comment;
 
     public LectureDto() {
     }
