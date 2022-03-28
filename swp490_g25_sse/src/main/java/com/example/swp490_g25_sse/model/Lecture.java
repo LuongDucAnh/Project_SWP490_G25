@@ -68,6 +68,14 @@ public class Lecture {
         this.resourceUrl = resourceUrl;
         this.indexOrder = indexOrder;
     }
+    
+    public Lecture(Course course, String name, String content, String resourceUrl, Long indexOrder) {
+        this.course = course;
+        this.name = name;
+        this.content = content;
+        this.resourceUrl = resourceUrl;
+        this.indexOrder = indexOrder;
+    }
 
     public Long getId() {
         return id;
