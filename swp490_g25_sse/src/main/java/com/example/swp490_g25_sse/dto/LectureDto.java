@@ -4,6 +4,10 @@
  */
 package com.example.swp490_g25_sse.dto;
 
+/**
+ *
+ * @author admin
+ */
 public class LectureDto {
 
     public Long id;
