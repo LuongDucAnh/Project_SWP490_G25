@@ -10,6 +10,7 @@ import com.example.swp490_g25_sse.model.Course;
 import com.example.swp490_g25_sse.model.Teacher;
 import com.example.swp490_g25_sse.service.CourseService;
 import com.example.swp490_g25_sse.service.CustomUserDetailsService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +82,7 @@ public class CourseController {
     }
 
     @PutMapping(value = "/{id}", produces = "application/json")
-    public Course updateCourse(@PathVariable long id, @RequestBody CourseDto dto) {
+    public Course updateCourse(@PathVariable long id, @RequestBody CourseDto dto) throws JsonProcessingException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetailsService currentUser = (CustomUserDetailsService) auth.getPrincipal();
 
@@ -98,7 +99,6 @@ public class CourseController {
         }
 
         Course result = courseService.updateCourse(dto, id);
-        //Course result = courseService.updateCourse(dto, id);
 
         return result;
     }

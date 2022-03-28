@@ -8,6 +8,7 @@ import com.example.swp490_g25_sse.dto.CourseDto;
 import com.example.swp490_g25_sse.model.Course;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
 
 /**
  *
@@ -24,4 +25,6 @@ public interface CourseService {
 	Optional<Course> deleteCourse(long id);
 
 	Course updateCourse(CourseDto courseDto, long id);
+
+	Page<Course> getMostEnrolledCourses();
 }
