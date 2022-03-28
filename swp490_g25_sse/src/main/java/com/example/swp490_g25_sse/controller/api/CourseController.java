@@ -98,6 +98,7 @@ public class CourseController {
         }
 
         Course result = courseService.updateCourse(dto, id);
+        //Course result = courseService.updateCourse(dto, id);
 
         return result;
     }
