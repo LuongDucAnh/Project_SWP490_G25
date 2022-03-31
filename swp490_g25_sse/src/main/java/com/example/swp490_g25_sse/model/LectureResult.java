@@ -21,6 +21,7 @@ public class LectureResult {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+  private Long number;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "enrollment_id", insertable = true, updatable = true)
