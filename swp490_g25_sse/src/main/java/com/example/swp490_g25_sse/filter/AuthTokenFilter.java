@@ -38,37 +38,37 @@ public class AuthTokenFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        if (!(auth instanceof AnonymousAuthenticationToken)) { /* The user is logged in :) */
-            
-            if () { /* The user doesn't have jwt :) */
-                String jwt = jwtUtils.generateJwtToken(auth);
-
-                CustomUserDetailsService userDetails = (CustomUserDetailsService) auth.getPrincipal();
-                List<String> roles = userDetails.getAuthorities().stream()
-                        .map(item -> item.getAuthority())
-                        .collect(Collectors.toList());
-
-                System.out.println();
-                System.out.println(jwt);
-
-            } else { /* user already have jwt */
-                try {
-                    String jwt = parseJwt(request);
-                    if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
-                        String username = jwtUtils.getUserNameFromJwtToken(jwt);
-                        CustomUserDetailsService userDetails = userDetailsService.loadUserByUsername(username);
-                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                                userDetails, null, userDetails.getAuthorities());
-                        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                        SecurityContextHolder.getContext().setAuthentication(authentication);
-                    }
-                } catch (Exception e) {
-                    logger.error("Cannot set user authentication: {}", e);
-                }
-            }
-        }
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//
+//        if (!(auth instanceof AnonymousAuthenticationToken)) { /* The user is logged in :) */
+//            
+//            if () { /* The user doesn't have jwt :) */
+//                String jwt = jwtUtils.generateJwtToken(auth);
+//
+//                CustomUserDetailsService userDetails = (CustomUserDetailsService) auth.getPrincipal();
+//                List<String> roles = userDetails.getAuthorities().stream()
+//                        .map(item -> item.getAuthority())
+//                        .collect(Collectors.toList());
+//
+//                System.out.println();
+//                System.out.println(jwt);
+//
+//            } else { /* user already have jwt */
+//                try {
+//                    String jwt = parseJwt(request);
+//                    if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
+//                        String username = jwtUtils.getUserNameFromJwtToken(jwt);
+//                        CustomUserDetailsService userDetails = userDetailsService.loadUserByUsername(username);
+//                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+//                                userDetails, null, userDetails.getAuthorities());
+//                        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+//                        SecurityContextHolder.getContext().setAuthentication(authentication);
+//                    }
+//                } catch (Exception e) {
+//                    logger.error("Cannot set user authentication: {}", e);
+//                }
+//            }
+//        }
 
         filterChain.doFilter(request, response);
     }
