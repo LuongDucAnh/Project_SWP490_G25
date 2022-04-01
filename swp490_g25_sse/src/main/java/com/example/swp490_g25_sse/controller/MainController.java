@@ -59,7 +59,7 @@ public class MainController {
     }
 
     @GetMapping("/account-info")
-    private String accountInfo(Model model) {
+    private String getUserInfo(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetailsService userDetails = (CustomUserDetailsService) auth.getPrincipal();
         UserInfoDto userInfo = new UserInfoDto(userDetails.getUser().getFirstName(),
@@ -83,14 +83,14 @@ public class MainController {
     }
 
     @GetMapping("/account-setting")
-    private String accountSetting(Model model) {
+    private String getAccountSetting(Model model) {
         AccountInfoDto accountInfo = new AccountInfoDto();
         model.addAttribute("accountInfo", accountInfo);
         return "account-setting";
     }
 
     @PostMapping("/account-setting")
-    private String updateAccountInfo(@ModelAttribute("accountInfo") AccountInfoDto accountInfo) {
+    private String updateAccountSetting(@ModelAttribute("accountInfo") AccountInfoDto accountInfo) {
         try {
             userService.updateAccount(accountInfo);
         } catch (ResponseStatusException e) {
