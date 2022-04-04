@@ -59,7 +59,7 @@ public class CourseController {
         return course;
     }
 
-    //
+    
     @DeleteMapping(value = "/{id}", produces = "application/json")
     public Course deleteCourse(@PathVariable long id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
