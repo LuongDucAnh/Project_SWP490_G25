@@ -6,13 +6,16 @@ package com.example.swp490_g25_sse.service;
 
 import com.example.swp490_g25_sse.dto.CourseDto;
 import com.example.swp490_g25_sse.model.Course;
+import com.example.swp490_g25_sse.model.Student;
+
+import org.springframework.data.domain.Page;
+
 import java.util.List;
 import java.util.Optional;
-import org.springframework.data.domain.Page;
 
 /**
  *
- * @author Admin
+ * @author bettafish15
  */
 public interface CourseService {
 
@@ -27,5 +30,8 @@ public interface CourseService {
 	Course updateCourse(CourseDto courseDto, long id);
 
 	Page<Course> getMostEnrolledCourses();
-        
+
+	List<Course> getStudentCourses(Student student, Boolean isFinished);
+
+	Boolean isAlreadyEnrolled(Course course, Student student);
 }
