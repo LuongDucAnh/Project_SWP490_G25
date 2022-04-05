@@ -10,30 +10,21 @@ import com.example.swp490_g25_sse.dto.TestDto;
 import com.example.swp490_g25_sse.exception.BaseRestException;
 import com.example.swp490_g25_sse.model.Course;
 import com.example.swp490_g25_sse.model.Lecture;
-import com.example.swp490_g25_sse.model.Student;
-import com.example.swp490_g25_sse.model.StudentCourseEnrollment;
 import com.example.swp490_g25_sse.model.Teacher;
 import com.example.swp490_g25_sse.model.Test;
 import com.example.swp490_g25_sse.model.User;
 import com.example.swp490_g25_sse.repository.CourseRepository;
 import com.example.swp490_g25_sse.repository.LectureRepository;
-import com.example.swp490_g25_sse.repository.StudentCourseEnrollmentRepository;
 import com.example.swp490_g25_sse.repository.TeacherRepository;
 import com.example.swp490_g25_sse.repository.TestRepository;
 import com.example.swp490_g25_sse.repository.UserRepository;
 import com.example.swp490_g25_sse.util.DtoToDaoConversion;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -43,7 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author bettafish15
+ * @author Admin
  */
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -60,14 +51,12 @@ public class CourseServiceImpl implements CourseService {
 	@Autowired
 	private TeacherRepository teacherRepository;
 
-	@Autowired
-	private StudentCourseEnrollmentRepository enrollmentRepository;
-
 	@Override
 	public Optional<Course> getCourseById(long id) {
 		return courseRepository.findById(id);
 	}
 
+        
 	@Override
 	@Transactional(rollbackFor = { Exception.class, Throwable.class })
 	public Course createCourse(CourseDto dto) {
@@ -180,22 +169,6 @@ public class CourseServiceImpl implements CourseService {
 	public Page<Course> getMostEnrolledCourses() {
 		// Page<Course> courses = courseRepository.findAll(Pageable.ofSize(10));
 		Page<Course> courses = courseRepository.findAll(PageRequest.of(0, 4));
-		return courses;
-	}
-
-	@Override
-	public Boolean isAlreadyEnrolled(Course course, Student student) {
-		StudentCourseEnrollment enroll = enrollmentRepository.findFirstByStudentAndCourse(student, course);
-		return enroll != null;
-	}
-
-	@Override
-	public List<Course> getStudentCourses(Student student, Boolean isFinished) {
-		Page<StudentCourseEnrollment> enrolls = enrollmentRepository.findByStudentAndIsFinished(student, isFinished,
-				PageRequest.of(0, 4));
-		System.out.println(enrolls.getContent().size());
-		List<Course> courses = enrolls.toList().stream().map(enroll -> enroll.getCourse()).collect(Collectors.toList());
-
 		return courses;
 	}
 
