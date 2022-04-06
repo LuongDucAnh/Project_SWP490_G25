@@ -6,6 +6,7 @@ package com.example.swp490_g25_sse.service;
 
 import com.example.swp490_g25_sse.dto.CourseDto;
 import com.example.swp490_g25_sse.model.Course;
+import com.example.swp490_g25_sse.model.Student;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -28,4 +29,5 @@ public interface CourseService {
 
 	Page<Course> getMostEnrolledCourses();
         
+        Boolean isAlreadyEnrolled(Course course, Student student);
 }
