@@ -154,7 +154,33 @@ public class StudentController {
         return "student/learn";
     }
 
+    @GetMapping("/learn/{id}/overview")
+    private String courseOverview(@PathVariable String id, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetailsService userDetails = (CustomUserDetailsService) auth.getPrincipal();
 
+        Course course = courseService.getCourseById(Long.parseLong(id)).get();
+        Student student = studentService.getStudentInfo(userDetails.getUser());
+        Boolean isEnrolled = courseService.isAlreadyEnrolled(course, student);
+
+        model.addAttribute("userName", userDetails.getUser().getFirstName());
+        model.addAttribute("course", course);
+        model.addAttribute("isEnrolled", isEnrolled);
+
+        String prefix = env.getProperty("FIREBASE_PREFIX");
+        String suffix = env.getProperty("FIREBASE_SUFFIX");
+
+        model.addAttribute("firebasePrefix", prefix);
+        model.addAttribute("firebaseSuffix", suffix);
+        model.addAttribute("enrollmentId", studentCourseEnrollmentService.getEnrollmentInfo(student, course).getId());
+
+        if (!isEnrolled) {
+            return "redirect:/app/student/course/" + id;
+        }
+
+        // System.out.println(top4Course.getContent().get(0).getImageUrl());
+        return "student/course-overview";
+    }
 
     @GetMapping("/learn/{id}/milestone")
     private String courseMileStone(@PathVariable String id, Model model) {
