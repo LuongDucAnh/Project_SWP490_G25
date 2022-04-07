@@ -25,6 +25,12 @@ public class TestDto {
         this.content = content;
         this.name = name;
     }
+    
+    public TestDto(String week, String content, String name) {
+        this.week = week;
+        this.content = content;
+        this.name = name;
+    }
 
     public String getWeek() {
         return week;
