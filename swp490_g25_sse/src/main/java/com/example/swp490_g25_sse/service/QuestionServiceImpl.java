@@ -1,41 +1,65 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.example.swp490_g25_sse.service;
 
-import com.example.swp490_g25_sse.model.Answer;
+import java.util.List;
+import java.util.Optional;
+
+import com.example.swp490_g25_sse.dto.QuestionDto;
+import com.example.swp490_g25_sse.model.Course;
 import com.example.swp490_g25_sse.model.Question;
+import com.example.swp490_g25_sse.model.Student;
+import com.example.swp490_g25_sse.repository.CourseRepository;
 import com.example.swp490_g25_sse.repository.QuestionRepository;
+import com.example.swp490_g25_sse.repository.StudentRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-/**
- *
- * @author Admin
- */
-@Service("questionService")
+@Service
 public class QuestionServiceImpl implements QuestionService {
+
+    @Autowired
+    private StudentRepository studentRepository;
 
     @Autowired
     private QuestionRepository questionRepository;
 
-    @Override
-    public Iterable<Question> findAll() {
+    @Autowired
+    private CourseRepository courseRepository;
 
-        return questionRepository.findAll();
+    @Override
+    public Question createQuestion(QuestionDto questionDto) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetailsService currentUser = (CustomUserDetailsService) auth.getPrincipal();
+        Course course = courseRepository.findFirstById(questionDto.courseId);
+        Student student = studentRepository.findFirstByUserId(currentUser.getUser().getId());
+
+        Question question = new Question(student, course, questionDto.getTitle(), questionDto.getTag(),
+                questionDto.getContent());
+
+        Question newQuestion = questionRepository.save(question);
+        // question = questionRepository.save(question);
+        // return questionRepository.save(question);
+        return newQuestion;
     }
 
     @Override
-    public int findAnswerIdCorrect(int questionId) {
-        Question question = questionRepository.findById(questionId).get();
-        for (Answer answer : question.getAnswers()) {
-            if (answer.isCorrect()) {
-                return answer.getAnswerId();
-            }
+    public List<Question> getQuestionsByCourseId(long id) {
+        List<Question> questions = questionRepository.findByCourseId(id);
+        return questions;
+    }
 
-        }
-        return -1;
+    @Override
+    public List<Question> getQuestionsByCourseIdAndUserId(long courseId, long studentId) {
+        List<Question> questions = questionRepository.findByCourseIdAndStudentId(courseId, studentId);
+        return questions;
+    }
+
+    @Override
+    public Optional<Question> getQuestionById(long id) {
+        Optional<Question> question = questionRepository.findById(id);
+        return question;
     }
 
 }

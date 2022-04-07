@@ -1,60 +1,97 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.example.swp490_g25_sse.model;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "Question")
-public class Question implements java.io.Serializable {
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-    private static final long SerialVersionUID = 1L;
-    private Integer questionId;
-    private String content;
-    private List<Answer> answers;
+@Entity()
+@Table(name = "questions")
+public class Question {
 
     public Question() {
+
+    }
+
+    public Question(Student student, Course course, String title, String tag, String content) {
+        this.student = student;
+        this.title = title;
+        this.content = content;
+        this.tag = tag;
+        this.course = course;
     }
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    public Integer getQuestionId() {
-        return questionId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String title;
+
+    private String tag;
+
+    private String content;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id", nullable = false)
+    @JsonIgnore
+    private Student student;
+
+    @ManyToOne
+    @JoinColumn(name = "course_id", nullable = false)
+    @JsonIgnore
+    private Course course;
+
+    public Student getStudent() {
+        return this.student;
     }
 
-    public void setQuestionId(Integer questionId) {
-        this.questionId = questionId;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
-    @Column(name = "content", nullable = false, length = 65535)
+    public Course getCourse() {
+        return this.course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTag() {
+        return this.tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
     public String getContent() {
-        return content;
+        return this.content;
     }
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "question")
-    public List<Answer> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(List<Answer> answers) {
-        this.answers = answers;
     }
 
 }

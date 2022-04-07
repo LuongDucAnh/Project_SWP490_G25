@@ -1,19 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package com.example.swp490_g25_sse.repository;
 
+import java.util.List;
+import java.util.Optional;
 
 import com.example.swp490_g25_sse.model.Question;
-import org.springframework.data.repository.CrudRepository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-/**
- *
- * @author Admin
- */
-@Repository("questionRepository")
-public interface QuestionRepository extends  CrudRepository<Question, Integer>{
-    
+@Repository
+public interface QuestionRepository extends JpaRepository<Question, Long> {
+    // List<Question> findByUserId();
+
+    List<Question> findByCourseId(long id);
+
+    List<Question> findByCourseIdAndStudentId(long courseId, long studentId);
+
+    Optional<Question> findFirstById(long id);
 }
