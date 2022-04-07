@@ -52,14 +52,13 @@ public class CourseController {
     //
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public Course createCourse(@RequestBody CourseDto dto) {
-        System.out.println("=============================================================================");
+    public Course createCourse(@RequestBody CourseDto dto) {      
         Course course = courseService.createCourse(dto);
 
         return course;
     }
 
-    
+    //
     @DeleteMapping(value = "/{id}", produces = "application/json")
     public Course deleteCourse(@PathVariable long id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -77,11 +76,10 @@ public class CourseController {
         }
 
         Optional<Course> result = courseService.deleteCourse(id);
-
         return result.get();
     }
 
-    @PutMapping(value = "/{id}", produces = "application/json")
+    @PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
     public Course updateCourse(@PathVariable long id, @RequestBody CourseDto dto) throws JsonProcessingException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetailsService currentUser = (CustomUserDetailsService) auth.getPrincipal();
