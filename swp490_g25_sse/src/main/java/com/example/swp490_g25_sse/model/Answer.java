@@ -1,71 +1,70 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.example.swp490_g25_sse.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "Answer")
-public class Answer implements java.io.Serializable {
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-    private static final long SerialVersionUID = 1L;
-    private Integer answerId;
+@Entity()
+@Table(name = "answers")
+public class Answer {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String content;
-    private boolean correct;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id", nullable = false)
+    @JsonIgnore
+    private Student student;
+
+    @ManyToOne
+    @JoinColumn(name = "question_id", nullable = false)
+    @JsonIgnore
     private Question question;
 
     public Answer() {
     }
 
-    public Answer(String content, boolean correct, Question question) {
-
+    public Answer(String content, Student student, Question question) {
         this.content = content;
-        this.correct = correct;
+        this.student = student;
         this.question = question;
     }
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    public Integer getAnswerId() {
-        return answerId;
+    public Long getId() {
+        return this.id;
     }
 
-    public void setAnswerId(Integer answerId) {
-        this.answerId = answerId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    @Column(name = "content", nullable = false, length = 65535)
     public String getContent() {
-        return content;
+        return this.content;
     }
 
     public void setContent(String content) {
         this.content = content;
     }
 
-    public boolean isCorrect() {
-        return correct;
+    public Student getStudent() {
+        return this.student;
     }
 
-    public void setCorrect(boolean correct) {
-        this.correct = correct;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "questionId", nullable = false)
     public Question getQuestion() {
-        return question;
+        return this.question;
     }
 
     public void setQuestion(Question question) {
