@@ -27,7 +27,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+/**
+ *
+ * @author bettafish15
+ */
 @Controller
 @RequestMapping("/app/student")
 public class StudentController {
@@ -175,17 +182,14 @@ public class StudentController {
         return "student/course-overview";
     }
 
-      @GetMapping("/learn/{id}/milestone")
-    private String courseMileStone(@PathVariable String id, @RequestParam(name = "week") Integer week,
-            Model model) {
+    @GetMapping("/learn/{id}/milestone")
+    private String courseMileStone(@PathVariable String id, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetailsService userDetails = (CustomUserDetailsService) auth.getPrincipal();
 
         Course course = courseService.getCourseById(Long.parseLong(id)).get();
         Student student = studentService.getStudentInfo(userDetails.getUser());
         Boolean isEnrolled = courseService.isAlreadyEnrolled(course, student);
-        StudentCourseEnrollment enroll = studentCourseEnrollmentService.getEnrollmentInfo(student, course);
-        List<MilestoneDto> milestone = courseService.milestone(enroll);
 
         model.addAttribute("userName", userDetails.getUser().getFirstName());
         model.addAttribute("course", course);
@@ -196,9 +200,7 @@ public class StudentController {
 
         model.addAttribute("firebasePrefix", prefix);
         model.addAttribute("firebaseSuffix", suffix);
-        model.addAttribute("enrollmentId", enroll.getId());
-        model.addAttribute("milestone", milestone);
-        model.addAttribute("currentWeek", week);
+        model.addAttribute("enrollmentId", studentCourseEnrollmentService.getEnrollmentInfo(student, course).getId());
 
         if (!isEnrolled) {
             return "redirect:/app/student/course/" + id;
