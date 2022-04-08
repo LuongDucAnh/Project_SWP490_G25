@@ -35,17 +35,8 @@ public class MainController {
         return "index";
     }
 
-
-   @GetMapping("/login")
-    private String login() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        if (!(auth instanceof AnonymousAuthenticationToken)) {
-
-            /* The user is logged in :) */
-            return "forward:/app";
-        }
-
+    @GetMapping("/login")
+    private String loginController() {
         return "login";
     }
 
