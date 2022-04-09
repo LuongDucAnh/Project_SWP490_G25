@@ -25,6 +25,14 @@ public class Question {
         this.tag = tag;
         this.course = course;
     }
+    
+    public Question(Student student, Course course, String title, String content) {
+        this.student = student;
+        this.title = title;
+        this.content = content;
+        this.tag = tag;
+        this.course = course;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
