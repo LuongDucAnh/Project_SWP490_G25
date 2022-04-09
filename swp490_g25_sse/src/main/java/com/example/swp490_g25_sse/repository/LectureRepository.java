@@ -4,9 +4,10 @@
  */
 package com.example.swp490_g25_sse.repository;
 
-import com.example.swp490_g25_sse.model.Lecture;
 import java.util.List;
-import org.springframework.data.domain.Sort;
+
+import com.example.swp490_g25_sse.model.Course;
+import com.example.swp490_g25_sse.model.Lecture;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -14,15 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author msi
  */
 public interface LectureRepository extends JpaRepository<Lecture, Long> {
+  Integer countByCourseAndWeek(Course course, String week);
 
-    public List<Lecture> findAll();
-
-    public List<Lecture> findAll(Sort sort);
-
-    public void flush();
-
-    public <S extends Lecture> S saveAndFlush(S entity);
-
-    public void deleteAllInBatch(Iterable<Lecture> entities);
-
+  List<Lecture> findByCourseAndWeek(Course course, String week);
 }
