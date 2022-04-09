@@ -21,7 +21,6 @@ public class LectureResult {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "enrollment_id", insertable = true, updatable = true)
@@ -66,10 +65,6 @@ public class LectureResult {
 
   public void setLecture(Lecture lecture) {
     this.lecture = lecture;
-  }
-
-  public Boolean isIsFinished() {
-    return this.isFinished;
   }
 
   public Boolean getIsFinished() {
