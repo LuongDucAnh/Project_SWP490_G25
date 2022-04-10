@@ -1,9 +1,8 @@
-
 package com.example.swp490_g25_sse.dto;
 
-
 public class UserInfoDto {
-      private String firstName;
+
+     private String firstName;
     private String lastName;
     private String email;
     private String imageURL;
@@ -50,5 +49,4 @@ public class UserInfoDto {
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
-
 }
