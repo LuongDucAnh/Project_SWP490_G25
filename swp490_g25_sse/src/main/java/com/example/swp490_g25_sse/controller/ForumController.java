@@ -58,6 +58,6 @@ public class ForumController {
         model.addAttribute("userName", userDetails.getUser().getFirstName());
         return "student/forum-questions";
     }
-//
+
     
 }
