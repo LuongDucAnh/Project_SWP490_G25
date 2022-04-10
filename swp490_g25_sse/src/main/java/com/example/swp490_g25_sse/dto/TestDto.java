@@ -15,6 +15,8 @@ public class TestDto {
     public Long index;
     public String content;
     public String name;
+    public Boolean isFinished;
+    public Integer mark;
 
     public TestDto() {
     }
@@ -22,12 +24,6 @@ public class TestDto {
     public TestDto(String week, Long index, String content, String name) {
         this.week = week;
         this.index = index;
-        this.content = content;
-        this.name = name;
-    }
-    
-    public TestDto(String week, String content, String name) {
-        this.week = week;
         this.content = content;
         this.name = name;
     }
@@ -70,6 +66,22 @@ public class TestDto {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Boolean getIsFinished() {
+        return this.isFinished;
+    }
+
+    public void setIsFinished(Boolean isFinished) {
+        this.isFinished = isFinished;
+    }
+
+    public Integer getMark() {
+        return this.mark;
+    }
+
+    public void setMark(Integer mark) {
+        this.mark = mark;
     }
 
 }
