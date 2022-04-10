@@ -61,6 +61,14 @@ public class Test {
         this.content = content;
         this.indexOrder = indexOrder;
     }
+    
+    public Test(Course course, Long indexOrder) {
+        this.course = course;
+        this.week = week;
+        this.name = name;
+        this.content = content;
+        this.indexOrder = indexOrder;
+    }
 
     public Long getId() {
         return id;
