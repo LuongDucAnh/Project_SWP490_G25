@@ -39,8 +39,7 @@ public class QuestionServiceImpl implements QuestionService {
                 questionDto.getContent());
 
         Question newQuestion = questionRepository.save(question);
-        // question = questionRepository.save(question);
-        // return questionRepository.save(question);
+
         return newQuestion;
     }
 
