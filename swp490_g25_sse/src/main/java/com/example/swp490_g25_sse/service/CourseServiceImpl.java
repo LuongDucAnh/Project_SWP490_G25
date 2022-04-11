@@ -17,6 +17,7 @@ import com.example.swp490_g25_sse.model.Student;
 import com.example.swp490_g25_sse.model.StudentCourseEnrollment;
 import com.example.swp490_g25_sse.model.Teacher;
 import com.example.swp490_g25_sse.model.Test;
+import com.example.swp490_g25_sse.model.TestResult;
 import com.example.swp490_g25_sse.model.User;
 import com.example.swp490_g25_sse.repository.CourseRepository;
 import com.example.swp490_g25_sse.repository.LectureRepository;
@@ -24,17 +25,23 @@ import com.example.swp490_g25_sse.repository.LectureResultRepository;
 import com.example.swp490_g25_sse.repository.StudentCourseEnrollmentRepository;
 import com.example.swp490_g25_sse.repository.TeacherRepository;
 import com.example.swp490_g25_sse.repository.TestRepository;
+import com.example.swp490_g25_sse.repository.TestResultRepository;
 import com.example.swp490_g25_sse.repository.UserRepository;
 import com.example.swp490_g25_sse.util.DtoToDaoConversion;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -44,7 +51,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author Admin
+ * @author msi
  */
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -110,7 +117,7 @@ public class CourseServiceImpl implements CourseService {
 
 		return course;
 	}
-//
+
 	@Override
 	@Transactional(rollbackFor = { Exception.class, Throwable.class })
 	public Course updateCourse(CourseDto courseDto, long id) {
