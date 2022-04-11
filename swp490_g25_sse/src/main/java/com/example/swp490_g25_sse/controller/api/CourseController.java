@@ -6,22 +6,35 @@ package com.example.swp490_g25_sse.controller.api;
 
 import com.example.swp490_g25_sse.dto.CourseDto;
 import com.example.swp490_g25_sse.dto.LectureDto;
+import com.example.swp490_g25_sse.dto.TestDto;
+import com.example.swp490_g25_sse.dto.UserRegistrationDto;
 import com.example.swp490_g25_sse.exception.BaseRestException;
 import com.example.swp490_g25_sse.model.Course;
+import com.example.swp490_g25_sse.model.Lecture;
 import com.example.swp490_g25_sse.model.LectureResult;
 import com.example.swp490_g25_sse.model.Student;
 import com.example.swp490_g25_sse.model.StudentCourseEnrollment;
 import com.example.swp490_g25_sse.model.Teacher;
+import com.example.swp490_g25_sse.model.Test;
+import com.example.swp490_g25_sse.model.TestResult;
 import com.example.swp490_g25_sse.service.CourseService;
 import com.example.swp490_g25_sse.service.CustomUserDetailsService;
 import com.example.swp490_g25_sse.service.LectureResultService;
 import com.example.swp490_g25_sse.service.StudentCourseEnrollmentService;
 import com.example.swp490_g25_sse.service.StudentService;
+import com.example.swp490_g25_sse.service.TestResultService;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,14 +45,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  *
- * @author ADMIN
+ * @author msi
  */
 @RestController
 @RequestMapping("/api/course")
 public class CourseController {
+
     @Autowired
     private CourseService courseService;
 
@@ -55,10 +70,14 @@ public class CourseController {
     @Autowired
     private StudentCourseEnrollmentService studentCourseEnrollmentService;
 
+    @Autowired
+    private TestResultService testResultService;
 
     @GetMapping(value = "/{id}", produces = "application/json")
     public CourseDto getCourseById(@PathVariable long id) {
         Optional<Course> course = courseService.getCourseById(id);
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++=");
+        System.out.println(course.get().getLectures());
         if (course.isEmpty()) {
             throw new BaseRestException(HttpStatus.NOT_FOUND, "Not Found");
         }
@@ -97,6 +116,27 @@ public class CourseController {
                     return lectureDto;
                 }).toList());
 
+        courseResult.setTestDtos(
+                course.get().getTests().stream().map(item -> {
+                    TestDto testDto = new TestDto();
+                    testDto.setContent(item.getContent());
+                    testDto.setId(item.getId());
+                    testDto.setIndex(item.getIndexOrder());
+                    testDto.setName(item.getName());
+                    testDto.setWeek(item.getWeek());
+
+                    TestResult testResult = testResultService.findFirstByEnrollmentAndTest(enroll, item);
+
+                    if (testResult == null) {
+                        testDto.setIsFinished(false);
+                        testDto.setMark(0);
+                    } else {
+                        testDto.setIsFinished(testResult.getIsFinished());
+                        testDto.setMark(testResult.getMark());
+                    }
+                    return testDto;
+                }).toList());
+
         return courseResult;
     }
 
@@ -107,7 +147,8 @@ public class CourseController {
     //
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public Course createCourse(@RequestBody CourseDto dto) {      
+    public Course createCourse(@RequestBody CourseDto dto) {
+        System.out.println("=============================================================================");
         Course course = courseService.createCourse(dto);
 
         return course;
@@ -131,11 +172,14 @@ public class CourseController {
         }
 
         Optional<Course> result = courseService.deleteCourse(id);
+        System.out.println("=======================================");
         return result.get();
     }
 
     @PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
     public Course updateCourse(@PathVariable long id, @RequestBody CourseDto dto) throws JsonProcessingException {
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        System.out.println(ow.writeValueAsString(dto));
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetailsService currentUser = (CustomUserDetailsService) auth.getPrincipal();
 
@@ -154,5 +198,55 @@ public class CourseController {
         Course result = courseService.updateCourse(dto, id);
 
         return result;
+    }
+
+    @PutMapping(value = "/{id}/lecture/{lectureId}", produces = "application/json")
+    public void markLectureAsComplete(@PathVariable long id, @PathVariable long lectureId)
+            throws JsonProcessingException {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetailsService currentUser = (CustomUserDetailsService) auth.getPrincipal();
+
+        Optional<Course> course = courseService.getCourseById(id);
+
+        if (course.isEmpty()) {
+            throw new BaseRestException(HttpStatus.NOT_FOUND, "cant action on this course");
+        }
+
+        Lecture lecture = course.get().getLectures().stream().filter(item -> item.getId() == lectureId).findAny()
+                .orElse(null);
+
+        if (lecture == null) {
+            throw new BaseRestException(HttpStatus.NOT_FOUND, "cant action on this lecture");
+        }
+
+        Student student = studentService.getStudentInfo(currentUser.getUser());
+        StudentCourseEnrollment enrollment = enrollService.getEnrollmentInfo(student, course.get());
+        lectureResultService.updateLectureResult(enrollment, lecture, true);
+    }
+
+    @PutMapping(value = "/{id}/test/{testId}", produces = "application/json")
+    public void markTestAsCompleteAndUpdateMark(@PathVariable long id, @PathVariable long testId,
+            @RequestBody Map<String, Integer> body)
+            throws JsonProcessingException {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetailsService currentUser = (CustomUserDetailsService) auth.getPrincipal();
+
+        Optional<Course> course = courseService.getCourseById(id);
+
+        if (course.isEmpty()) {
+            throw new BaseRestException(HttpStatus.NOT_FOUND, "cant action on this course");
+        }
+
+        Test test = course.get().getTests().stream().filter(item -> item.getId() == testId).findAny().orElse(null);
+
+        if (test == null) {
+            throw new BaseRestException(HttpStatus.NOT_FOUND, "cant action on this test");
+        }
+
+        Student student = studentService.getStudentInfo(currentUser.getUser());
+        StudentCourseEnrollment enrollment = enrollService.getEnrollmentInfo(student, course.get());
+        testResultService.updateTestResult(enrollment, test, true, body.get("mark"));
     }
 }
