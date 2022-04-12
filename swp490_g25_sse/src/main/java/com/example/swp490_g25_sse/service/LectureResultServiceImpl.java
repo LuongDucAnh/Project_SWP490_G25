@@ -18,6 +18,11 @@ public class LectureResultServiceImpl implements LectureResultService {
   public LectureResult createLectureReport(StudentCourseEnrollment enrollment, Lecture lecture) {
     return lectureResultRepository.save(new LectureResult(enrollment, lecture, false));
   }
+  
+  @Override
+  public LectureResult NewcreateLectureReport(StudentCourseEnrollment enrollment, Lecture lecture) {
+    return lectureResultRepository.save(new LectureResult(enrollment, lecture, false));
+  }
 
   @Override
   public LectureResult updateLectureResult(StudentCourseEnrollment enrollment, Lecture lecture, Boolean isFinished) {
