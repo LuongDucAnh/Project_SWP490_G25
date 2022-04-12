@@ -42,6 +42,20 @@ public class QuestionServiceImpl implements QuestionService {
 
         return newQuestion;
     }
+    
+    public Question NewcreateQuestion(QuestionDto questionDto) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetailsService currentUser = (CustomUserDetailsService) auth.getPrincipal();
+        Course course = courseRepository.findFirstById(questionDto.courseId);
+        Student student = studentRepository.findFirstByUserId(currentUser.getUser().getId());
+
+        Question question = new Question(student, course, questionDto.getTitle(), questionDto.getTag(),
+                questionDto.getContent());
+
+        Question newQuestion = questionRepository.save(question);
+
+        return newQuestion;
+    }
 
     @Override
     public List<Question> getQuestionsByCourseId(long id) {
