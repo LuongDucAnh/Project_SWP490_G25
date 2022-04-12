@@ -105,5 +105,87 @@
       crossorigin="anonymous"
     ></script>
   </body>
-  
+  <script>
+    var isCreate;
+
+    var courseId = document.getElementById("course-id").value;
+
+    // add active class to nav-menu
+    const menus = document.querySelectorAll(".item-wrapper");
+    for (const menu of menus) {
+      menu.addEventListener("click", () => {
+        const tab = document.querySelector(".active");
+        if (tab) {
+          tab.classList.remove("active");
+        }
+        menu.classList.add("active");
+      });
+    }
+
+    // click to delete course
+    // const btns = document.querySelectorAll(".btn-danger");
+    // for (const btn of btns) {
+    //   btn.addEventListener("click", (e) => {
+    //     e.target.closest(".course-card").remove();
+    //   });
+    // }
+
+    //getData to edit
+    // const getData = (id) => {
+    //   console.log(id);
+    //   fetch("/app/teacher/update-course/"+id, {method: "GET", headers: {
+    //   'Content-Type': 'application/json'}}).then(data => data.json()).then(data => console.log(data));
+    // }
+
+    //deleteCourse
+    const deleteCourse = () => {
+      fetch("/api/course/"+courseId, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((data) => {console.log(data)
+      window.location.reload();
+      });
+    };
+
+    //insert course id
+    const courses = document.getElementsByClassName("course-card");
+    //show pop up when delete
+    //show modal and overlay
+    const showOverlay = () => {
+      document.getElementById("overlay").classList.add("overlay");
+      document.getElementById("id01").style.display = "block";
+    };
+
+    const closeOverlay = () => {
+      document.getElementById("overlay").classList.remove("overlay");
+      document.getElementById('id01').style.display='none'
+    }
+
+    const onDeleteCourse = () => {
+      document.getElementById("overlay").classList.remove("overlay");
+      document.getElementById('id01').style.display='none'
+    }
+
+    // Get the modal
+    var modal = document.getElementById("id01");
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    };
+
+    const showOverlayAndGetCourseId = (id) => {
+      showOverlay();
+      courseId = id;
+    }
+
+    const updateCourse = (id) => {
+      const url = "/app/teacher/update-course/"+id
+      window.location.href = url;
+    }
+  </script>
 </html>
