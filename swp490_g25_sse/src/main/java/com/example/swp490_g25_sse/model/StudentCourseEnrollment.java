@@ -17,10 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-/**
- *
- * @author msi
- */
 @Entity()
 @Table(name = "student_course_enrollments")
 public class StudentCourseEnrollment {
@@ -29,16 +25,16 @@ public class StudentCourseEnrollment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "course_id", nullable = false)
     @JsonIgnore
     private Course course;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "student_id", nullable = false)
     @JsonIgnore
     private Student student;
-    
+
     private boolean isFinished;
 
     public StudentCourseEnrollment() {
@@ -65,7 +61,6 @@ public class StudentCourseEnrollment {
     public void setStudent(Student student) {
         this.student = student;
     }
-
 
     public Course getCourse() {
         return this.course;
