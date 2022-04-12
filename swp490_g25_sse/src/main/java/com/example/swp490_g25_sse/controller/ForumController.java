@@ -59,5 +59,19 @@ public class ForumController {
         return "student/forum-questions";
     }
 
-    
+    @GetMapping("/question/{id}")
+    private String getStudentQuestion(Model model, @PathVariable String id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetailsService user = (CustomUserDetailsService) auth.getPrincipal();
+        Student student = studentRepository.findFirstByUserId(user.getUser().getId());
+        Long studentId = student.getId();
+        Course course = courseService.getCourseById(Long.parseLong(id)).get();
+        List<Question> questions = questionService.getQuestionsByCourseIdAndUserId(Long.parseLong(id), studentId);
+        System.out.println(questions);
+        model.addAttribute("questions", questions);
+        model.addAttribute("course", course);
+
+        return "student/student-questions";
+    }
+
 }
