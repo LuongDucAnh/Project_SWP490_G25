@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/app/teacher")
 public class TeacherController {
 
-        @Autowired
+    @Autowired
     private Environment env;
 
     @Autowired
@@ -115,4 +115,52 @@ public class TeacherController {
         return "teacher/update-course";
     }
 
+    @GetMapping("/forum")
+    private String forumQuestion(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetailsService currentUser = (CustomUserDetailsService) auth.getPrincipal();
+
+        Teacher teacher = teacherRepository.findFirstByUserId(currentUser.getUser().getId());
+
+        List<Course> courses = teacher.getCourses();
+
+        String contentStr = "";
+        String[] contentPart;
+        char lastChar;
+        String rawContent = "";
+        String content = "";
+
+        for (int i = 0; i < courses.size(); i++) {
+            contentStr = courses.get(i).getContent();
+            contentPart = contentStr.split("><");
+            lastChar = contentPart[0].charAt(contentPart[0].length() - 1);
+
+            if (String.valueOf(lastChar).equalsIgnoreCase("p")) {
+                rawContent = contentPart[0] + ">";
+                if (rawContent.length() >= 255) {
+                    content = rawContent.substring(0, 255) + "...";
+                } else {
+                    content = rawContent;
+                }
+            } else {
+                rawContent = contentPart[0];
+                if (rawContent.length() >= 255) {
+                    content = rawContent.substring(0, 255) + "...";
+                } else {
+                    content = rawContent;
+                }
+            }
+
+            courses.get(i).setContent(content);
+
+        }
+        String userImgUrl = currentUser.getUser().getImageURL();
+
+        model.addAttribute("userImgUrl", userImgUrl);
+
+        model.addAttribute("userName", currentUser.getUser().getFirstName());
+        model.addAttribute("courses", courses);
+        model.addAttribute("user", "teacher");
+        return "teacher/home-forum";
+    }
 }
