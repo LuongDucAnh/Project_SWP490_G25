@@ -4,6 +4,8 @@
  */
 package com.example.swp490_g25_sse.controller;
 
+import com.example.swp490_g25_sse.dto.AnswerDto;
+import com.example.swp490_g25_sse.dto.QuestionDto;
 import com.example.swp490_g25_sse.model.Answer;
 import com.example.swp490_g25_sse.model.Course;
 import com.example.swp490_g25_sse.model.Question;
@@ -72,6 +74,55 @@ public class ForumController {
         model.addAttribute("course", course);
 
         return "student/student-questions";
+    } 
+
+    @GetMapping("/creat/{id}")
+    private String createQuestion(Model model, @PathVariable String id) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetailsService user = (CustomUserDetailsService) auth.getPrincipal();
+        Student student = studentRepository.findFirstByUserId(user.getUser().getId());
+        Long studentId = student.getId();
+        Question question = new Question();
+        Course course = courseService.getCourseById(Long.parseLong(id)).get();
+        model.addAttribute("question", question);
+        model.addAttribute("course", course);
+        model.addAttribute("studentId", studentId);
+        return "student/course-question";
     }
 
+    @PostMapping("/creat/{id}")
+    private String creatQuestion(@ModelAttribute("question") QuestionDto questionDto) {
+        questionService.createQuestion(questionDto);
+        return "redirect:/app/student/forum/{id}";
+    }
+
+    @GetMapping("/answer/{courseId}/{id}")
+    private String getStudentAnswer(Model model, @PathVariable String id, @PathVariable String courseId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetailsService user = (CustomUserDetailsService) auth.getPrincipal();
+        Student student = studentRepository.findFirstByUserId(user.getUser().getId());
+        Long studentId = student.getId();
+
+        Question question = questionService.getQuestionById(Long.parseLong(id)).get();
+
+        Course course = courseService.getCourseById(Long.parseLong(courseId)).get();
+        Answer answer = new Answer();
+
+        List<Answer> answers = answerService.getAnswersByQuestionId(Long.parseLong(id));
+
+        model.addAttribute("question", question);
+        model.addAttribute("course", course);
+        model.addAttribute("studentId", studentId);
+        model.addAttribute("answer", answer);
+        model.addAttribute("answers", answers);
+        model.addAttribute("userName", user.getUser().getFirstName());
+        return "student/forum-answers";
+    }
+
+    @PostMapping("/answer/creat/{courseId}/{questionId}")
+    private String creatAnswer(@ModelAttribute("answer") AnswerDto answerDto, @PathVariable String questionId) {
+        answerService.createAnswer(answerDto, Long.parseLong(questionId));
+        return "redirect:/app/student/forum/answer/{courseId}/{questionId}";
+    }
 }
