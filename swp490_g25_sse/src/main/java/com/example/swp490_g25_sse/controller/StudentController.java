@@ -1,5 +1,6 @@
 package com.example.swp490_g25_sse.controller;
 
+import com.example.swp490_g25_sse.dto.CourseOverviewDto;
 import java.util.List;
 
 import com.example.swp490_g25_sse.model.Course;
@@ -154,7 +155,7 @@ public class StudentController {
         return "student/learn";
     }
 
-    @GetMapping("/learn/{id}/overview")
+@GetMapping("/learn/{id}/overview")
     private String courseOverview(@PathVariable String id, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetailsService userDetails = (CustomUserDetailsService) auth.getPrincipal();
@@ -162,7 +163,11 @@ public class StudentController {
         Course course = courseService.getCourseById(Long.parseLong(id)).get();
         Student student = studentService.getStudentInfo(userDetails.getUser());
         Boolean isEnrolled = courseService.isAlreadyEnrolled(course, student);
+        StudentCourseEnrollment enroll = studentCourseEnrollmentService.getEnrollmentInfo(student, course);
+        List<CourseOverviewDto> courseOverview = courseService.overview(enroll);
+        String userImgUrl = userDetails.getUser().getImageURL();
 
+        model.addAttribute("userImgUrl", userImgUrl);
         model.addAttribute("userName", userDetails.getUser().getFirstName());
         model.addAttribute("course", course);
         model.addAttribute("isEnrolled", isEnrolled);
@@ -172,7 +177,8 @@ public class StudentController {
 
         model.addAttribute("firebasePrefix", prefix);
         model.addAttribute("firebaseSuffix", suffix);
-        model.addAttribute("enrollmentId", studentCourseEnrollmentService.getEnrollmentInfo(student, course).getId());
+        model.addAttribute("enrollmentId", enroll.getId());
+        model.addAttribute("courseOverview", courseOverview);
 
         if (!isEnrolled) {
             return "redirect:/app/student/course/" + id;
