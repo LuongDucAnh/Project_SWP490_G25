@@ -10,7 +10,9 @@ import com.example.swp490_g25_sse.model.Answer;
 import com.example.swp490_g25_sse.model.Course;
 import com.example.swp490_g25_sse.model.Question;
 import com.example.swp490_g25_sse.model.Student;
+import com.example.swp490_g25_sse.model.Teacher;
 import com.example.swp490_g25_sse.repository.StudentRepository;
+import com.example.swp490_g25_sse.repository.TeacherRepository;
 import com.example.swp490_g25_sse.service.AnswerService;
 import com.example.swp490_g25_sse.service.CourseService;
 import com.example.swp490_g25_sse.service.CustomUserDetailsService;
@@ -43,6 +45,9 @@ public class ForumController {
 
     @Autowired
     private StudentRepository studentRepository;
+    
+    @Autowired
+    private TeacherRepository teacherRepository;
 
     @Autowired
     private AnswerService answerService;
@@ -97,27 +102,47 @@ public class ForumController {
         return "redirect:/app/student/forum/{id}";
     }
 
-    @GetMapping("/answer/{courseId}/{id}")
+    @GetMapping("/answer/course/{courseId}/question/{id}")
     private String getStudentAnswer(Model model, @PathVariable String id, @PathVariable String courseId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetailsService user = (CustomUserDetailsService) auth.getPrincipal();
-        Student student = studentRepository.findFirstByUserId(user.getUser().getId());
-        Long studentId = student.getId();
+        String userRole = user.getRole();
+        if (userRole.equals("ROLE_STUDENT")) {
+            Student student = studentRepository.findFirstByUserId(user.getUser().getId());
+            Long studentId = student.getId();
+            Question question = questionService.getQuestionById(Long.parseLong(id)).get();
+            Course course = courseService.getCourseById(Long.parseLong(courseId)).get();
+            Answer answer = new Answer();
+            List<Answer> answers = answerService.getAnswersByQuestionId(Long.parseLong(id));
+            String userImgUrl = user.getUser().getImageURL();
 
-        Question question = questionService.getQuestionById(Long.parseLong(id)).get();
+            model.addAttribute("userImgUrl", userImgUrl);
+            model.addAttribute("question", question);
+            model.addAttribute("course", course);
+            model.addAttribute("answer", answer);
+            model.addAttribute("answers", answers);
+            model.addAttribute("userName", user.getUser().getFirstName());
+            model.addAttribute("studentId", studentId);
+            return "student/forum-answers";
+        } else {
+            Teacher teacher = teacherRepository.findFirstByUserId(user.getUser().getId());
+            Long teacherId = teacher.getId();
+            Question question = questionService.getQuestionById(Long.parseLong(id)).get();
+            Course course = courseService.getCourseById(Long.parseLong(courseId)).get();
+            Answer answer = new Answer();
+            List<Answer> answers = answerService.getAnswersByQuestionId(Long.parseLong(id));
+            String userImgUrl = user.getUser().getImageURL();
 
-        Course course = courseService.getCourseById(Long.parseLong(courseId)).get();
-        Answer answer = new Answer();
+            model.addAttribute("userImgUrl", userImgUrl);
+            model.addAttribute("question", question);
+            model.addAttribute("course", course);
+            model.addAttribute("answer", answer);
+            model.addAttribute("answers", answers);
+            model.addAttribute("userName", user.getUser().getFirstName());
+            model.addAttribute("teacherId", teacherId);
+            return "teacher/forum-answers";
+        }
 
-        List<Answer> answers = answerService.getAnswersByQuestionId(Long.parseLong(id));
-
-        model.addAttribute("question", question);
-        model.addAttribute("course", course);
-        model.addAttribute("studentId", studentId);
-        model.addAttribute("answer", answer);
-        model.addAttribute("answers", answers);
-        model.addAttribute("userName", user.getUser().getFirstName());
-        return "student/forum-answers";
     }
 
     @PostMapping("/answer/creat/{courseId}/{questionId}")
