@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Admin
  */
 @Controller
-@RequestMapping("/app/student/forum")
+@RequestMapping("/app/forum")
 public class ForumController {
 
     @Autowired
@@ -148,6 +148,21 @@ public class ForumController {
     @PostMapping("/answer/creat/{courseId}/{questionId}")
     private String creatAnswer(@ModelAttribute("answer") AnswerDto answerDto, @PathVariable String questionId) {
         answerService.createAnswer(answerDto, Long.parseLong(questionId));
-        return "redirect:/app/student/forum/answer/{courseId}/{questionId}";
+        return "redirect:/app/forum/answer/course/{courseId}/question/{questionId}";
+    }
+    
+    @GetMapping("/teacher/course/{id}")
+    private String getCourseQuestions(Model model, @PathVariable String id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetailsService userDetails = (CustomUserDetailsService) auth.getPrincipal();
+        List<Question> questions = questionService.getQuestionsByCourseId(Long.parseLong(id));
+        Course course = courseService.getCourseById(Long.parseLong(id)).get();
+        String userImgUrl = userDetails.getUser().getImageURL();
+
+        model.addAttribute("userImgUrl", userImgUrl);
+        model.addAttribute("questions", questions);
+        model.addAttribute("course", course);
+        model.addAttribute("userName", userDetails.getUser().getFirstName());
+        return "teacher/forum-questions";
     }
 }
