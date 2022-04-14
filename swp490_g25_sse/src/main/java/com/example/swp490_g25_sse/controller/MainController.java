@@ -7,12 +7,15 @@ package com.example.swp490_g25_sse.controller;
 import com.example.swp490_g25_sse.dto.AccountInfoDto;
 import com.example.swp490_g25_sse.dto.UserInfoDto;
 import com.example.swp490_g25_sse.service.CustomUserDetailsService;
+import com.example.swp490_g25_sse.service.UserService;
 import com.example.swp490_g25_sse.service.UserServiceImpl;
+import com.example.swp490_g25_sse.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,15 +31,27 @@ import org.springframework.web.server.ResponseStatusException;
 public class MainController {
 
     @Autowired
-    UserServiceImpl userService;
+    JwtUtils jwtUtils;
+    private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/")
-    private String home() {
+    private String index() {
         return "index";
     }
 
     @GetMapping("/login")
-    private String loginController() {
+    private String login() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+
+            /* The user is logged in :) */
+            return "forward:/app";
+        }
+
         return "login";
     }
 
@@ -66,6 +81,16 @@ public class MainController {
                 userDetails.getUser().getLastName(), userDetails.getUser().getEmail(),
                 userDetails.getUser().getImageURL());
 
+        String userImgUrl = userDetails.getUser().getImageURL();
+
+        if (userDetails.getRole().equals("ROLE_STUDENT")) {
+            model.addAttribute("user", "student");
+        }
+        if (userDetails.getRole().equals("ROLE_TEACHER")) {
+            model.addAttribute("user", "teacher");
+        }
+
+        model.addAttribute("userImgUrl", userImgUrl);
         model.addAttribute("userInfo", userInfo);
         model.addAttribute("userName", userDetails.getUser().getFirstName());
         return "account-info";
