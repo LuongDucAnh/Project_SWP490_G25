@@ -97,6 +97,19 @@ public class TeacherController {
 
         return "teacher/create-course";
     }
+    
+    @GetMapping("/create-course")
+    private String NewcreateCourse(Model model) {
+        model.addAttribute("user", "teacher");
+
+        String prefix = env.getProperty("FIREBASE_PREFIX");
+        String suffix = env.getProperty("FIREBASE_SUFFIX");
+
+        model.addAttribute("firebasePrefix", prefix);
+        model.addAttribute("firebaseSuffix", suffix);
+
+        return "teacher/create-course";
+    }
 
     @GetMapping("/update-course/{id}")
     private String updateCourse(@PathVariable String id, Model model) {
