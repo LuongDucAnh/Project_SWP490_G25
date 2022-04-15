@@ -63,7 +63,7 @@ public class ForumController {
         model.addAttribute("questions", questions);
         model.addAttribute("course", course);
         model.addAttribute("userName", userDetails.getUser().getFirstName());
-        return "student/forum-questions";//
+        return "student/forum-questions";
     }
 
     @GetMapping("/question/{id}")
