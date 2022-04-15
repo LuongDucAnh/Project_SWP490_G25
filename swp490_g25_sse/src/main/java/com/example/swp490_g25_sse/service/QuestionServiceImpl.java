@@ -39,7 +39,7 @@ public class QuestionServiceImpl implements QuestionService {
                 questionDto.getContent());
 
         Question newQuestion = questionRepository.save(question);
-
+//
         return newQuestion;
     }
 
