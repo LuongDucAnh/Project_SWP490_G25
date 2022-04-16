@@ -27,14 +27,6 @@ public class TestResultServiceImpl implements TestResultService {
     result.setMark(mark);
     return testResultRepository.save(result);
   }
-  
-  public TestResult NewupdateTestResult(StudentCourseEnrollment enrollment, Test test, Boolean isFinished, Integer mark) {
-    TestResult result = testResultRepository.findFirstByEnrollmentAndTest(enrollment, test);
-
-    result.setIsFinished(true);
-    result.setMark(mark);
-    return testResultRepository.save(result);
-  }
 
   @Override
   public TestResult findFirstByEnrollmentAndTest(StudentCourseEnrollment enroll, Test test) {
