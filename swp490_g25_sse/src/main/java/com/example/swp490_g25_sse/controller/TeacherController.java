@@ -6,6 +6,7 @@ import com.example.swp490_g25_sse.model.Teacher;
 import com.example.swp490_g25_sse.repository.TeacherRepository;
 import com.example.swp490_g25_sse.service.CourseService;
 import com.example.swp490_g25_sse.service.CustomUserDetailsService;
+import com.example.swp490_g25_sse.service.FeedbackService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +30,9 @@ public class TeacherController {
 
     @Autowired
     private CourseService courseService;
+    
+        @Autowired
+    private FeedbackService feedbackService;
 
     @Autowired
     private TeacherRepository teacherRepository;
