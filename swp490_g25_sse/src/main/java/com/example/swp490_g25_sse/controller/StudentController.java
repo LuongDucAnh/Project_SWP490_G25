@@ -65,7 +65,7 @@ public class StudentController {
 
         // System.out.println(top4Course.getContent().get(0).getImageUrl());
         return "student/course-screen";
-    }
+    }//
 
     @GetMapping("/registeredCourses")
     private String registeredCourses(Model model, @RequestParam(name = "isFinished") Boolean isFinished) {
