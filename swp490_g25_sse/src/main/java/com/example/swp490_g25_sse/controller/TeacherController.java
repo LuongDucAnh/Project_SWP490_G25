@@ -74,7 +74,7 @@ public class TeacherController {
             }
 
             courses.get(i).setContent(content);
-//
+//  
         }
 
         model.addAttribute("userName", currentUser.getUser().getFirstName());
