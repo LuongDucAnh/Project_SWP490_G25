@@ -1,5 +1,6 @@
 package com.example.swp490_g25_sse.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,11 +22,16 @@ public class Answer {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "student_id", nullable = false)
+    @JoinColumn(name = "student_id", nullable = true)
     @JsonIgnore
     private Student student;
 
     @ManyToOne
+    @JoinColumn(name = "teacher_id", nullable = true)
+    @JsonIgnore
+    private Teacher teacher;
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "question_id", nullable = false)
     @JsonIgnore
     private Question question;
@@ -36,6 +42,12 @@ public class Answer {
     public Answer(String content, Student student, Question question) {
         this.content = content;
         this.student = student;
+        this.question = question;
+    }
+
+    public Answer(String content, Teacher teacher, Question question) {
+        this.content = content;
+        this.teacher = teacher;
         this.question = question;
     }
 
@@ -61,6 +73,14 @@ public class Answer {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    public Teacher getTeacher() {
+        return this.teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
     public Question getQuestion() {
