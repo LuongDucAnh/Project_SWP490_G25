@@ -1,6 +1,7 @@
 package com.example.swp490_g25_sse.controller;
 
 import com.example.swp490_g25_sse.dto.CourseOverviewDto;
+import com.example.swp490_g25_sse.dto.FeedbackDto;
 import java.util.List;
 
 import com.example.swp490_g25_sse.model.Course;
@@ -23,6 +24,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -214,4 +216,10 @@ public class StudentController {
 
         return "student/feedback";
     }
+
+    @ModelAttribute("feedback")
+    public FeedbackDto feedbackDto() {
+        return new FeedbackDto();
+    }
+
 }
