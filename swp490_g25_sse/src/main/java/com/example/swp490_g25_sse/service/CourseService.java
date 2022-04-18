@@ -25,6 +25,8 @@ Optional<Course> getCourseById(long id);
 	Course createCourse(CourseDto courseDto);
 
 	List<Course> getCourses();
+        
+        List<Course> getListCourses();
 
 	List<CourseOverviewDto> overview(StudentCourseEnrollment enroll);
 
