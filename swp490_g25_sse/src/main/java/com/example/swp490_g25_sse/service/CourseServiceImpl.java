@@ -109,6 +109,11 @@ public class CourseServiceImpl implements CourseService {
 	public List<Course> getCourses() {
 		return courseRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
 	}
+        
+        @Override
+	public List<Course> getListCourses() {
+		return courseRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+	}
 
 	@Override
 	public Optional<Course> deleteCourse(long id) {
