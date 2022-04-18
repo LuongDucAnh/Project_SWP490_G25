@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 @Controller
 @RequestMapping("/app/student")
 public class StudentController {
@@ -148,7 +147,7 @@ public class StudentController {
         return "student/learn";
     }
 
-@GetMapping("/learn/{id}/overview")
+    @GetMapping("/learn/{id}/overview")
     private String courseOverview(@PathVariable String id, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetailsService userDetails = (CustomUserDetailsService) auth.getPrincipal();
@@ -207,5 +206,12 @@ public class StudentController {
 
         // System.out.println(top4Course.getContent().get(0).getImageUrl());
         return "student/milestone";
+    }
+
+    @GetMapping("/course/{id}/feedback")
+    private String feedback(@PathVariable String id, Model model) {
+        model.addAttribute("id", id);
+
+        return "student/feedback";
     }
 }
