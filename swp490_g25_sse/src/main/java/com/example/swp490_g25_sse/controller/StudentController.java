@@ -1,5 +1,6 @@
 package com.example.swp490_g25_sse.controller;
 
+import com.example.swp490_g25_sse.dto.CourseDto;
 import com.example.swp490_g25_sse.dto.CourseOverviewDto;
 import com.example.swp490_g25_sse.dto.FeedbackDto;
 import java.util.List;
@@ -56,17 +57,19 @@ public class StudentController {
     private String index(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetailsService userDetails = (CustomUserDetailsService) auth.getPrincipal();
+        List<CourseDto> mostLearnCourses = courseService.getMostEnrolledCourses();
+        List<CourseDto> bestFeedbackCourses = courseService.getBestFeedbackCourses();
+        String userImgUrl = userDetails.getUser().getImageURL();
 
-        Page<Course> top4Course = courseService.getMostEnrolledCourses();
-        List<Course> courses = top4Course.getContent();
-
+        model.addAttribute("userImgUrl", userImgUrl);
         model.addAttribute("userName", userDetails.getUser().getFirstName());
-        model.addAttribute("courses", courses);
+        model.addAttribute("mostLearnCourses", mostLearnCourses);
+        model.addAttribute("bestFeedbackCourses", bestFeedbackCourses);
         model.addAttribute("user", "student");
 
         // System.out.println(top4Course.getContent().get(0).getImageUrl());
         return "student/course-screen";
-    }//
+    }
 
     @GetMapping("/registeredCourses")
     private String registeredCourses(Model model, @RequestParam(name = "isFinished") Boolean isFinished) {

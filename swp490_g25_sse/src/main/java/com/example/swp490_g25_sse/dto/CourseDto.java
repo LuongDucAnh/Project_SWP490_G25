@@ -4,6 +4,7 @@
  */
 package com.example.swp490_g25_sse.dto;
 
+import com.example.swp490_g25_sse.model.Teacher;
 import java.util.List;
 
 /**
@@ -18,6 +19,9 @@ public class CourseDto {
     public String content;
     public List<LectureDto> lectureDtos;
     public List<TestDto> testDtos;
+    public Long feedbackRating;
+    public Long totalEnrolls;
+    public Teacher teacher;
 
     public CourseDto() {
     }
@@ -77,6 +81,30 @@ public class CourseDto {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getFeedbackRating() {
+        return this.feedbackRating;
+    }
+
+    public void setFeedbackRating(Long feedbackRating) {
+        this.feedbackRating = feedbackRating;
+    }
+
+    public Long getTotalEnrolls() {
+        return this.totalEnrolls;
+    }
+
+    public void setTotalEnrolls(Long totalEnrolls) {
+        this.totalEnrolls = totalEnrolls;
+    }
+
+    public Teacher getTeacher() {
+        return this.teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
 }

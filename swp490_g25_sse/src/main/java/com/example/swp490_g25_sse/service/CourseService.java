@@ -20,13 +20,11 @@ import org.springframework.data.domain.Page;
  */
 public interface CourseService {
 
-Optional<Course> getCourseById(long id);
+        Optional<Course> getCourseById(long id);
 
 	Course createCourse(CourseDto courseDto);
 
 	List<Course> getCourses();
-        
-        List<Course> getListCourses();
 
 	List<CourseOverviewDto> overview(StudentCourseEnrollment enroll);
 
@@ -35,8 +33,10 @@ Optional<Course> getCourseById(long id);
 	Optional<Course> deleteCourse(long id);
 
 	Course updateCourse(CourseDto courseDto, long id);
+        
+        List<CourseDto> getMostEnrolledCourses();
 
-	Page<Course> getMostEnrolledCourses();
+	List<CourseDto> getBestFeedbackCourses();
 
 	List<Course> getStudentCourses(Student student, Boolean isFinished);
 

@@ -28,6 +28,7 @@ import com.example.swp490_g25_sse.repository.TestRepository;
 import com.example.swp490_g25_sse.repository.TestResultRepository;
 import com.example.swp490_g25_sse.repository.UserRepository;
 import com.example.swp490_g25_sse.util.DtoToDaoConversion;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,8 +36,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import org.modelmapper.ModelMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -75,6 +78,9 @@ public class CourseServiceImpl implements CourseService {
 
 	@Autowired
 	private StudentCourseEnrollmentRepository enrollmentRepository;
+        
+        @Autowired
+	private ModelMapper modelMapper;
 
 	@Override
 	public Optional<Course> getCourseById(long id) {
@@ -107,11 +113,6 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public List<Course> getCourses() {
-		return courseRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
-	}
-        
-        @Override
-	public List<Course> getListCourses() {
 		return courseRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
 	}
 
@@ -195,10 +196,55 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public Page<Course> getMostEnrolledCourses() {
+	public List<CourseDto> getMostEnrolledCourses() {
 		// Page<Course> courses = courseRepository.findAll(Pageable.ofSize(10));
-		Page<Course> courses = courseRepository.findAll(PageRequest.of(0, 4));
-		return courses;
+		List<Object[]> resultSet = courseRepository.countTopEnrolledCourse(4);
+
+		List<Long[]> courseEnrolledInfo = resultSet.stream().map(el -> {
+			Long[] arr = new Long[2];
+
+			arr[0] = (((BigInteger) el[0]).longValue());
+			arr[1] = (((Integer) el[1]).longValue());
+
+			return arr;
+		}).toList();
+
+		AtomicInteger index = new AtomicInteger();
+
+		return courseRepository.findByIdIn(courseEnrolledInfo.stream().map(el -> el[0]).toList()).stream().map(course -> {
+			CourseDto courseDto = modelMapper.map(course, CourseDto.class);
+
+			courseDto.setTotalEnrolls(courseEnrolledInfo.get(index.get())[1]);
+
+			index.getAndIncrement();
+			return courseDto;
+		}).toList();
+	}
+        
+        @Override
+	public List<CourseDto> getBestFeedbackCourses() {
+		// Page<Course> courses = courseRepository.findAll(Pageable.ofSize(10));
+		List<Object[]> resultSet = courseRepository.countTopFeedbackCourse(4);
+
+		List<Long[]> courseFeedbackInfo = resultSet.stream().map(el -> {
+			Long[] arr = new Long[2];
+
+			arr[0] = (((BigInteger) el[0]).longValue());
+			arr[1] = (((Integer) el[1]).longValue());
+
+			return arr;
+		}).toList();
+
+		AtomicInteger index = new AtomicInteger();
+
+		return courseRepository.findByIdIn(courseFeedbackInfo.stream().map(el -> el[0]).toList()).stream().map(course -> {
+			CourseDto courseDto = modelMapper.map(course, CourseDto.class);
+
+			courseDto.setFeedbackRating(courseFeedbackInfo.get(index.get())[1]);
+
+			index.getAndIncrement();
+			return courseDto;
+		}).toList();
 	}
 
 	@Override
