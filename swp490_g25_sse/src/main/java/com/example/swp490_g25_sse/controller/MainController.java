@@ -128,7 +128,7 @@ public class MainController {
             model.addAttribute("user", "teacher");
         }
         model.addAttribute("userName", userDetails.getUser().getFirstName());
-        return "account-setting";//
+        return "account-setting";
     }
 
     @PostMapping("/account-setting")
