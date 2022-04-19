@@ -5,6 +5,11 @@
 package com.example.swp490_g25_sse.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,17 +18,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 /**
  *
- * @author ADMIN
+ * @author msi
  */
 @Entity()
 @Table(name = "tests", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"week", "index_order"}),
-    @UniqueConstraint(columnNames = {"week", "name"})})
+        @UniqueConstraint(columnNames = { "week", "index_order" }),
+        @UniqueConstraint(columnNames = { "week", "name" }) })
 public class Test {
 
     @Id
@@ -35,6 +41,9 @@ public class Test {
     @JsonIgnore
     private Course course;
 
+    @OneToMany(mappedBy = "test", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<TestResult> testResults;
+
     private String week;
 
     private String name;
@@ -44,30 +53,26 @@ public class Test {
     @Column(name = "index_order")
     private Long indexOrder;
 
+    public Long time;
+
     public Test() {
     }
 
-    public Test(String week, String name, String content, Long indexOrder) {
+    public Test(String week, String name, String content, Long indexOrder, Long time) {
         this.week = week;
         this.name = name;
         this.content = content;
         this.indexOrder = indexOrder;
+        this.time = time;
     }
 
-    public Test(Course course, String week, String name, String content, Long indexOrder) {
+    public Test(Course course, String week, String name, String content, Long indexOrder, Long time) {
         this.course = course;
         this.week = week;
         this.name = name;
         this.content = content;
         this.indexOrder = indexOrder;
-    }
-    
-    public Test(Course course, Long indexOrder) {
-        this.course = course;
-        this.week = week;
-        this.name = name;
-        this.content = content;
-        this.indexOrder = indexOrder;
+        this.time = time;
     }
 
     public Long getId() {
@@ -117,4 +122,13 @@ public class Test {
     public void setIndexOrder(Long indexOrder) {
         this.indexOrder = indexOrder;
     }
+
+    public Long getTime() {
+        return this.time;
+    }
+
+    public void setTime(Long time) {
+        this.time = time;
+    }
+
 }
