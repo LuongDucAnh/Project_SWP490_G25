@@ -6,6 +6,7 @@ package com.example.swp490_g25_sse.controller;
 
 import com.example.swp490_g25_sse.dto.AccountInfoDto;
 import com.example.swp490_g25_sse.dto.UserInfoDto;
+import com.example.swp490_g25_sse.model.Student;
 import com.example.swp490_g25_sse.service.CustomUserDetailsService;
 import com.example.swp490_g25_sse.service.UserService;
 import com.example.swp490_g25_sse.service.UserServiceImpl;
@@ -73,7 +74,7 @@ public class MainController {
         }
     }
 
-    @GetMapping("/account-info")
+@GetMapping("/account-info")
     private String accountInfo(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetailsService userDetails = (CustomUserDetailsService) auth.getPrincipal();
@@ -82,9 +83,13 @@ public class MainController {
                 userDetails.getUser().getImageURL());
 
         String userImgUrl = userDetails.getUser().getImageURL();
-
+        Student student = studentService.getStudentInfo(userDetails.getUser());
         if (userDetails.getRole().equals("ROLE_STUDENT")) {
+            long numberOfFinishedCourses = courseService.getNumberOfFinishedCourse(student, true);
+            long numberOfCourses = courseService.getNumberOfStudentCourses(student);
             model.addAttribute("user", "student");
+            model.addAttribute("numberOfFinishedCourses", numberOfFinishedCourses);
+            model.addAttribute("numberOfCourses", numberOfCourses);
         }
         if (userDetails.getRole().equals("ROLE_TEACHER")) {
             model.addAttribute("user", "teacher");
@@ -104,10 +109,10 @@ public class MainController {
             System.out.println("Error");
         }
 
-        if (currentUser.getRole() == "ROLE_STUDENT") {
+        if (currentUser.getRole().equals("ROLE_STUDENT")) {
             model.addAttribute("user", "student");
         }
-        if (currentUser.getRole() == "ROLE_TEACHER") {
+        if (currentUser.getRole().equals("ROLE_TEACHER")) {
             model.addAttribute("user", "teacher");
         }
 
