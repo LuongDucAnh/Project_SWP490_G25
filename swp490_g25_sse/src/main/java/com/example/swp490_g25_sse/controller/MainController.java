@@ -7,7 +7,9 @@ package com.example.swp490_g25_sse.controller;
 import com.example.swp490_g25_sse.dto.AccountInfoDto;
 import com.example.swp490_g25_sse.dto.UserInfoDto;
 import com.example.swp490_g25_sse.model.Student;
+import com.example.swp490_g25_sse.service.CourseService;
 import com.example.swp490_g25_sse.service.CustomUserDetailsService;
+import com.example.swp490_g25_sse.service.StudentService;
 import com.example.swp490_g25_sse.service.UserService;
 import com.example.swp490_g25_sse.service.UserServiceImpl;
 import com.example.swp490_g25_sse.util.JwtUtils;
@@ -37,6 +39,12 @@ public class MainController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CourseService courseService;
+
+    @Autowired
+    private StudentService studentService;
 
     @GetMapping("/")
     private String index() {
@@ -74,7 +82,7 @@ public class MainController {
         }
     }
 
-@GetMapping("/account-info")
+    @GetMapping("/account-info")
     private String accountInfo(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetailsService userDetails = (CustomUserDetailsService) auth.getPrincipal();
