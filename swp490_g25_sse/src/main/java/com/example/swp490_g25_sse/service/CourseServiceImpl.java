@@ -177,10 +177,11 @@ public class CourseServiceImpl implements CourseService {
 					test.setContent(testDto.getContent());
 					test.setIndexOrder(testDto.getIndex());
 					test.setWeek(testDto.getWeek());
+					test.setTime(testDto.getTime());
 
 				} else {
 					test = new Test(course, testDto.getWeek(), testDto.getName(), testDto.getContent(),
-							testDto.getIndex());
+							testDto.getIndex(), testDto.getTime());
 				}
 
 				testRepository.save(test);
@@ -255,9 +256,13 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public List<Course> getStudentCourses(Student student, Boolean isFinished) {
+		List<StudentCourseEnrollment> studentEnrollments = enrollmentRepository.findByStudent(student);
+
+		studentEnrollments.stream().forEach(enroll -> this.isCourseFinished(enroll));
+
 		Page<StudentCourseEnrollment> enrolls = enrollmentRepository.findByStudentAndIsFinished(student, isFinished,
 				PageRequest.of(0, 4));
-		System.out.println(enrolls.getContent().size());
+
 		List<Course> courses = enrolls.toList().stream().map(enroll -> enroll.getCourse()).collect(Collectors.toList());
 
 		return courses;
@@ -375,6 +380,19 @@ public class CourseServiceImpl implements CourseService {
 		}
 
 		return result.stream().sorted((o1, o2) -> o1.getWeek().compareTo(o2.getWeek())).collect(Collectors.toList());
+	}       
+
+	@Override
+	public List<Course> searchCourse(String searchTerm, Teacher teacher) {
+		List<Course> courses;
+
+		if (teacher == null) {
+			courses = courseRepository.findByTitleContaining(searchTerm, PageRequest.of(0, 4));
+		} else {
+			courses = courseRepository.findByTeacherAndTitleContaining(teacher, searchTerm, PageRequest.of(0, 4));
+		}
+
+		return courses;
 	}
 
 }

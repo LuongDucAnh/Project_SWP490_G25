@@ -10,9 +10,9 @@ import com.example.swp490_g25_sse.dto.MilestoneDto;
 import com.example.swp490_g25_sse.model.Course;
 import com.example.swp490_g25_sse.model.Student;
 import com.example.swp490_g25_sse.model.StudentCourseEnrollment;
+import com.example.swp490_g25_sse.model.Teacher;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.data.domain.Page;
 
 /**
  *
@@ -41,4 +41,6 @@ public interface CourseService {
 	List<Course> getStudentCourses(Student student, Boolean isFinished);
 
 	Boolean isAlreadyEnrolled(Course course, Student student);
+        
+        List<Course> searchCourse(String searchTerm, Teacher teacher);
 }

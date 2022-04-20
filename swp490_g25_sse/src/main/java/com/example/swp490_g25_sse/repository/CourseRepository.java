@@ -5,6 +5,7 @@
 package com.example.swp490_g25_sse.repository;
 
 import com.example.swp490_g25_sse.model.Course;
+import com.example.swp490_g25_sse.model.Teacher;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -52,6 +53,10 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     List<Object[]> countTopFeedbackCourse(Integer limit);
     
     List<Course> findByIdIn(List<Long> ids);
+    
+    List<Course> findByTitleContaining(String title, Pageable pageable);
+
+    List<Course> findByTeacherAndTitleContaining(Teacher teacher, String title, Pageable pageable);
 
     Course findFirstById(long id);
 }
