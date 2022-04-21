@@ -20,27 +20,31 @@ import java.util.Optional;
  */
 public interface CourseService {
 
-        Optional<Course> getCourseById(long id);
+    Optional<Course> getCourseById(long id);
 
-	Course createCourse(CourseDto courseDto);
+    Course createCourse(CourseDto courseDto);
 
-	List<Course> getCourses();
+    List<Course> getCourses();
 
-	List<CourseOverviewDto> overview(StudentCourseEnrollment enroll);
+    List<CourseOverviewDto> overview(StudentCourseEnrollment enroll);
 
-	List<MilestoneDto> milestone(StudentCourseEnrollment enroll);
+    List<MilestoneDto> milestone(StudentCourseEnrollment enroll);
 
-	Optional<Course> deleteCourse(long id);
+    Optional<Course> deleteCourse(long id);
 
-	Course updateCourse(CourseDto courseDto, long id);
-        
-        List<CourseDto> getMostEnrolledCourses();
+    Course updateCourse(CourseDto courseDto, long id);
 
-	List<CourseDto> getBestFeedbackCourses();
+    List<CourseDto> getMostEnrolledCourses();
 
-	List<Course> getStudentCourses(Student student, Boolean isFinished);
+    List<CourseDto> getBestFeedbackCourses();
 
-	Boolean isAlreadyEnrolled(Course course, Student student);
-        
-        List<Course> searchCourse(String searchTerm, Teacher teacher);
+    List<Course> getStudentCourses(Student student, Boolean isFinished);
+
+    Boolean isAlreadyEnrolled(Course course, Student student);
+
+    long getNumberOfFinishedCourse(Student student, Boolean isFinished);
+
+    long getNumberOfStudentCourses(Student student);
+
+    List<Course> searchCourse(String searchTerm, Teacher teacher);
 }
