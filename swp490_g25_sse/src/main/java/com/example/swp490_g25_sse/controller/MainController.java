@@ -6,6 +6,7 @@ package com.example.swp490_g25_sse.controller;
 
 import com.example.swp490_g25_sse.dto.AccountInfoDto;
 import com.example.swp490_g25_sse.dto.UserInfoDto;
+import com.example.swp490_g25_sse.model.Course;
 import com.example.swp490_g25_sse.model.Student;
 import com.example.swp490_g25_sse.service.CourseService;
 import com.example.swp490_g25_sse.service.CustomUserDetailsService;
@@ -14,6 +15,7 @@ import com.example.swp490_g25_sse.service.UserService;
 import com.example.swp490_g25_sse.service.UserServiceImpl;
 import com.example.swp490_g25_sse.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -47,7 +49,10 @@ public class MainController {
     private StudentService studentService;
 
     @GetMapping("/")
-    private String index() {
+    private String index(Model model) {
+        Page<Course> courses = courseService.get4NewestCourses();
+
+        model.addAttribute("courses", courses);
         return "index";
     }
 
