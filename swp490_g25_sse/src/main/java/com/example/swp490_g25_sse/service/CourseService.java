@@ -43,11 +43,13 @@ public interface CourseService {
 
     Boolean isAlreadyEnrolled(Course course, Student student);
 
+    Boolean isCourseFinished(StudentCourseEnrollment enroll);
+
     long getNumberOfFinishedCourse(Student student, Boolean isFinished);
 
     long getNumberOfStudentCourses(Student student);
 
     List<Course> searchCourse(String searchTerm, Teacher teacher);
-    
+
     Page<Course> get4NewestCourses();
 }

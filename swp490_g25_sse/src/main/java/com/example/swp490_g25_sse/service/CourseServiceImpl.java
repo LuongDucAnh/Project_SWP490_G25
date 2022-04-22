@@ -212,14 +212,15 @@ public class CourseServiceImpl implements CourseService {
 
         AtomicInteger index = new AtomicInteger();
 
-        return courseRepository.findByIdIn(courseEnrolledInfo.stream().map(el -> el[0]).toList()).stream().map(course -> {
-            CourseDto courseDto = modelMapper.map(course, CourseDto.class);
+        return courseRepository.findByIdIn(courseEnrolledInfo.stream().map(el -> el[0]).toList()).stream()
+                .map(course -> {
+                    CourseDto courseDto = modelMapper.map(course, CourseDto.class);
 
-            courseDto.setTotalEnrolls(courseEnrolledInfo.get(index.get())[1]);
+                    courseDto.setTotalEnrolls(courseEnrolledInfo.get(index.get())[1]);
 
-            index.getAndIncrement();
-            return courseDto;
-        }).toList();
+                    index.getAndIncrement();
+                    return courseDto;
+                }).toList();
     }
 
     @Override
@@ -238,14 +239,15 @@ public class CourseServiceImpl implements CourseService {
 
         AtomicInteger index = new AtomicInteger();
 
-        return courseRepository.findByIdIn(courseFeedbackInfo.stream().map(el -> el[0]).toList()).stream().map(course -> {
-            CourseDto courseDto = modelMapper.map(course, CourseDto.class);
+        return courseRepository.findByIdIn(courseFeedbackInfo.stream().map(el -> el[0]).toList()).stream()
+                .map(course -> {
+                    CourseDto courseDto = modelMapper.map(course, CourseDto.class);
 
-            courseDto.setFeedbackRating(courseFeedbackInfo.get(index.get())[1]);
+                    courseDto.setFeedbackRating(courseFeedbackInfo.get(index.get())[1]);
 
-            index.getAndIncrement();
-            return courseDto;
-        }).toList();
+                    index.getAndIncrement();
+                    return courseDto;
+                }).toList();
     }
 
     @Override
@@ -383,18 +385,40 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public long getNumberOfFinishedCourse(Student student, Boolean isFinished) {
+    public Boolean isCourseFinished(StudentCourseEnrollment enroll) {
+        if (enroll.getIsFinished()) {
+            return true;
+        }
 
-        List<StudentCourseEnrollment> studentEnrollments = enrollmentRepository.findByStudent(student);
-        studentEnrollments.stream().forEach(enroll -> this.isCourseFinished(enroll));
-        long courseCount = enrollmentRepository.countByStudentAndIsFinished(student, isFinished);
-        return courseCount;
-    }
+        Course course = enroll.getCourse();
 
-    @Override
-    public long getNumberOfStudentCourses(Student student) {
-        long courseCount = enrollmentRepository.countByStudent(student);
-        return courseCount;
+        List<Lecture> lectures = course.getLectures();
+        List<Test> tests = course.getTests();
+
+        Boolean isAllLectureFinished = lectures.stream().allMatch(lecture -> {
+            LectureResult result = lectureResultRepository.findFirstByEnrollmentAndLecture(enroll, lecture);
+
+            return result.getIsFinished();
+        });
+
+        if (!isAllLectureFinished) {
+            return false;
+        }
+
+        Boolean isAllTestFinished = tests.stream().allMatch(test -> {
+            TestResult result = testResultRepository.findFirstByEnrollmentAndTest(enroll, test);
+
+            return result.getIsFinished();
+        });
+
+        if (!isAllTestFinished) {
+            return false;
+        }
+
+        enroll.setIsFinished(true);
+        enrollmentRepository.save(enroll);
+
+        return true;
     }
 
     @Override
@@ -408,6 +432,21 @@ public class CourseServiceImpl implements CourseService {
         }
 
         return courses;
+    }
+
+    @Override
+    public long getNumberOfFinishedCourse(Student student, Boolean isFinished) {
+
+        List<StudentCourseEnrollment> studentEnrollments = enrollmentRepository.findByStudent(student);
+        studentEnrollments.stream().forEach(enroll -> this.isCourseFinished(enroll));
+        long courseCount = enrollmentRepository.countByStudentAndIsFinished(student, isFinished);
+        return courseCount;
+    }
+
+    @Override
+    public long getNumberOfStudentCourses(Student student) {
+        long courseCount = enrollmentRepository.countByStudent(student);
+        return courseCount;
     }
 
     @Override
