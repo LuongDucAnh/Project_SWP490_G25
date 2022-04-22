@@ -13,6 +13,7 @@ import com.example.swp490_g25_sse.model.StudentCourseEnrollment;
 import com.example.swp490_g25_sse.model.Teacher;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
 
 /**
  *
@@ -47,4 +48,6 @@ public interface CourseService {
     long getNumberOfStudentCourses(Student student);
 
     List<Course> searchCourse(String searchTerm, Teacher teacher);
+    
+    Page<Course> get4NewestCourses();
 }
