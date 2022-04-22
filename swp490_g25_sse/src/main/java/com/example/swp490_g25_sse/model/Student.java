@@ -33,7 +33,10 @@ public class Student {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private List<Question> questions;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private Set<StudentCourseEnrollment> courses;
 
     public Student() {

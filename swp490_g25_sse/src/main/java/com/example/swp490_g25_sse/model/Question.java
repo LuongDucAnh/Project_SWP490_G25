@@ -9,6 +9,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.OneToMany;
 
 @Entity()
 @Table(name = "questions")
@@ -19,14 +22,6 @@ public class Question {
     }
 
     public Question(Student student, Course course, String title, String tag, String content) {
-        this.student = student;
-        this.title = title;
-        this.content = content;
-        this.tag = tag;
-        this.course = course;
-    }
-    
-    public Question(Student student, Course course, String title, String content) {
         this.student = student;
         this.title = title;
         this.content = content;
@@ -49,10 +44,13 @@ public class Question {
     @JsonIgnore
     private Student student;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "course_id", nullable = false)
     @JsonIgnore
     private Course course;
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    private List<Answer> answers;
 
     public Student getStudent() {
         return this.student;
