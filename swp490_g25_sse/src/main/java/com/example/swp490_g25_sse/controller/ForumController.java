@@ -108,6 +108,11 @@ public class ForumController {
         questionService.createQuestion(questionDto);
         return "redirect:/app/forum/{id}";
     }
+    
+    private String creatNewQuestion(@ModelAttribute("question") QuestionDto questionDto) {
+        questionService.createQuestion(questionDto);
+        return "redirect:/app/forum/{id}";
+    }
 
     @GetMapping("/answer/course/{courseId}/question/{id}")
     private String getStudentAnswer(Model model, @PathVariable String id, @PathVariable String courseId) {
