@@ -16,6 +16,6 @@ import java.util.List;
  */
 public interface FeedbackService {
     Feedback createNewFeedback(FeedbackDto feedbackDto, Student student, Course course);
-
+    Feedback AddNewFeedback(FeedbackDto feedbackDto, Student student, Course course);
 	List<Feedback> getAllFeedBack(Course course);
 }
