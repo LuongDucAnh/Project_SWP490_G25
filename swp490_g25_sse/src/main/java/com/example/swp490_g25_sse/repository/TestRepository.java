@@ -7,9 +7,7 @@ package com.example.swp490_g25_sse.repository;
 import java.util.List;
 
 import com.example.swp490_g25_sse.model.Course;
-import com.example.swp490_g25_sse.model.StudentCourseEnrollment;
 import com.example.swp490_g25_sse.model.Test;
-import com.example.swp490_g25_sse.model.TestResult;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -162,12 +162,21 @@ public class CourseController {
     @PostMapping(consumes = "application/json", produces = "application/json")
     public Course createCourse(@RequestBody CourseDto dto) {
         System.out.println("=============================================================================");
-        Course course = courseService.createCourse(dto);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetailsService currentUser = (CustomUserDetailsService) auth.getPrincipal();
+        Teacher teacher = teacherRepository.findFirstByUserId(currentUser.getUser().getId());
+        
+        Course rawCourse = new Course(teacher,
+				dto.getCourseImgUrl(),
+				dto.getCourseTitle(),
+				dto.getContent());
+        
+        Course course = courseService.createCourse(dto, rawCourse);
 
         return course;
     }
 
-    
+    //
     @DeleteMapping(value = "/{id}", produces = "application/json")
     public Course deleteCourse(@PathVariable long id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

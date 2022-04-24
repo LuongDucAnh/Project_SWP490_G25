@@ -18,7 +18,6 @@ import com.example.swp490_g25_sse.model.StudentCourseEnrollment;
 import com.example.swp490_g25_sse.model.Teacher;
 import com.example.swp490_g25_sse.model.Test;
 import com.example.swp490_g25_sse.model.TestResult;
-import com.example.swp490_g25_sse.model.User;
 import com.example.swp490_g25_sse.repository.CourseRepository;
 import com.example.swp490_g25_sse.repository.LectureRepository;
 import com.example.swp490_g25_sse.repository.LectureResultRepository;
@@ -26,29 +25,22 @@ import com.example.swp490_g25_sse.repository.StudentCourseEnrollmentRepository;
 import com.example.swp490_g25_sse.repository.TeacherRepository;
 import com.example.swp490_g25_sse.repository.TestRepository;
 import com.example.swp490_g25_sse.repository.TestResultRepository;
-import com.example.swp490_g25_sse.repository.UserRepository;
 import com.example.swp490_g25_sse.util.DtoToDaoConversion;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -89,18 +81,8 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
-    public Course createCourse(CourseDto dto) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        CustomUserDetailsService currentUser = (CustomUserDetailsService) auth.getPrincipal();
+    public Course createCourse(CourseDto dto, Course course) {
 
-        Teacher teacher = teacherRepository.findFirstByUserId(currentUser.getUser().getId());
-
-        Course course = new Course(teacher,
-                dto.getCourseImgUrl(),
-                dto.getCourseTitle(),
-                dto.getContent());
-
-        course = courseRepository.save(course);
         List<Lecture> lectures = DtoToDaoConversion.convertLectureDtosToListOfLectureModel(dto.getLectureDtos(),
                 course);
         System.out.println(lectures);
@@ -112,7 +94,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> getCourses() {
+    public List<Course> getCourses() {       
         return courseRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
 

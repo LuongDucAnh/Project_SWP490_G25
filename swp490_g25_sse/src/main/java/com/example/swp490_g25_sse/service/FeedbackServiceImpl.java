@@ -32,16 +32,6 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     return feedback;
   }
-  
-  @Override
-  public Feedback AddNewFeedback(FeedbackDto feedbackDto, Student student, Course course) {
-    Feedback feedback = new Feedback(course, student, feedbackDto.getRating(), feedbackDto.getContentKey(),
-        feedbackDto.getContent());
-
-    feedbackRepository.save(feedback);
-
-    return feedback;
-  }
 
   @Override
   public List<Feedback> getAllFeedBack(Course course) {

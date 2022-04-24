@@ -34,7 +34,7 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author bettafish15
+ * @author Admin
  */
 @Service
 public class FirebaseStorageStrategyService implements StorageStrategyService {

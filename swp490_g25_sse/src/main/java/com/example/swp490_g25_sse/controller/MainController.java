@@ -12,7 +12,6 @@ import com.example.swp490_g25_sse.service.CourseService;
 import com.example.swp490_g25_sse.service.CustomUserDetailsService;
 import com.example.swp490_g25_sse.service.StudentService;
 import com.example.swp490_g25_sse.service.UserService;
-import com.example.swp490_g25_sse.service.UserServiceImpl;
 import com.example.swp490_g25_sse.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

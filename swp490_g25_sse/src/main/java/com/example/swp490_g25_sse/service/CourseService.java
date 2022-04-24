@@ -23,7 +23,7 @@ public interface CourseService {
 
     Optional<Course> getCourseById(long id);
 
-    Course createCourse(CourseDto courseDto);
+    Course createCourse(CourseDto courseDto, Course course);
 
     List<Course> getCourses();
 
@@ -45,11 +45,11 @@ public interface CourseService {
 
     Boolean isCourseFinished(StudentCourseEnrollment enroll);
 
+    List<Course> searchCourse(String searchTerm, Teacher teacher);
+
     long getNumberOfFinishedCourse(Student student, Boolean isFinished);
 
     long getNumberOfStudentCourses(Student student);
-
-    List<Course> searchCourse(String searchTerm, Teacher teacher);
 
     Page<Course> get4NewestCourses();
 }
