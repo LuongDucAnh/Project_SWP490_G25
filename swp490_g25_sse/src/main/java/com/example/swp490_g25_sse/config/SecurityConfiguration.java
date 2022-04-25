@@ -83,9 +83,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.requestCache().disable();
 
         http
-                //                .exceptionHandling()
-                //                .authenticationEntryPoint(unauthorizedHandler)
-                //                .and()
+                
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(
@@ -114,13 +112,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login?logout")
                 .permitAll();
 
-//        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//        web.ignoring().antMatchers(HttpMethod.POST, "/api/file");
-//    }
+
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
