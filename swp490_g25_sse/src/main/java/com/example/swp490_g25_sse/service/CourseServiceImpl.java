@@ -94,7 +94,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> getCourses() {       
+    public List<Course> getCourses() {
         return courseRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
 
@@ -118,7 +118,7 @@ public class CourseServiceImpl implements CourseService {
             course.setImageUrl(courseDto.getCourseImgUrl());
             List<LectureDto> lectureDtos = courseDto.getLectureDtos();
             List<TestDto> testDtos = courseDto.getTestDtos();
-
+            List<Lecture> lectures = new ArrayList<>();
             for (int i = 0; i < lectureDtos.size(); i++) {
                 LectureDto lectureDto = lectureDtos.get(i);
                 Lecture lecture;
@@ -140,10 +140,11 @@ public class CourseServiceImpl implements CourseService {
                     lecture = new Lecture(course, lectureDto.getWeek(), lectureDto.getName(), lectureDto.getContent(),
                             lectureDto.getResourceUrl(), lectureDto.getIndex());
                 }
-
-                lectureRepository.save(lecture);
+                lectures.add(lecture);
             }
+            lectureRepository.saveAll(lectures);
 
+            List<Test> tests = new ArrayList<>();
             for (int i = 0; i < testDtos.size(); i++) {
                 TestDto testDto = testDtos.get(i);
                 Test test;
@@ -165,10 +166,9 @@ public class CourseServiceImpl implements CourseService {
                     test = new Test(course, testDto.getWeek(), testDto.getName(), testDto.getContent(),
                             testDto.getIndex(), testDto.getTime());
                 }
-
-                testRepository.save(test);
+                tests.add(test);
             }
-
+            testRepository.saveAll(tests);
             courseRepository.save(course);
         }
 
