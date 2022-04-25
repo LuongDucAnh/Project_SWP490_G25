@@ -3,6 +3,7 @@ package com.example.swp490_g25_sse.controller;
 import com.example.swp490_g25_sse.model.Course;
 import com.example.swp490_g25_sse.model.Feedback;
 import com.example.swp490_g25_sse.model.Teacher;
+import com.example.swp490_g25_sse.repository.FeedbackRepository;
 import com.example.swp490_g25_sse.repository.TeacherRepository;
 import com.example.swp490_g25_sse.service.CourseService;
 import com.example.swp490_g25_sse.service.CustomUserDetailsService;
@@ -11,8 +12,10 @@ import com.example.swp490_g25_sse.service.FeedbackService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -27,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 /**
  *
- * @author msi
+ * @author bettafish15
  */
 @Controller
 @RequestMapping("/app/teacher")

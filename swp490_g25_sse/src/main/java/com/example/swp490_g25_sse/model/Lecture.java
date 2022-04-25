@@ -7,6 +7,7 @@ package com.example.swp490_g25_sse.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,7 +24,7 @@ import javax.persistence.UniqueConstraint;
 
 /**
  *
- * @author msi
+ * @author bettafish15
  */
 @Entity()
 @Table(name = "lectures", uniqueConstraints = {

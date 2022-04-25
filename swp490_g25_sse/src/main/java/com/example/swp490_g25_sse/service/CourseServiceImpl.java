@@ -18,6 +18,7 @@ import com.example.swp490_g25_sse.model.StudentCourseEnrollment;
 import com.example.swp490_g25_sse.model.Teacher;
 import com.example.swp490_g25_sse.model.Test;
 import com.example.swp490_g25_sse.model.TestResult;
+import com.example.swp490_g25_sse.model.User;
 import com.example.swp490_g25_sse.repository.CourseRepository;
 import com.example.swp490_g25_sse.repository.LectureRepository;
 import com.example.swp490_g25_sse.repository.LectureResultRepository;
@@ -25,416 +26,425 @@ import com.example.swp490_g25_sse.repository.StudentCourseEnrollmentRepository;
 import com.example.swp490_g25_sse.repository.TeacherRepository;
 import com.example.swp490_g25_sse.repository.TestRepository;
 import com.example.swp490_g25_sse.repository.TestResultRepository;
+import com.example.swp490_g25_sse.repository.UserRepository;
 import com.example.swp490_g25_sse.util.DtoToDaoConversion;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import org.modelmapper.ModelMapper;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author msi
+ * @author bettafish15
  */
 @Service
 public class CourseServiceImpl implements CourseService {
 
-    @Autowired
-    private CourseRepository courseRepository;
-
-    @Autowired
-    private LectureRepository lectureRepository;
-
-    @Autowired
-    private TestRepository testRepository;
-
-    @Autowired
-    private LectureResultRepository lectureResultRepository;
-
-    @Autowired
-    private TestResultRepository testResultRepository;
-    @Autowired
-    private TeacherRepository teacherRepository;
-
-    @Autowired
-    private StudentCourseEnrollmentRepository enrollmentRepository;
-
-    @Autowired
-    private ModelMapper modelMapper;
-
-    @Override
-    public Optional<Course> getCourseById(long id) {
-        return courseRepository.findById(id);
-    }
-
-    @Override
-    @Transactional(rollbackFor = {Exception.class, Throwable.class})
-    public Course createCourse(CourseDto dto, Course course) {
-
-        List<Lecture> lectures = DtoToDaoConversion.convertLectureDtosToListOfLectureModel(dto.getLectureDtos(),
-                course);
-        System.out.println(lectures);
-        List<Test> tests = DtoToDaoConversion.convertTestDtosToListOfTestModel(dto.getTestDtos(), course);
-        lectureRepository.saveAll(lectures);
-        testRepository.saveAll(tests);
-
-        return courseRepository.save(course);
-    }
-
-    @Override
-    public List<Course> getCourses() {
-        return courseRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
-    }
-
-    @Override
-    public Optional<Course> deleteCourse(long id) {
-        Optional<Course> course = courseRepository.findById(id);
-        courseRepository.delete(course.get());
-
-        return course;
-    }
-
-    @Override
-    @Transactional(rollbackFor = {Exception.class, Throwable.class})
-    public Course updateCourse(CourseDto courseDto, long id) {
-        Optional<Course> courseOptionalWrapper = courseRepository.findById(id);
-        Course course = courseOptionalWrapper.get();
-
-        if (courseOptionalWrapper.isPresent()) {
-            course.setTitle(courseDto.getCourseTitle());
-            course.setContent(courseDto.getContent());
-            course.setImageUrl(courseDto.getCourseImgUrl());
-            List<LectureDto> lectureDtos = courseDto.getLectureDtos();
-            List<TestDto> testDtos = courseDto.getTestDtos();
-            List<Lecture> lectures = new ArrayList<>();
-            for (int i = 0; i < lectureDtos.size(); i++) {
-                LectureDto lectureDto = lectureDtos.get(i);
-                Lecture lecture;
-
-                if (lectureDto.id != null) {
-                    lecture = lectureRepository.getById(lectureDto.id);
-                    if (lecture.getCourse().getId() != course.getId()) {
-                        System.out.println("=======================================================================");
-                        throw new BaseRestException(HttpStatus.FORBIDDEN,
-                                "there is a lecture that is not belong to this course");
-                    }
-                    lecture.setName(lectureDto.getName());
-                    lecture.setContent(lectureDto.getContent());
-                    lecture.setIndexOrder(lectureDto.getIndex());
-                    lecture.setResourceUrl(lectureDto.getResourceUrl());
-                    lecture.setWeek(lectureDto.getWeek());
-
-                } else {
-                    lecture = new Lecture(course, lectureDto.getWeek(), lectureDto.getName(), lectureDto.getContent(),
-                            lectureDto.getResourceUrl(), lectureDto.getIndex());
-                }
-                lectures.add(lecture);
-            }
-            lectureRepository.saveAll(lectures);
-
-            List<Test> tests = new ArrayList<>();
-            for (int i = 0; i < testDtos.size(); i++) {
-                TestDto testDto = testDtos.get(i);
-                Test test;
-
-                if (testDto.id != null) {
-                    test = testRepository.getById(testDto.id);
-                    if (test.getCourse().getId() != course.getId()) {
-                        System.out.println("=======================================================================");
-                        throw new BaseRestException(HttpStatus.FORBIDDEN,
-                                "there is a test that is not belong to this course");
-                    }
-                    test.setName(testDto.getName());
-                    test.setContent(testDto.getContent());
-                    test.setIndexOrder(testDto.getIndex());
-                    test.setWeek(testDto.getWeek());
-                    test.setTime(testDto.getTime());
+	@Autowired
+	private CourseRepository courseRepository;
+
+	@Autowired
+	private LectureRepository lectureRepository;
+
+	@Autowired
+	private TestRepository testRepository;
+
+	@Autowired
+	private LectureResultRepository lectureResultRepository;
+
+	@Autowired
+	private TestResultRepository testResultRepository;
+	@Autowired
+	private TeacherRepository teacherRepository;
+
+	@Autowired
+	private StudentCourseEnrollmentRepository enrollmentRepository;
+
+	@Autowired
+	private ModelMapper modelMapper;
+
+	@Override
+	public Optional<Course> getCourseById(long id) {
+		return courseRepository.findById(id);
+	}
+
+	@Override
+	@Transactional(rollbackFor = { Exception.class, Throwable.class })
+	public Course createCourse(CourseDto dto, Course course) {		
+            
+		List<Lecture> lectures = DtoToDaoConversion.convertLectureDtosToListOfLectureModel(dto.getLectureDtos(),
+				course);
+		System.out.println(lectures);
+		List<Test> tests = DtoToDaoConversion.convertTestDtosToListOfTestModel(dto.getTestDtos(), course);
+		lectureRepository.saveAll(lectures);
+		testRepository.saveAll(tests);
+
+		return courseRepository.save(course);
+	}
+
+	@Override
+	public List<Course> getCourses() {
+		return courseRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+	}
+
+	@Override
+	public Optional<Course> deleteCourse(long id) {
+		Optional<Course> course = courseRepository.findById(id);
+		courseRepository.delete(course.get());
+
+		return course;
+	}
+
+	@Override
+	@Transactional(rollbackFor = { Exception.class, Throwable.class })
+	public Course updateCourse(CourseDto courseDto, long id) {
+		Optional<Course> courseOptionalWrapper = courseRepository.findById(id);
+		Course course = courseOptionalWrapper.get();
+
+		if (courseOptionalWrapper.isPresent()) {
+			course.setTitle(courseDto.getCourseTitle());
+			course.setContent(courseDto.getContent());
+			course.setImageUrl(courseDto.getCourseImgUrl());
+			List<LectureDto> lectureDtos = courseDto.getLectureDtos();
+			List<TestDto> testDtos = courseDto.getTestDtos();
+
+			for (int i = 0; i < lectureDtos.size(); i++) {
+				LectureDto lectureDto = lectureDtos.get(i);
+				Lecture lecture;
+
+				if (lectureDto.id != null) {
+					lecture = lectureRepository.getById(lectureDto.id);
+					if (lecture.getCourse().getId() != course.getId()) {
+						System.out.println("=======================================================================");
+						throw new BaseRestException(HttpStatus.FORBIDDEN,
+								"there is a lecture that is not belong to this course");
+					}
+					lecture.setName(lectureDto.getName());
+					lecture.setContent(lectureDto.getContent());
+					lecture.setIndexOrder(lectureDto.getIndex());
+					lecture.setResourceUrl(lectureDto.getResourceUrl());
+					lecture.setWeek(lectureDto.getWeek());
+
+				} else {
+					lecture = new Lecture(course, lectureDto.getWeek(), lectureDto.getName(), lectureDto.getContent(),
+							lectureDto.getResourceUrl(), lectureDto.getIndex());
+				}
+
+				lectureRepository.save(lecture);
+			}
+
+			for (int i = 0; i < testDtos.size(); i++) {
+				TestDto testDto = testDtos.get(i);
+				Test test;
+
+				if (testDto.id != null) {
+					test = testRepository.getById(testDto.id);
+					if (test.getCourse().getId() != course.getId()) {
+						System.out.println("=======================================================================");
+						throw new BaseRestException(HttpStatus.FORBIDDEN,
+								"there is a test that is not belong to this course");
+					}
+					test.setName(testDto.getName());
+					test.setContent(testDto.getContent());
+					test.setIndexOrder(testDto.getIndex());
+					test.setWeek(testDto.getWeek());
+					test.setTime(testDto.getTime());
 
-                } else {
-                    test = new Test(course, testDto.getWeek(), testDto.getName(), testDto.getContent(),
-                            testDto.getIndex(), testDto.getTime());
-                }
-                tests.add(test);
-            }
-            testRepository.saveAll(tests);
-            courseRepository.save(course);
-        }
+				} else {
+					test = new Test(course, testDto.getWeek(), testDto.getName(), testDto.getContent(),
+							testDto.getIndex(), testDto.getTime());
+				}
 
-        courseOptionalWrapper = courseRepository.findById(id);
-        course = courseOptionalWrapper.get();
+				testRepository.save(test);
+			}
 
-        return course;
-    }
+			courseRepository.save(course);
+		}
 
-    @Override
-    public List<CourseDto> getMostEnrolledCourses() {
-        // Page<Course> courses = courseRepository.findAll(Pageable.ofSize(10));
-        List<Object[]> resultSet = courseRepository.countTopEnrolledCourse(4);
+		courseOptionalWrapper = courseRepository.findById(id);
+		course = courseOptionalWrapper.get();
 
-        List<Long[]> courseEnrolledInfo = resultSet.stream().map(el -> {
-            Long[] arr = new Long[2];
+		return course;
+	}
 
-            arr[0] = (((BigInteger) el[0]).longValue());
-            arr[1] = (((Integer) el[1]).longValue());
+	@Override
+	public List<CourseDto> getMostEnrolledCourses() {
+		// Page<Course> courses = courseRepository.findAll(Pageable.ofSize(10));
+		List<Object[]> resultSet = courseRepository.countTopEnrolledCourse(4);
 
-            return arr;
-        }).toList();
+		List<Long[]> courseEnrolledInfo = resultSet.stream().map(el -> {
+			Long[] arr = new Long[2];
 
-        AtomicInteger index = new AtomicInteger();
+			arr[0] = (((BigInteger) el[0]).longValue());
+			arr[1] = (((Integer) el[1]).longValue());
 
-        return courseRepository.findByIdIn(courseEnrolledInfo.stream().map(el -> el[0]).toList()).stream()
-                .map(course -> {
-                    CourseDto courseDto = modelMapper.map(course, CourseDto.class);
+			return arr;
+		}).toList();
 
-                    courseDto.setTotalEnrolls(courseEnrolledInfo.get(index.get())[1]);
+		AtomicInteger index = new AtomicInteger();
 
-                    index.getAndIncrement();
-                    return courseDto;
-                }).toList();
-    }
+		return courseRepository.findByIdIn(courseEnrolledInfo.stream().map(el -> el[0]).toList()).stream()
+				.map(course -> {
+					CourseDto courseDto = modelMapper.map(course, CourseDto.class);
 
-    @Override
-    public List<CourseDto> getBestFeedbackCourses() {
-        // Page<Course> courses = courseRepository.findAll(Pageable.ofSize(10));
-        List<Object[]> resultSet = courseRepository.countTopFeedbackCourse(4);
+					courseDto.setTotalEnrolls(courseEnrolledInfo.get(index.get())[1]);
 
-        List<Long[]> courseFeedbackInfo = resultSet.stream().map(el -> {
-            Long[] arr = new Long[2];
+					index.getAndIncrement();
+					return courseDto;
+				}).toList();
+	}
 
-            arr[0] = (((BigInteger) el[0]).longValue());
-            arr[1] = (((Integer) el[1]).longValue());
+	@Override
+	public List<CourseDto> getBestFeedbackCourses() {
+		// Page<Course> courses = courseRepository.findAll(Pageable.ofSize(10));
+		List<Object[]> resultSet = courseRepository.countTopFeedbackCourse(4);
 
-            return arr;
-        }).toList();
+		List<Long[]> courseFeedbackInfo = resultSet.stream().map(el -> {
+			Long[] arr = new Long[2];
 
-        AtomicInteger index = new AtomicInteger();
+			arr[0] = (((BigInteger) el[0]).longValue());
+			arr[1] = (((Integer) el[1]).longValue());
 
-        return courseRepository.findByIdIn(courseFeedbackInfo.stream().map(el -> el[0]).toList()).stream()
-                .map(course -> {
-                    CourseDto courseDto = modelMapper.map(course, CourseDto.class);
+			return arr;
+		}).toList();
 
-                    courseDto.setFeedbackRating(courseFeedbackInfo.get(index.get())[1]);
+		AtomicInteger index = new AtomicInteger();
 
-                    index.getAndIncrement();
-                    return courseDto;
-                }).toList();
-    }
+		return courseRepository.findByIdIn(courseFeedbackInfo.stream().map(el -> el[0]).toList()).stream()
+				.map(course -> {
+					CourseDto courseDto = modelMapper.map(course, CourseDto.class);
 
-    @Override
-    public Boolean isAlreadyEnrolled(Course course, Student student) {
-        StudentCourseEnrollment enroll = enrollmentRepository.findFirstByStudentAndCourse(student, course);
-        return enroll != null;
-    }
+					courseDto.setFeedbackRating(courseFeedbackInfo.get(index.get())[1]);
 
-    @Override
-    public List<Course> getStudentCourses(Student student, Boolean isFinished) {
-        List<StudentCourseEnrollment> studentEnrollments = enrollmentRepository.findByStudent(student);
+					index.getAndIncrement();
+					return courseDto;
+				}).toList();
+	}
 
-        studentEnrollments.stream().forEach(enroll -> this.isCourseFinished(enroll));
+	@Override
+	public Boolean isAlreadyEnrolled(Course course, Student student) {
+		StudentCourseEnrollment enroll = enrollmentRepository.findFirstByStudentAndCourse(student, course);
+		return enroll != null;
+	}
 
-        Page<StudentCourseEnrollment> enrolls = enrollmentRepository.findByStudentAndIsFinished(student, isFinished,
-                PageRequest.of(0, 4));
+	@Override
+	public List<Course> getStudentCourses(Student student, Boolean isFinished) {
+		List<StudentCourseEnrollment> studentEnrollments = enrollmentRepository.findByStudent(student);
 
-        List<Course> courses = enrolls.toList().stream().map(enroll -> enroll.getCourse()).collect(Collectors.toList());
+		studentEnrollments.stream().forEach(enroll -> this.isCourseFinished(enroll));
 
-        return courses;
-    }
+		Page<StudentCourseEnrollment> enrolls = enrollmentRepository.findByStudentAndIsFinished(student, isFinished,
+				PageRequest.of(0, 4));
 
-    @Override
-    public List<CourseOverviewDto> overview(StudentCourseEnrollment enroll) {
-        Course course = enroll.getCourse();
-        List<CourseOverviewDto> result = new ArrayList<>();
+		List<Course> courses = enrolls.toList().stream().map(enroll -> enroll.getCourse()).collect(Collectors.toList());
 
-        List<Lecture> lectures = course.getLectures();
-        List<Test> tests = course.getTests();
+		return courses;
+	}
 
-        Map<String, CourseOverviewDto> map = new HashMap<String, CourseOverviewDto>();
+	@Override
+	public List<CourseOverviewDto> overview(StudentCourseEnrollment enroll) {
+		Course course = enroll.getCourse();
+		List<CourseOverviewDto> result = new ArrayList<>();
 
-        for (int i = 0; i < lectures.size(); i++) {
-            String week = lectures.get(i).getWeek();
+		List<Lecture> lectures = course.getLectures();
+		List<Test> tests = course.getTests();
 
-            if (map.get(week) == null) {
-                CourseOverviewDto courseOverview = new CourseOverviewDto();
-                courseOverview.setWeek(week);
-                courseOverview.setTotalLecture(lectureRepository.countByCourseAndWeek(course, week));
-                courseOverview.setTotalTest(0);
-                courseOverview.setFinishedTest(0);
+		Map<String, CourseOverviewDto> map = new HashMap<String, CourseOverviewDto>();
 
-                List<Lecture> currentWeekLectures = lectureRepository.findByCourseAndWeek(course, week);
-                Integer finishedLecture = currentWeekLectures.stream().filter(lecture -> {
-                    LectureResult temp = lectureResultRepository.findFirstByEnrollmentAndLecture(enroll, lecture);
+		for (int i = 0; i < lectures.size(); i++) {
+			String week = lectures.get(i).getWeek();
 
-                    return temp.getIsFinished();
-                }).toList().size();
+			if (map.get(week) == null) {
+				CourseOverviewDto courseOverview = new CourseOverviewDto();
+				courseOverview.setWeek(week);
+				courseOverview.setTotalLecture(lectureRepository.countByCourseAndWeek(course, week));
+				courseOverview.setTotalTest(0);
+				courseOverview.setFinishedTest(0);
 
-                courseOverview.setFinishedLecture(finishedLecture);
+				List<Lecture> currentWeekLectures = lectureRepository.findByCourseAndWeek(course, week);
+				Integer finishedLecture = currentWeekLectures.stream().filter(lecture -> {
+					LectureResult temp = lectureResultRepository.findFirstByEnrollmentAndLecture(enroll, lecture);
 
-                map.put(week, courseOverview);
-            }
-        }
+					return temp.getIsFinished();
+				}).toList().size();
 
-        for (int i = 0; i < tests.size(); i++) {
-            String week = tests.get(i).getWeek();
+				courseOverview.setFinishedLecture(finishedLecture);
 
-            if (map.get(week) == null) {
-                CourseOverviewDto courseOverview = new CourseOverviewDto();
-                courseOverview.setWeek(week);
-                courseOverview.setTotalTest(testRepository.countByCourseAndWeek(course, week));
+				map.put(week, courseOverview);
+			}
+		}
 
-                List<Test> currentWeekTests = testRepository.findByCourseAndWeek(course, week);
-                Integer finishedTest = currentWeekTests.stream().filter(test -> {
-                    TestResult temp = testResultRepository.findFirstByEnrollmentAndTest(enroll, test);
+		for (int i = 0; i < tests.size(); i++) {
+			String week = tests.get(i).getWeek();
 
-                    return temp.getIsFinished();
-                }).toList().size();
+			if (map.get(week) == null) {
+				CourseOverviewDto courseOverview = new CourseOverviewDto();
+				courseOverview.setWeek(week);
+				courseOverview.setTotalTest(testRepository.countByCourseAndWeek(course, week));
 
-                courseOverview.setFinishedTest(finishedTest);
-                courseOverview.setFinishedLecture(0);
-                courseOverview.setTotalLecture(0);
+				List<Test> currentWeekTests = testRepository.findByCourseAndWeek(course, week);
+				Integer finishedTest = currentWeekTests.stream().filter(test -> {
+					TestResult temp = testResultRepository.findFirstByEnrollmentAndTest(enroll, test);
 
-                map.put(week, courseOverview);
-            } else {
-                CourseOverviewDto courseOverview = map.get(week);
+					return temp.getIsFinished();
+				}).toList().size();
 
-                courseOverview.setTotalTest(testRepository.countByCourseAndWeek(course, week));
+				courseOverview.setFinishedTest(finishedTest);
+				courseOverview.setFinishedLecture(0);
+				courseOverview.setTotalLecture(0);
 
-                List<Test> currentWeekTests = testRepository.findByCourseAndWeek(course, week);
-                Integer finishedTest = currentWeekTests.stream().filter(test -> {
-                    TestResult temp = testResultRepository.findFirstByEnrollmentAndTest(enroll, test);
+				map.put(week, courseOverview);
+			} else {
+				CourseOverviewDto courseOverview = map.get(week);
 
-                    return temp.getIsFinished();
-                }).toList().size();
+				courseOverview.setTotalTest(testRepository.countByCourseAndWeek(course, week));
 
-                courseOverview.setFinishedTest(finishedTest);
+				List<Test> currentWeekTests = testRepository.findByCourseAndWeek(course, week);
+				Integer finishedTest = currentWeekTests.stream().filter(test -> {
+					TestResult temp = testResultRepository.findFirstByEnrollmentAndTest(enroll, test);
 
-                map.put(week, courseOverview);
-            }
-        }
+					return temp.getIsFinished();
+				}).toList().size();
 
-        for (Map.Entry<String, CourseOverviewDto> entry : map.entrySet()) {
-            result.add(entry.getValue());
-        }
+				courseOverview.setFinishedTest(finishedTest);
 
-        return result.stream().sorted((o1, o2) -> o1.getWeek().compareTo(o2.getWeek())).collect(Collectors.toList());
-    }
+				map.put(week, courseOverview);
+			}
+		}
 
-    @Override
-    public List<MilestoneDto> milestone(StudentCourseEnrollment enroll) {
-        Course course = enroll.getCourse();
-        List<MilestoneDto> result = new ArrayList<>();
+		for (Map.Entry<String, CourseOverviewDto> entry : map.entrySet()) {
+			result.add(entry.getValue());
+		}
 
-        List<Test> tests = course.getTests();
+		return result.stream().sorted((o1, o2) -> o1.getWeek().compareTo(o2.getWeek())).collect(Collectors.toList());
+	}
 
-        Map<String, MilestoneDto> map = new HashMap<String, MilestoneDto>();
+	@Override
+	public List<MilestoneDto> milestone(StudentCourseEnrollment enroll) {
+		Course course = enroll.getCourse();
+		List<MilestoneDto> result = new ArrayList<>();
 
-        for (int i = 0; i < tests.size(); i++) {
-            String week = tests.get(i).getWeek();
+		List<Test> tests = course.getTests();
 
-            if (map.get(week) == null) {
-                MilestoneDto milestone = new MilestoneDto();
-                milestone.setWeek(week);
+		Map<String, MilestoneDto> map = new HashMap<String, MilestoneDto>();
 
-                List<Test> currentWeekTests = testRepository.findByCourseAndWeek(course, week);
-                List<TestResult> testResult = currentWeekTests.stream().map(test -> {
-                    TestResult temp = testResultRepository.findFirstByEnrollmentAndTest(enroll, test);
+		for (int i = 0; i < tests.size(); i++) {
+			String week = tests.get(i).getWeek();
 
-                    return temp;
-                }).toList();
+			if (map.get(week) == null) {
+				MilestoneDto milestone = new MilestoneDto();
+				milestone.setWeek(week);
 
-                milestone.setResults(testResult);
+				List<Test> currentWeekTests = testRepository.findByCourseAndWeek(course, week);
+				List<TestResult> testResult = currentWeekTests.stream().map(test -> {
+					TestResult temp = testResultRepository.findFirstByEnrollmentAndTest(enroll, test);
 
-                map.put(week, milestone);
-            }
-        }
+					return temp;
+				}).toList();
 
-        for (Map.Entry<String, MilestoneDto> entry : map.entrySet()) {
-            result.add(entry.getValue());
-        }
+				milestone.setResults(testResult);
 
-        return result.stream().sorted((o1, o2) -> o1.getWeek().compareTo(o2.getWeek())).collect(Collectors.toList());
-    }
+				map.put(week, milestone);
+			}
+		}
 
-    @Override
-    public Boolean isCourseFinished(StudentCourseEnrollment enroll) {
-        if (enroll.getIsFinished()) {
-            return true;
-        }
+		for (Map.Entry<String, MilestoneDto> entry : map.entrySet()) {
+			result.add(entry.getValue());
+		}
 
-        Course course = enroll.getCourse();
+		return result.stream().sorted((o1, o2) -> o1.getWeek().compareTo(o2.getWeek())).collect(Collectors.toList());
+	}
 
-        List<Lecture> lectures = course.getLectures();
-        List<Test> tests = course.getTests();
+	@Override
+	public Boolean isCourseFinished(StudentCourseEnrollment enroll) {
+		if (enroll.getIsFinished()) {
+			return true;
+		}
 
-        Boolean isAllLectureFinished = lectures.stream().allMatch(lecture -> {
-            LectureResult result = lectureResultRepository.findFirstByEnrollmentAndLecture(enroll, lecture);
+		Course course = enroll.getCourse();
 
-            return result.getIsFinished();
-        });
+		List<Lecture> lectures = course.getLectures();
+		List<Test> tests = course.getTests();
 
-        if (!isAllLectureFinished) {
-            return false;
-        }
+		Boolean isAllLectureFinished = lectures.stream().allMatch(lecture -> {
+			LectureResult result = lectureResultRepository.findFirstByEnrollmentAndLecture(enroll, lecture);
 
-        Boolean isAllTestFinished = tests.stream().allMatch(test -> {
-            TestResult result = testResultRepository.findFirstByEnrollmentAndTest(enroll, test);
+			return result.getIsFinished();
+		});
 
-            return result.getIsFinished();
-        });
+		if (!isAllLectureFinished) {
+			return false;
+		}
 
-        if (!isAllTestFinished) {
-            return false;
-        }
+		Boolean isAllTestFinished = tests.stream().allMatch(test -> {
+			TestResult result = testResultRepository.findFirstByEnrollmentAndTest(enroll, test);
 
-        enroll.setIsFinished(true);
-        enrollmentRepository.save(enroll);
+			return result.getIsFinished();
+		});
 
-        return true;
-    }
+		if (!isAllTestFinished) {
+			return false;
+		}
 
-    @Override
-    public List<Course> searchCourse(String searchTerm, Teacher teacher) {
-        List<Course> courses;
+		enroll.setIsFinished(true);
+		enrollmentRepository.save(enroll);
 
-        if (teacher == null) {
-            courses = courseRepository.findByTitleContaining(searchTerm, PageRequest.of(0, 4));
-        } else {
-            courses = courseRepository.findByTeacherAndTitleContaining(teacher, searchTerm, PageRequest.of(0, 4));
-        }
+		return true;
+	}
 
-        return courses;
-    }
+	@Override
+	public List<Course> searchCourse(String searchTerm, Teacher teacher) {
+		List<Course> courses;
 
-    @Override
-    public long getNumberOfFinishedCourse(Student student, Boolean isFinished) {
+		if (teacher == null) {
+			courses = courseRepository.findByTitleContaining(searchTerm, PageRequest.of(0, 4));
+		} else {
+			courses = courseRepository.findByTeacherAndTitleContaining(teacher, searchTerm, PageRequest.of(0, 4));
+		}
 
-        List<StudentCourseEnrollment> studentEnrollments = enrollmentRepository.findByStudent(student);
-        studentEnrollments.stream().forEach(enroll -> this.isCourseFinished(enroll));
-        long courseCount = enrollmentRepository.countByStudentAndIsFinished(student, isFinished);
-        return courseCount;
-    }
+		return courses;
+	}
 
-    @Override
-    public long getNumberOfStudentCourses(Student student) {
-        long courseCount = enrollmentRepository.countByStudent(student);
-        return courseCount;
-    }
+	@Override
+	public long getNumberOfFinishedCourse(Student student, Boolean isFinished) {
 
-    @Override
-    public Page<Course> get4NewestCourses() {
-        Page<Course> courses = courseRepository.findAll(PageRequest.of(0, 4));
-        return courses;
-    }
+		List<StudentCourseEnrollment> studentEnrollments = enrollmentRepository.findByStudent(student);
+		studentEnrollments.stream().forEach(enroll -> this.isCourseFinished(enroll));
+		long courseCount = enrollmentRepository.countByStudentAndIsFinished(student, isFinished);
+		return courseCount;
+	}
+
+	@Override
+	public long getNumberOfStudentCourses(Student student) {
+		long courseCount = enrollmentRepository.countByStudent(student);
+		return courseCount;
+	}
+
+	@Override
+	public Page<Course> get4NewestCourses() {
+		Page<Course> courses = courseRepository.findAll(PageRequest.of(0, 4));
+		return courses;
+	}
 
 }

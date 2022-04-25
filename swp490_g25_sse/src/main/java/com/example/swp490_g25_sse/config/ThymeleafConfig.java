@@ -14,10 +14,6 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
-/**
- *
- * @author ADMIN
- */
 @Configuration
 public class ThymeleafConfig {
 

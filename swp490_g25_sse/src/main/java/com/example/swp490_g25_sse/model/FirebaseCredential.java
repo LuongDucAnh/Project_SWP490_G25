@@ -6,7 +6,7 @@ package com.example.swp490_g25_sse.model;
 
 /**
  *
- * @author Admin
+ * @author bettafish15
  */
 public class FirebaseCredential {
 
