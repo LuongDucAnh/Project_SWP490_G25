@@ -6,7 +6,7 @@ package com.example.swp490_g25_sse.dto;
 
 /**
  *
- * @author msi
+ * @author bettafish15
  */
 public class LectureDto {
 

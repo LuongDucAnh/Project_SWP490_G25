@@ -1,7 +1,6 @@
 package com.example.swp490_g25_sse.dto;
 
 public class QuestionDto {
-
     public Long id;
 
     public String title;

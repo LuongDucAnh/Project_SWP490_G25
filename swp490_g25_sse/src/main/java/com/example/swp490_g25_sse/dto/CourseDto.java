@@ -4,12 +4,13 @@
  */
 package com.example.swp490_g25_sse.dto;
 
-import com.example.swp490_g25_sse.model.Teacher;
 import java.util.List;
+
+import com.example.swp490_g25_sse.model.Teacher;
 
 /**
  *
- * @author ADMIN
+ * @author bettafish15
  */
 public class CourseDto {
 

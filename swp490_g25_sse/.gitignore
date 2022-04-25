@@ -28,6 +28,15 @@ target/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
+**/application.properties*
 
 ### VS Code ###
 .vscode/
+
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+dump.rdb
+metrics.json

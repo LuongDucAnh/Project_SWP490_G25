@@ -11,45 +11,48 @@ import com.example.swp490_g25_sse.model.Course;
 import com.example.swp490_g25_sse.model.Student;
 import com.example.swp490_g25_sse.model.StudentCourseEnrollment;
 import com.example.swp490_g25_sse.model.Teacher;
-import java.util.List;
-import java.util.Optional;
+
 import org.springframework.data.domain.Page;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  *
- * @author Admin
+ * @author bettafish15
  */
 public interface CourseService {
 
-    Optional<Course> getCourseById(long id);
+	Optional<Course> getCourseById(long id);
 
-    Course createCourse(CourseDto courseDto, Course course);
+	Course createCourse(CourseDto courseDto, Course course);
 
-    List<Course> getCourses();
+	List<Course> getCourses();
 
-    List<CourseOverviewDto> overview(StudentCourseEnrollment enroll);
+	List<CourseOverviewDto> overview(StudentCourseEnrollment enroll);
 
-    List<MilestoneDto> milestone(StudentCourseEnrollment enroll);
+	List<MilestoneDto> milestone(StudentCourseEnrollment enroll);
 
-    Optional<Course> deleteCourse(long id);
+	Optional<Course> deleteCourse(long id);
 
-    Course updateCourse(CourseDto courseDto, long id);
+	Course updateCourse(CourseDto courseDto, long id);
 
-    List<CourseDto> getMostEnrolledCourses();
+	List<CourseDto> getMostEnrolledCourses();
 
-    List<CourseDto> getBestFeedbackCourses();
+	List<CourseDto> getBestFeedbackCourses();
 
-    List<Course> getStudentCourses(Student student, Boolean isFinished);
+	List<Course> getStudentCourses(Student student, Boolean isFinished);
 
-    Boolean isAlreadyEnrolled(Course course, Student student);
+	Boolean isAlreadyEnrolled(Course course, Student student);
 
-    Boolean isCourseFinished(StudentCourseEnrollment enroll);
+	Boolean isCourseFinished(StudentCourseEnrollment enroll);
 
-    List<Course> searchCourse(String searchTerm, Teacher teacher);
+	List<Course> searchCourse(String searchTerm, Teacher teacher);
 
-    long getNumberOfFinishedCourse(Student student, Boolean isFinished);
+	long getNumberOfFinishedCourse(Student student, Boolean isFinished);
 
-    long getNumberOfStudentCourses(Student student);
+	long getNumberOfStudentCourses(Student student);
 
-    Page<Course> get4NewestCourses();
+	Page<Course> get4NewestCourses();
 }

@@ -1,5 +1,7 @@
 package com.example.swp490_g25_sse.controller;
 
+import java.io.OutputStream;
+import java.util.Collection;
 import java.util.List;
 
 import com.example.swp490_g25_sse.dto.CourseDto;
@@ -7,6 +9,7 @@ import com.example.swp490_g25_sse.dto.CourseOverviewDto;
 import com.example.swp490_g25_sse.dto.FeedbackDto;
 import com.example.swp490_g25_sse.dto.MilestoneDto;
 import com.example.swp490_g25_sse.model.Course;
+import com.example.swp490_g25_sse.model.Feedback;
 import com.example.swp490_g25_sse.model.Student;
 import com.example.swp490_g25_sse.model.StudentCourseEnrollment;
 import com.example.swp490_g25_sse.service.CourseService;
@@ -19,8 +22,11 @@ import com.example.swp490_g25_sse.service.StudentCourseEnrollmentService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Page;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +42,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 /**
  *
- * @author msi
+ * @author bettafish15
  */
 @Controller
 @RequestMapping("/app/student")

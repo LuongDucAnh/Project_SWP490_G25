@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
- * @author Admin
+ * @author bettafish15
  */
 public interface StorageStrategyService {
 

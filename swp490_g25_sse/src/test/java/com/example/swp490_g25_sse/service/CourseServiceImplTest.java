@@ -8,12 +8,14 @@ import com.example.swp490_g25_sse.dto.CourseDto;
 import com.example.swp490_g25_sse.dto.LectureDto;
 import com.example.swp490_g25_sse.dto.TestDto;
 import com.example.swp490_g25_sse.model.Course;
+import com.example.swp490_g25_sse.model.Lecture;
 import com.example.swp490_g25_sse.model.Role;
 import com.example.swp490_g25_sse.model.Teacher;
 import com.example.swp490_g25_sse.model.User;
 import com.example.swp490_g25_sse.repository.CourseRepository;
 import com.example.swp490_g25_sse.repository.LectureRepository;
 import com.example.swp490_g25_sse.repository.TestRepository;
+import com.example.swp490_g25_sse.util.DtoToDaoConversion;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,6 +29,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
 
 /**
  *
@@ -99,6 +102,13 @@ public class CourseServiceImplTest {
 
     @Test
     public void testGetCourses() {
+    List<Course> courses = couresRepository.findAll();
+        //when
+        Mockito.when(couresRepository.findById(1L)).thenReturn(Optional.of(course));
+//        //then
+        Optional<Course> result = courseServiceImpl.getCourseById(1L);
+        assertNotNull(result);
+        assertEquals(course, result.get());
     }
 
     @Test

@@ -1,8 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.example.swp490_g25_sse.controller;
+
+import java.io.Console;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import com.example.swp490_g25_sse.dto.AnswerDto;
 import com.example.swp490_g25_sse.dto.QuestionDto;
@@ -17,7 +18,7 @@ import com.example.swp490_g25_sse.service.AnswerService;
 import com.example.swp490_g25_sse.service.CourseService;
 import com.example.swp490_g25_sse.service.CustomUserDetailsService;
 import com.example.swp490_g25_sse.service.QuestionService;
-import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,10 +30,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-/**
- *
- * @author Admin
- */
 @Controller
 @RequestMapping("/app/forum")
 public class ForumController {

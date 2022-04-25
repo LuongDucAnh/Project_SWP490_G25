@@ -19,7 +19,7 @@ import javax.persistence.UniqueConstraint;
 
 /**
  *
- * @author msi
+ * @author bettafish15
  */
 @Entity()
 @Table(name = "students", uniqueConstraints = @UniqueConstraint(columnNames = "user_id"))

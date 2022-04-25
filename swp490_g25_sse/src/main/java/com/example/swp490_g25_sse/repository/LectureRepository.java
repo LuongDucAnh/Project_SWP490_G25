@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
- * @author msi
+ * @author bettafish15
  */
 public interface LectureRepository extends JpaRepository<Lecture, Long> {
   Integer countByCourseAndWeek(Course course, String week);

@@ -15,7 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  *
- * @author msi
+ * @author vupham
  */
 public class CustomUserDetailsService implements UserDetails {
 
