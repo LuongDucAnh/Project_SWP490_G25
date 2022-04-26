@@ -41,6 +41,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -81,8 +83,18 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
-    public Course createCourse(CourseDto dto, Course course) {
+    public Course createCourse(CourseDto dto) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetailsService currentUser = (CustomUserDetailsService) auth.getPrincipal();
 
+        Teacher teacher = teacherRepository.findFirstByUserId(currentUser.getUser().getId());
+
+        Course course = new Course(teacher,
+                dto.getCourseImgUrl(),
+                dto.getCourseTitle(),
+                dto.getContent());
+
+        course = courseRepository.save(course);
         List<Lecture> lectures = DtoToDaoConversion.convertLectureDtosToListOfLectureModel(dto.getLectureDtos(),
                 course);
         System.out.println(lectures);
@@ -118,7 +130,7 @@ public class CourseServiceImpl implements CourseService {
             course.setImageUrl(courseDto.getCourseImgUrl());
             List<LectureDto> lectureDtos = courseDto.getLectureDtos();
             List<TestDto> testDtos = courseDto.getTestDtos();
-            List<Lecture> lectures = new ArrayList<>();
+
             for (int i = 0; i < lectureDtos.size(); i++) {
                 LectureDto lectureDto = lectureDtos.get(i);
                 Lecture lecture;
@@ -140,11 +152,10 @@ public class CourseServiceImpl implements CourseService {
                     lecture = new Lecture(course, lectureDto.getWeek(), lectureDto.getName(), lectureDto.getContent(),
                             lectureDto.getResourceUrl(), lectureDto.getIndex());
                 }
-                lectures.add(lecture);
-            }
-            lectureRepository.saveAll(lectures);
 
-            List<Test> tests = new ArrayList<>();
+                lectureRepository.save(lecture);
+            }
+
             for (int i = 0; i < testDtos.size(); i++) {
                 TestDto testDto = testDtos.get(i);
                 Test test;
@@ -166,9 +177,10 @@ public class CourseServiceImpl implements CourseService {
                     test = new Test(course, testDto.getWeek(), testDto.getName(), testDto.getContent(),
                             testDto.getIndex(), testDto.getTime());
                 }
-                tests.add(test);
+
+                testRepository.save(test);
             }
-            testRepository.saveAll(tests);
+
             courseRepository.save(course);
         }
 

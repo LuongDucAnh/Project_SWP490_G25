@@ -91,7 +91,7 @@ public class CourseServiceImplTest {
         Mockito.when(couresRepository.save(course)).thenReturn(course);
 //        //then
         CourseDto courseDto = new CourseDto("Title1", "Img1", "Content1", lectureDtos, testDtos);
-        Course result = courseServiceImpl.createCourse(courseDto, course);
+        Course result = courseServiceImpl.createCourse(courseDto);
 
         assertNotNull(result);
         assertEquals(course, result);

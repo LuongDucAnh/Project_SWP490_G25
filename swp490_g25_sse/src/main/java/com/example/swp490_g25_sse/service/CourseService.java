@@ -23,7 +23,7 @@ public interface CourseService {
 
     Optional<Course> getCourseById(long id);
 
-    Course createCourse(CourseDto courseDto, Course course);
+    Course createCourse(CourseDto courseDto);
 
     List<Course> getCourses();
 

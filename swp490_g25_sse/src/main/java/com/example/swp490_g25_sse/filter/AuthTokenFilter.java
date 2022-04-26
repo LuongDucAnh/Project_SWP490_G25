@@ -4,7 +4,6 @@
  */
 package com.example.swp490_g25_sse.filter;
 
-import com.example.swp490_g25_sse.service.CustomUserDetailsService;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,22 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import javax.servlet.*;
 import com.example.swp490_g25_sse.service.UserServiceImpl;
-//import com.example.swp490_g25_sse.util.JwtUtils;
-import java.util.List;
-import java.util.stream.Collectors;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
+import com.example.swp490_g25_sse.util.JwtUtils;
 
 public class AuthTokenFilter implements Filter {
 
-//    @Autowired
-//    private JwtUtils jwtUtils;
+@Autowired
+    private JwtUtils jwtUtils;
     @Autowired
     private UserServiceImpl userDetailsService;
     private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
