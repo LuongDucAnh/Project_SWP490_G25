@@ -26,6 +26,6 @@ public class StudentServiceImpl implements StudentService {
     Student student = studentRepository.findFirstByUserId(user.getId());
 
     return student;
-  }//
+  }
 
 }
