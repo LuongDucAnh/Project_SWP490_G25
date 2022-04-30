@@ -9,13 +9,14 @@ package com.example.swp490_g25_sse.dto;
  * @author Admin
  */
 public class AccountInfoDto {
+
     private String currentPassword;
     private String newPassword;
     private String confirmNewPassword;
-    
+
     public AccountInfoDto() {
     }
-    
+
     public AccountInfoDto(String currentPassword, String newPassword, String confirmNewPassword) {
         this.currentPassword = currentPassword;
         this.newPassword = newPassword;
@@ -45,6 +46,5 @@ public class AccountInfoDto {
     public void setConfirmNewPassword(String confirmNewPassword) {
         this.confirmNewPassword = confirmNewPassword;
     }
-    
- 
+
 }
