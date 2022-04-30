@@ -101,7 +101,7 @@ public class ForumController {
         model.addAttribute("question", question);
         model.addAttribute("course", course);
         model.addAttribute("studentId", studentId);
-        
+
         return "student/course-question";
     }
 
