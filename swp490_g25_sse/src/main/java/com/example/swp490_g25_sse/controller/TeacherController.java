@@ -56,6 +56,7 @@ public class TeacherController {
 
         String contentStr = "";
         String[] contentPart;
+        
         char lastChar;
         String rawContent = "";
         String content = "";
