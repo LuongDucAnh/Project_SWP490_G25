@@ -95,6 +95,7 @@ public class MainController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetailsService userDetails = (CustomUserDetailsService) auth.getPrincipal();
         UserInfoDto userInfo = new UserInfoDto(userDetails.getUser().getFirstName(),
+                
                 userDetails.getUser().getLastName(), userDetails.getUser().getEmail(),
                 userDetails.getUser().getImageURL());
 
