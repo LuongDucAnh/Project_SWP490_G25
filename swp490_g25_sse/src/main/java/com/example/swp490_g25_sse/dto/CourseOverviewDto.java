@@ -9,7 +9,6 @@ public class CourseOverviewDto {
     private Integer totalTest;
 
     public CourseOverviewDto() {
-
     }
 
     public CourseOverviewDto(String week, Integer finishedLecture, Integer totalLecture, Integer finishedTest,
