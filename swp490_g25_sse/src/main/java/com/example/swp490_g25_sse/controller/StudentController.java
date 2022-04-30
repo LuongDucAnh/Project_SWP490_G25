@@ -67,6 +67,7 @@ public class StudentController {
     private String index(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetailsService userDetails = (CustomUserDetailsService) auth.getPrincipal();
+        
         List<CourseDto> mostLearnCourses = courseService.getMostEnrolledCourses();
         List<CourseDto> bestFeedbackCourses = courseService.getBestFeedbackCourses();
         String userImgUrl = userDetails.getUser().getImageURL();
