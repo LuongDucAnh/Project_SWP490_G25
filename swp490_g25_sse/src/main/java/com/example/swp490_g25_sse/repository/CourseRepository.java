@@ -51,9 +51,9 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
             + "course_id order "
             + "by avg(rating) desc", nativeQuery = true)
     List<Object[]> countTopFeedbackCourse(Integer limit);
-    
+
     List<Course> findByIdIn(List<Long> ids);
-    
+
     List<Course> findByTitleContaining(String title, Pageable pageable);
 
     List<Course> findByTeacherAndTitleContaining(Teacher teacher, String title, Pageable pageable);
