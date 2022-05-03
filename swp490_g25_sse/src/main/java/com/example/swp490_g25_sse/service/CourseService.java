@@ -52,4 +52,5 @@ public interface CourseService {
     long getNumberOfStudentCourses(Student student);
 
     Page<Course> get4NewestCourses();
+    
 }
