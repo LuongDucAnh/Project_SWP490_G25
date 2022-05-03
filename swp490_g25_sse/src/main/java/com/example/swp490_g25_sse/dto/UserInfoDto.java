@@ -8,7 +8,6 @@ public class UserInfoDto {
     private String imageURL;
 
     public UserInfoDto() {
-
     }
 
     public UserInfoDto(String firstName, String lastName, String email, String imageURL) {
