@@ -84,6 +84,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
     public Course createCourse(CourseDto dto) {
+        
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetailsService currentUser = (CustomUserDetailsService) auth.getPrincipal();
 
