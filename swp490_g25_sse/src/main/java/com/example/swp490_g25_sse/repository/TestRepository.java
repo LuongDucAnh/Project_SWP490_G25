@@ -16,7 +16,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author msi
  */
 public interface TestRepository extends JpaRepository<Test, Long> {
-  Integer countByCourseAndWeek(Course course, String week);
+  
+    Integer countByCourseAndWeek(Course course, String week);
 
   List<Test> findByCourseAndWeek(Course course, String week);
 }
