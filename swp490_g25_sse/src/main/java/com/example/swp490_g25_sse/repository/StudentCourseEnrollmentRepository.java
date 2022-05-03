@@ -27,4 +27,5 @@ public interface StudentCourseEnrollmentRepository extends JpaRepository<Student
    long countByStudentAndIsFinished(Student student, Boolean isFinished);
 
    long countByStudent(Student student);
+   
 }
