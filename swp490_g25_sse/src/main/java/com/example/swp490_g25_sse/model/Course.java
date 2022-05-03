@@ -55,6 +55,7 @@ public class Course {
     private Set<StudentCourseEnrollment> students;
 
     public Course() {
+        
     }
 
     public Course(Teacher teacher, String imageUrl, String title, String content) {
