@@ -24,7 +24,6 @@ public class CourseDto {
     public Teacher teacher;
 
     public CourseDto() {
-
     }
 
     public CourseDto(String courseTitle, String courseImgUrl, String content, List<LectureDto> lectureDtos,
