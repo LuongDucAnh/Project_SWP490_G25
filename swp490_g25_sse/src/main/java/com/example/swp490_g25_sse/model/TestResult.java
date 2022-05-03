@@ -33,6 +33,7 @@ public class TestResult {
   private Integer mark;
 
   public TestResult() {
+      
   }
 
   public TestResult(StudentCourseEnrollment enrollment, Test test, Boolean isFinished, Integer mark) {
