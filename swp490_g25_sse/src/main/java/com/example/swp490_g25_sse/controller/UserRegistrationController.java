@@ -44,7 +44,11 @@ public class UserRegistrationController {
             model.addAttribute("errMsg", "Email đã được sử dụng");
             return "registration";
         }
+        if (!registrationDto.getPassword().equals(registrationDto.getCfPassword())) {
+            model.addAttribute("errMsg", "Mật khẩu không trùng khớp");
+            return "registration";
+        }
         userService.save(registrationDto);
-        return "login";
+        return "redirect:/registration?success";
     }
 }

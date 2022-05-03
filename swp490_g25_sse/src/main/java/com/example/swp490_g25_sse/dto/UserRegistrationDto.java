@@ -7,6 +7,7 @@ public class UserRegistrationDto {
     private String lastName;
     private String email;
     private String password;
+    private String cfPassword;
     private String role;
 
     public UserRegistrationDto() {
@@ -51,6 +52,14 @@ public class UserRegistrationDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getCfPassword() {
+        return cfPassword;
+    }
+
+    public void setCfPassword(String cfPassword) {
+        this.cfPassword = cfPassword;
     }
 
     public String getRole() {
