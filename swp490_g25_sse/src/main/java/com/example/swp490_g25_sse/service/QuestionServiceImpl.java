@@ -60,5 +60,4 @@ public class QuestionServiceImpl implements QuestionService {
         Optional<Question> question = questionRepository.findById(id);
         return question;
     }
-
 }
