@@ -45,7 +45,7 @@
                 <p class="course-title" th:utext="${course.title}"></p>
                 <div class="course-description" th:utext="${course.content}"></div>
               </div>
-              <p class="course-views">Người đăng ký: 4652 người</p>
+              <p class="course-views" th:utext="${'Số người đăng ký: ' + course.totalEnrolls}"></p>
               <div class="button-control">
                 <button type="button" class="btn btn-success" th:with="id=${course.id}"
                   th:onclick="courseAction([[${id}]],[[${isFinished}]])"

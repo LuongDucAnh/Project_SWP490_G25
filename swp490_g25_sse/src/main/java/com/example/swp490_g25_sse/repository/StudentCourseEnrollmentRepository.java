@@ -28,4 +28,6 @@ public interface StudentCourseEnrollmentRepository extends JpaRepository<Student
 
    long countByStudent(Student student);
    
+   long countByCourse(Course course);
+   
 }
