@@ -20,6 +20,7 @@ public class TestDto {
     public Long time;
 
     public TestDto() {
+        
     }
 
     public TestDto(String week, Long index, String content, String name) {
