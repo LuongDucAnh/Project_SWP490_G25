@@ -26,6 +26,7 @@ import com.example.swp490_g25_sse.repository.TeacherRepository;
 import com.example.swp490_g25_sse.repository.TestRepository;
 import com.example.swp490_g25_sse.repository.TestResultRepository;
 import com.example.swp490_g25_sse.util.DtoToDaoConversion;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -84,7 +85,6 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
     public Course createCourse(CourseDto dto) {
-        
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetailsService currentUser = (CustomUserDetailsService) auth.getPrincipal();
 
@@ -209,7 +209,11 @@ public class CourseServiceImpl implements CourseService {
 
         return courseRepository.findByIdIn(courseEnrolledInfo.stream().map(el -> el[0]).toList()).stream()
                 .map(course -> {
+
                     CourseDto courseDto = modelMapper.map(course, CourseDto.class);
+                    if (course.getTitle().length() > 20) {
+                        courseDto.setCourseTitle(course.getTitle().substring(0, 20) + "...");
+                    }
 
                     courseDto.setTotalEnrolls(courseEnrolledInfo.get(index.get())[1]);
 
@@ -238,6 +242,9 @@ public class CourseServiceImpl implements CourseService {
                 .map(course -> {
                     CourseDto courseDto = modelMapper.map(course, CourseDto.class);
 
+                    if (course.getTitle().length() > 20) {
+                        courseDto.setCourseTitle(course.getTitle().substring(0, 20) + "...");
+                    }
                     courseDto.setFeedbackRating(courseFeedbackInfo.get(index.get())[1]);
 
                     index.getAndIncrement();
