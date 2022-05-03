@@ -100,4 +100,5 @@ public class FirebaseCredential {
     public void setClient_x509_cert_url(String client_x509_cert_url) {
         this.client_x509_cert_url = client_x509_cert_url;
     }
+    
 }
