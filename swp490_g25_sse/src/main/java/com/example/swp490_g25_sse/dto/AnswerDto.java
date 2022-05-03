@@ -8,7 +8,6 @@ public class AnswerDto {
     public Long questionId;
 
     public AnswerDto() {
-        
     }
 
     public AnswerDto(Long id, String content, Long questionId) {
