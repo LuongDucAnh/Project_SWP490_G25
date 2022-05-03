@@ -12,5 +12,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author msi
  */
 public interface TeacherRepository extends JpaRepository<Teacher, Long> {
+    
     Teacher findFirstByUserId(long id);
 }
