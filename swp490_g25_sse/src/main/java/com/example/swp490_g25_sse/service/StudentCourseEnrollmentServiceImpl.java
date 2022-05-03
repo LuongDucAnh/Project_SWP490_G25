@@ -24,5 +24,4 @@ public class StudentCourseEnrollmentServiceImpl implements StudentCourseEnrollme
 		StudentCourseEnrollment enroll = studentCourseEnrollmentRepository.findFirstByStudentAndCourse(student, course);
 		return enroll;
   }
-
 }
