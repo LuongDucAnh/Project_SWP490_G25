@@ -26,28 +26,28 @@
         <form th:action="@{/app/forum/creat/{id}(id=${course.id})}" class="question-from" th:object="${question}"
           method="post">
           <div class="question">
-            Question
+            Câu hỏi
           </div>
           <div class="title">
-            Title <span>*</span>
+            Tiêu đề <span>*</span>
           </div>
-          <input th:field="*{title}" class="input mt-3" required type="text" placeholder="Write something here...">
+          <input th:field="*{title}" class="input mt-3" required="true" type="text" placeholder="Write something here..."/>
           <div class="title">
             Tag <span>*</span>
           </div>
-          <input th:field="*{tag}" class="input mt-3" required type="text" placeholder="Write something here...">
+          <input th:field="*{tag}" class="input mt-3" required="true" type="text" placeholder="Write something here..."/>
           <div class="title mb-3">
-            Content <span>*</span>
+            Nội dung <span>*</span>
           </div>
           <textarea th:field="*{content}" id="editor" name="content" class="text-area"></textarea>
-          <input type="hidden" th:value="${course.id}" th:attr="name='courseId'">
-          <input type="hidden" th:value="${studentId}" th:attr="name='studentId'">
+          <input type="hidden" th:value="${course.id}" th:attr="name='courseId'"/>
+          <input type="hidden" th:value="${studentId}" th:attr="name='studentId'"/>
 
-          <input class="submit" type="submit" placeholder="Save">
+          <input class="submit" type="submit" placeholder="Save"/>
         </form>
       </div>
     </main>
-    <input type="hidden" value="forum" id="sidebarLocation">
+    <input type="hidden" value="forum" id="sidebarLocation"/>
   </div>
 
   <script src="/javascript/sidebar-active.js"></script>

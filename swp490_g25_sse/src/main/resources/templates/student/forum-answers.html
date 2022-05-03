@@ -31,12 +31,12 @@
             <div class="body-question">
               <div class="authors">
                 <div class="username" th:utext="${question.student.user.firstName}"></div>
-                <img th:src="${question.student.user.imageURL}" alt="">
+                <img th:src="${question.student.user.imageURL}" alt=""/>
               </div>
               <div class="question-content">
                 <div th:utext="${question.content}"></div>
                 <div class="comment">
-                  <button onclick="showComment()">Comment</button>
+                  <button onclick="showComment()">Trả lời</button>
                 </div>
               </div>
             </div>
@@ -47,7 +47,7 @@
                 class="question-from" th:object="${answer}" method="post">
                 <textarea th:field="*{content}" id="editor" name="content" class="text-area"
                   placeholder="Viết bình luận...."></textarea>
-                <input type="submit" value="Đăng">
+                <input type="submit" value="Đăng"/>
               </form>
             </div>
 
@@ -64,8 +64,8 @@
                   <div class="username" th:unless="${answer.student != null}"
                     th:utext="${answer.teacher.user.firstName}">
                   </div>
-                  <img th:if="${answer.student != null}" th:src="${answer.student.user.imageURL}" alt="">
-                  <img th:unless="${answer.student != null}" th:src="${answer.teacher.user.imageURL}" alt="">
+                  <img th:if="${answer.student != null}" th:src="${answer.student.user.imageURL}" alt=""/>
+                  <img th:unless="${answer.student != null}" th:src="${answer.teacher.user.imageURL}" alt=""/>
                 </div>
                 <div class="question-content" th:utext="${answer.content}"></div>
               </div>
@@ -74,7 +74,7 @@
         </div>
       </div>
     </main>
-    <input type="hidden" value="forum" id="sidebarLocation">
+    <input type="hidden" value="forum" id="sidebarLocation"/>
   </div>
 
   <script src="/javascript/sidebar-active.js"></script>

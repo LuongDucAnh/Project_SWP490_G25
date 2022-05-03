@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="UTF-8" />
@@ -28,14 +28,13 @@
         <div class="dashboard-container">
           <table class="table">
             <thead>
-              <!-- <tr> -->
-              <th scrope="col" class="id-header">ID</th>
-              <th scrope="col" class="title-header">Title</th>
-              <th scrope="col" class="created-header">Created By</th>
-              <th scrope="col" class="rate-header">Rating</th>
-              <th scrope="col" class="improve-header">Improved</th>
-              </th>
-              <!-- </tr> -->
+               <tr>
+                <th scope="col" class="id-header">ID</th>
+                <th scope="col" class="title-header">Tiêu đề</th>
+                <th scope="col" class="created-header">Được tạo bởi</th>
+                <th scope="col" class="rate-header">Đánh giá</th>
+                <th scope="col" class="improve-header">Nên cải thiện</th>              
+               </tr> 
             </thead>
             <tbody>
               <th:block th:each="feedback : ${feedbacks}">

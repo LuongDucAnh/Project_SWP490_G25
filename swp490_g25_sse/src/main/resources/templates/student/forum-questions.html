@@ -35,7 +35,7 @@
           </div>
           <th:block th:each="question : ${questions}">
             <div class="question-wrapper">
-              <div v class="question-info">
+              <div class="question-info">
                 <div class="info-wrapper">
                   <div class="user">
                     <img th:src="${question.student.user.imageURL}" />
@@ -50,7 +50,7 @@
               </div>
               <div class="question-content" th:utext="${question.content}">
               </div>
-              <div class="question-details">
+              <!-- <div class="question-details">
                 <div class="reactions">
                   <div class="react">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -86,14 +86,14 @@
                   </svg>
                   <a href="#">Báo cáo</a>
                 </div>
-              </div>
+              </div> -->
             </div>
           </th:block>
 
         </div>
       </div>
     </main>
-    <input type="hidden" value="forum" id="sidebarLocation">
+    <input type="hidden" value="forum" id="sidebarLocation"/>
 
   </div>
   <script src="/javascript/sidebar-active.js"></script>

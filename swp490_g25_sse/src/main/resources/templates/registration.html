@@ -41,11 +41,11 @@
             <p class="form-header">Đăng Ký</p>
             <div class="col-md-4 input-wrapper">
                 <input id="firstName" th:field="*{firstName}" class="input-field" type="text" placeholder="Họ"
-                       name="id" required="true" />
+                       name="id" maxlength="50" required="true" />
                 <input id="lastName" th:field="*{lastName}" class="input-field" type="text" placeholder="Tên"
-                    name="id" required="true" />
+                    name="id" maxlength="50" required="true" />
                 <input id="email" th:field="*{email}" class="input-field" type="email" placeholder="Email"
-                    name="email" required="true" />
+                    name="email" minlength="4" required="true" />
                 <input id="password" th:field="*{password}" class="input-field" type="password" placeholder="Mật khẩu"
                     name="pwd" required="true" />
 
@@ -86,7 +86,7 @@
         <div class="footer-des col-6">
             <a href="/" class="footer-logo"><img src="images\Logo.png" width="20%" style="border: 1px solid; border-radius: 77px;"/></a>
             <p class="footer-des-detail">
-                Soft skill là nền tảng học trực tuyến giúp </br>mọi người nâng cao kỹ năng mềm
+                Soft skill là nền tảng học trực tuyến giúp <br/>mọi người nâng cao kỹ năng mềm
             </p>
             <div class="social-list">
                 <img class="footer-img" src="/images/facebook-logo.png" />
