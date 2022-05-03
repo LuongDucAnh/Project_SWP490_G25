@@ -15,6 +15,7 @@ public class AccountInfoDto {
     private String confirmNewPassword;
 
     public AccountInfoDto() {
+        
     }
 
     public AccountInfoDto(String currentPassword, String newPassword, String confirmNewPassword) {
