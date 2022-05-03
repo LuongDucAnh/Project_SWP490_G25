@@ -305,7 +305,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <a th:href="@{/app/student/course/{id}(id=${course.id})}">
                   <div class="course-card">
                     <div class="course-card-img">
-                      <img th:src="${course.imageUrl}" class="course-img" />
+                      <img th:src="${course.courseImgUrl}" class="course-img" />
                     </div>
                     <div class="course-card-owner-img">
                       <img th:src="${course.teacher.user.imageURL}" class="owner-img" />
@@ -313,7 +313,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <div class="course-detail">
                       <div class="owner-name" id="owner-name"
                         th:text="${course.teacher.user.firstName} + ' ' + ${course.teacher.user.lastName}"></div>
-                      <p class="course-name" th:utext="${course.title}"></p>
+                      <p class="course-name" th:utext="${course.courseTitle}"></p>
                       <div class="course-views">
                         <svg xmlns="http://www.w3.org/2000/svg" class="views-icon" fill="none" viewBox="0 0 24 24"
                           stroke="currentColor">
