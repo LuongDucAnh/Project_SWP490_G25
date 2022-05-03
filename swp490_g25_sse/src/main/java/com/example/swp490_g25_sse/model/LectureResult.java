@@ -31,6 +31,7 @@ public class LectureResult {
   private Boolean isFinished;
 
   public LectureResult() {
+      
   }
 
   public LectureResult(StudentCourseEnrollment enrollment, Lecture lecture, Boolean isFinished) {
