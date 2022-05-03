@@ -7,5 +7,6 @@ import com.example.swp490_g25_sse.model.StudentCourseEnrollment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LectureResultRepository extends JpaRepository<LectureResult, Long> {
-  LectureResult findFirstByEnrollmentAndLecture(StudentCourseEnrollment enroll, Lecture lecture);
+  
+    LectureResult findFirstByEnrollmentAndLecture(StudentCourseEnrollment enroll, Lecture lecture);
 }
