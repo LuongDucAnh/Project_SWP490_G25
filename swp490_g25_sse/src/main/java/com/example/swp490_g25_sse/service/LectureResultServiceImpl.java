@@ -33,5 +33,4 @@ public class LectureResultServiceImpl implements LectureResultService {
 
     return lectureResult;
   }
-
 }
