@@ -14,5 +14,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author ADMIN
  */
 public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
-  List<Feedback> findByCourse(Course course);
+  
+    List<Feedback> findByCourse(Course course);
 }
