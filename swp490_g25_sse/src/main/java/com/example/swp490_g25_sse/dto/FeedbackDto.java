@@ -40,7 +40,6 @@ public class FeedbackDto {
     }
 
     public void setContentKey(String contentKey) {
-
         if (this.contentKey.contains(contentKey)) {
             this.contentKey.remove(contentKey);
         } else {
