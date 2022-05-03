@@ -26,6 +26,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     <nav class="navbar1">
       <ul class="nav-list">
         <li class="item"><a href="/"><img src="images\Logo.png" width="65%" style="border-radius: 77px;"/></a></li>
+        <li class="item"><a href="/app/student/">Khóa học</a></li>
+        <th:block th:switch="${user}">
+          <th:block th:case="'teacher'">
+            <li class="item"><a href="/app/teacher/">Giáo viên</a></li>
+          </th:block>
+        </th:block>
+        <th:block th:switch="${user}">
+          <th:block th:case="'student'">
+            <li class="item"><a href="/app/student/">Học Sinh</a></li>
+          </th:block>
+        </th:block>
         <li class="item">
           <div class="input-nav-group">
             <svg xmlns="http://www.w3.org/2000/svg" class="search-icon" fill="none" viewBox="0 0 24 24"
@@ -35,7 +46,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             </svg>            
           </div>
           <div class="button-group">
-            <a href="/registration" class="btn1 btn-signup">Đăng ký</a>
+            <th:block th:switch="${user}">
+              <th:block th:case="'teacher'">
+                <a href="/logout" class="btn1 btn-signup">Đăng xuất</a>
+              </th:block>
+              <th:block th:case="'student'">
+                <a href="/logout" class="btn1 btn-signup">Đăng xuất</a>
+              </th:block>
+              <th:block th:case="'anonymousUser'">
+                <a href="/registration" class="btn1 btn-signup">Đăng ký</a>
+              </th:block>
+            </th:block>
             <svg xmlns="http://www.w3.org/2000/svg" class="btn-icon signup" fill="none" viewBox="0 0 24 24"
               stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -70,15 +91,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         </div>
         <div class="col-5 pl-0">
           <div class="item">
-            <div class="button-group">     
-                <a href="/login" class="btn1 btn-signup">Đăng nhập</a>
-              <svg xmlns="http://www.w3.org/2000/svg" class="btn-icon signup" fill="none"
-                viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </div>
-            <div class="button-group">
-            </div>
+            <th:block th:switch="${user}">
+              <th:block th:case="'anonymousUser'">
+                <div class="button-group">
+                  <a href="/login" class="btn1 btn-signup">Đăng nhập</a>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="btn-icon course" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </th:block>
+            </th:block>          
           </div>
         </div>
       </div>

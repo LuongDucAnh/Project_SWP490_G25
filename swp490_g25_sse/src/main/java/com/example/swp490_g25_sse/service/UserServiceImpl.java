@@ -154,4 +154,9 @@ public class UserServiceImpl implements UserService {
         User updatedAccount = userRepository.save(currentAccount);
         return updatedAccount;
     }
+    
+    @Override
+    public boolean checkIfUserExist(String email) {
+        return userRepository.findByEmail(email) != null ? true : false;
+    }
 }

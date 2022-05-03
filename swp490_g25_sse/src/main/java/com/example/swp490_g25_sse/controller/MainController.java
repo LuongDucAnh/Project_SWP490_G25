@@ -7,7 +7,6 @@ package com.example.swp490_g25_sse.controller;
 import com.example.swp490_g25_sse.util.JwtUtils;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
 import java.util.ArrayList;
@@ -24,7 +23,6 @@ import com.example.swp490_g25_sse.service.CustomUserDetailsService;
 import com.example.swp490_g25_sse.service.StudentService;
 import com.example.swp490_g25_sse.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -81,6 +79,17 @@ public class MainController {
         
             courseDtos.add(courseDto);
         });
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getPrincipal().equals("anonymousUser")) {
+            model.addAttribute("user", "anonymousUser");
+        } else {
+            CustomUserDetailsService user = (CustomUserDetailsService) auth.getPrincipal();
+            if (user.getRole().equals("ROLE_STUDENT")) {
+                model.addAttribute("user", "student");
+            } else if (user.getRole().equals("ROLE_TEACHER")) {
+                model.addAttribute("user", "teacher");
+            }
+        }
         model.addAttribute("courses", courseDtos);
         return "index";
     }
