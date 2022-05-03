@@ -56,6 +56,7 @@ public class Lecture {
     private Long indexOrder;
 
     public Lecture() {
+        
     }
 
     public Lecture(String week, String name, String content, String resourceUrl, Long indexOrder) {
