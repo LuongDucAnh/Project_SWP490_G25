@@ -37,5 +37,4 @@ public class FeedbackServiceImpl implements FeedbackService {
   public List<Feedback> getAllFeedBack(Course course) {
     return feedbackRepository.findByCourse(course);
   }
-
 }
