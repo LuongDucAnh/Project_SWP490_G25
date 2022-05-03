@@ -41,14 +41,15 @@
             <p class="form-header">Đăng Ký</p>
             <div class="col-md-4 input-wrapper">
                 <input id="firstName" th:field="*{firstName}" class="input-field" type="text" placeholder="Họ"
-                       name="id" maxlength="50" required="true" />
+                       name="id" maxlength="50" required="required" />
                 <input id="lastName" th:field="*{lastName}" class="input-field" type="text" placeholder="Tên"
-                    name="id" maxlength="50" required="true" />
+                    name="id" maxlength="50" required="required" />
                 <input id="email" th:field="*{email}" class="input-field" type="email" placeholder="Email"
-                    name="email" minlength="4" required="true" />
+                    name="email" minlength="4" required="required" />
                 <input id="password" th:field="*{password}" class="input-field" type="password" placeholder="Mật khẩu"
-                    name="pwd" required="true" />
-
+                    name="pwd" required="required" />
+                <input id="cfPassword" th:field="*{cfPassword}" class="input-field" type="password"
+                    placeholder="Xác nhận mật khẩu" name="cfpwd" required="required" />
                 <select class="form-select form-select-lg mb-3 input-field" aria-label="Default select example"
                     th:field="*{role}">
                     <option th:value="'ROLE_TEACHER'" th:text="'Giáo viên'" selected="selected"></option>
