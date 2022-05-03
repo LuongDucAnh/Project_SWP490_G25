@@ -78,8 +78,7 @@ public class MainController {
             CourseDto courseDto = modelMapper.map(course, CourseDto.class);
 
             courseDto.setTotalEnrolls(studentCourseEnrollmentRepository.countByCourse(course));
-
-        model.addAttribute("courses", courses);
+        
             courseDtos.add(courseDto);
         });
         model.addAttribute("courses", courseDtos);
