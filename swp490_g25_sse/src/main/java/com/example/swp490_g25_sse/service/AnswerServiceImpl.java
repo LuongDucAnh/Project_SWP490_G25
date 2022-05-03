@@ -60,5 +60,4 @@ public class AnswerServiceImpl implements AnswerService {
         List<Answer> answers = answerRepository.findByQuestionId(questionId);
         return answers;
     }
-
 }
