@@ -19,6 +19,7 @@ public class LectureDto {
     public Boolean isFinished;
 
     public LectureDto() {
+        
     }
 
     public LectureDto(String week, Long index, String resourceUrl, String content, String name) {
