@@ -18,7 +18,6 @@ import javax.persistence.OneToMany;
 public class Question {
 
     public Question() {
-
     }
 
     public Question(Student student, Course course, String title, String tag, String content) {
