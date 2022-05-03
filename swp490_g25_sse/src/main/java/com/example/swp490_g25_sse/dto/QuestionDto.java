@@ -13,6 +13,7 @@ public class QuestionDto {
     public Long courseId;
 
     public QuestionDto() {
+        
     }
 
     public QuestionDto(Long id, String title, String tag, String content, Long courseId) {
