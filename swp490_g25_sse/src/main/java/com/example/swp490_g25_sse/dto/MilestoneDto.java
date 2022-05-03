@@ -10,7 +10,6 @@ public class MilestoneDto {
   private List<TestResult> results;
 
   public MilestoneDto() {
-
   }
 
   public MilestoneDto(String week, List<TestResult> results) {
