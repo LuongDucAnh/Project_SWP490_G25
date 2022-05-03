@@ -59,4 +59,5 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     List<Course> findByTeacherAndTitleContaining(Teacher teacher, String title, Pageable pageable);
 
     Course findFirstById(long id);
+    
 }
