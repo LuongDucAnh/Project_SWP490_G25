@@ -35,6 +35,7 @@ public class StudentCourseEnrollment {
     private boolean isFinished;
 
     public StudentCourseEnrollment() {
+        
     }
 
     public StudentCourseEnrollment(Student student, Course course, boolean isFinished) {
