@@ -36,6 +36,7 @@ public class Teacher {
     private List<Course> courses;
 
     public Teacher() {
+        
     }
 
     public Teacher(User user) {
