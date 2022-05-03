@@ -37,6 +37,7 @@ public class Answer {
     private Question question;
 
     public Answer() {
+        
     }
 
     public Answer(String content, Student student, Question question) {
