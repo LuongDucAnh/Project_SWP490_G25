@@ -64,7 +64,6 @@ public class FirebaseStorageStrategyService implements StorageStrategyService {
         } catch (Exception ex) {
             java.util.logging.Logger.getLogger(FirebaseStorageStrategyService.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     @Override
