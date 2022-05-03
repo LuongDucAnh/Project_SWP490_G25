@@ -7,5 +7,6 @@ import com.example.swp490_g25_sse.model.TestResult;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TestResultRepository extends JpaRepository<TestResult, Long> {
-  TestResult findFirstByEnrollmentAndTest(StudentCourseEnrollment enroll, Test test);
+  
+    TestResult findFirstByEnrollmentAndTest(StudentCourseEnrollment enroll, Test test);
 }
