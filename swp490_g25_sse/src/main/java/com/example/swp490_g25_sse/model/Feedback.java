@@ -40,6 +40,7 @@ public class Feedback {
     private String content;
 
     public Feedback() {
+        
     }
 
     public Feedback(Course course, Student student, Integer rating, String contentKey, String content) {
