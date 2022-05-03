@@ -7,7 +7,6 @@ import com.example.swp490_g25_sse.dto.QuestionDto;
 import com.example.swp490_g25_sse.model.Question;
 
 public interface QuestionService {
-
     Question createQuestion(QuestionDto questionDto);
 
     List<Question> getQuestionsByCourseId(long id);
