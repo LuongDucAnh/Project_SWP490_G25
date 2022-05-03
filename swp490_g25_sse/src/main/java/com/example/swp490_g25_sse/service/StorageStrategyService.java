@@ -17,4 +17,5 @@ public interface StorageStrategyService {
     String[] uploadFile(MultipartFile multipartFile) throws Exception;
 
     ResponseEntity<Object> downloadFile(String fileUrl, HttpServletRequest request) throws Exception;
+    
 }
