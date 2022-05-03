@@ -10,7 +10,6 @@ public class UserRegistrationDto {
     private String role;
 
     public UserRegistrationDto() {
-
     }
 
     public UserRegistrationDto(String firstName, String lastName, String email, String password, String role) {
