@@ -40,6 +40,7 @@ public class Student {
     private Set<StudentCourseEnrollment> courses;
 
     public Student() {
+        
     }
 
     public Student(User user) {
