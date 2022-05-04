@@ -84,17 +84,8 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
-    public Course createCourse(CourseDto dto) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        CustomUserDetailsService currentUser = (CustomUserDetailsService) auth.getPrincipal();
-
-        Teacher teacher = teacherRepository.findFirstByUserId(currentUser.getUser().getId());
-
-        Course course = new Course(teacher,
-                dto.getCourseImgUrl(),
-                dto.getCourseTitle(),
-                dto.getContent());
-
+    public Course createCourse(CourseDto dto, Course course) {
+        
         course = courseRepository.save(course);
         List<Lecture> lectures = DtoToDaoConversion.convertLectureDtosToListOfLectureModel(dto.getLectureDtos(),
                 course);

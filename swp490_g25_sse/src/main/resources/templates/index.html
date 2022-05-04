@@ -25,16 +25,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
   <header>
     <nav class="navbar1">
       <ul class="nav-list">
-        <li class="item"><a href="/"><img src="images\Logo.png" width="65%" style="border-radius: 77px;"/></a></li>
-        <li class="item"><a href="/app/student/">Khóa học</a></li>
+        <li class="item"><a href="/"><img src="images\Logo.png" width="65%" style="border-radius: 77px;"/></a></li>        
         <th:block th:switch="${user}">
           <th:block th:case="'teacher'">
-            <li class="item"><a href="/app/teacher/">Giáo viên</a></li>
+              <li class="item"><a href="/app/teacher/">Khóa học</a></li>            
           </th:block>
         </th:block>
         <th:block th:switch="${user}">
           <th:block th:case="'student'">
-            <li class="item"><a href="/app/student/">Học Sinh</a></li>
+              <li class="item"><a href="/app/student/">Khóa học</a></li>            
           </th:block>
         </th:block>
         <li class="item">
@@ -222,12 +221,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
               <div class="col-12">
                 <div class="Intro_part_content mt-4 mb-5">
                   <p>
-                    Kỹ năng mềm là việc vận dụng kiến thức, kinh nghiệm đã có
-                    một cách linh hoạt, mềm dẻo trong quá trình giải quyết những
-                    tình huống, công việc cụ thể. Kỹ năng mềm nói chung để chỉ
-                    hàng loạt hành vi, kỹ thuật mang tính chất cá nhân nhằm mục
-                    đích tạo thiện cảm cho người đối diện trong quá trình triển
-                    khai, giải quyết công việc.
+                    Soft skill education là hệ một hệ thống bao gồm các bài 
+                    giảng tốt nhất dành cho bạn, giúp bạn nâng cao kỹ năng mềm
+                    của chính mình để mở ra nhiều cơ hội việc làm hơn trong tương 
+                    lai.
                   </p>
                 </div>
               </div>

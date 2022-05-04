@@ -39,11 +39,7 @@
             <p class="form-header">Đăng Nhập</p>
             <div class="col-md-4 input-wrapper">
                 <input id="username" class="input-field" type="text" placeholder="Tên đăng nhập" name="username" required="required"/>
-                <input id="password" class="input-field" type="password" placeholder="Mật khẩu" name="password" required="required"/>
-                <div class="checkbox-input">
-                    <input type="checkbox" name="remember" id="remember" />
-                    <label for="remember">remember me</label>
-                </div>
+                <input id="password" class="input-field" type="password" placeholder="Mật khẩu" name="password" required="required"/>                
                 <div th:if="${param.error}">
                     <div class="alert-message">Email hoặc mật khẩu không đúng</div>
                 </div>

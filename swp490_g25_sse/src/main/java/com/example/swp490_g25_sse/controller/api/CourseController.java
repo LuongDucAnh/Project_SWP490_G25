@@ -160,11 +160,17 @@ public class CourseController {
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public Course createCourse(@RequestBody CourseDto dto) {
-        System.out.println("=============================================================================");
-        Course course = courseService.createCourse(dto);
+    public Course createCourse(@RequestBody CourseDto dto) {        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetailsService currentUser = (CustomUserDetailsService) auth.getPrincipal();
 
-        return course;
+        Teacher teacher = teacherRepository.findFirstByUserId(currentUser.getUser().getId());
+        Course course = new Course(teacher,
+                dto.getCourseImgUrl(),
+                dto.getCourseTitle(),
+                dto.getContent());                                 
+
+        return courseService.createCourse(dto, course);
     }
 
     //
