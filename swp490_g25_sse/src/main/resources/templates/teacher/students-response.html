@@ -28,22 +28,23 @@
         <div class="dashboard-container">
           <table class="table">
             <thead>
-               <tr>
-                <th scope="col" class="id-header">ID</th>
-                <th scope="col" class="title-header">Tiêu đề</th>
-                <th scope="col" class="created-header">Được tạo bởi</th>
+               <tr>                
+                <th scope="col" class="title-header">Khóa học</th>
+                <th scope="col" class="created-header">Người feedback</th>
                 <th scope="col" class="rate-header">Đánh giá</th>
-                <th scope="col" class="improve-header">Nên cải thiện</th>              
+                <th scope="col" class="content-header">Nội dung đánh giá</th>              
+                <th scope="col" class="improve-header">Phân loại đánh giá</th>              
                </tr> 
             </thead>
             <tbody>
               <th:block th:each="feedback : ${feedbacks}">
                 <tr>
-                  <td class="id" th:utext="${feedback.id}">1</td>
-                  <td class="title" th:utext="${feedback.course.title}">Incorrect Answer</td>
-                  <td class="created" th:utext="${feedback.student.user.firstName}">Bruno Lopez</td>
-                  <td class="rate" th:utext="${feedback.rating}">4- Verygood</td>
-                  <td class="improve" th:utext="${feedback.contentKey}">Ansewer of question</td>
+                  <td class="title" th:utext="${feedback.course.title}"></td>
+                  <td class="created" th:utext="${feedback.student.user.firstName} + ' ' +
+                      ${feedback.student.user.lastName}"></td>
+                  <td class="rate" th:utext="${feedback.rating}"></td>
+                  <td class="improve" th:utext="${feedback.content}"></td>
+                  <td class="improve" th:utext="${feedback.contentKey}"></td>
                 </tr>
               </th:block>
             </tbody>

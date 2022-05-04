@@ -19,14 +19,14 @@
     );
 
     alter table users 
-       add constraint UK6dotkott2kjsp8vw4d0m25fb7 unique (email);
+       add constraint FK_users_email unique (email);
 
     alter table users_roles 
-       add constraint FKj6m8fwv7oqv74fcehir1a9ffy 
+       add constraint FK_users_roles_roles 
        foreign key (role_id) 
        references roles ON DELETE CASCADE;
 
     alter table users_roles 
-       add constraint FK2o0jvgh89lemvvo17cbqvdxaa 
+       add constraint FK_users_roles_users 
        foreign key (user_id) 
        references users ON DELETE CASCADE;

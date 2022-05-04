@@ -1,24 +1,24 @@
 
 alter table tests 
-       drop constraint UK1oyupuj94fo4yqwfdcl6yfi41;
+       drop constraint FK_tests_week_index_order;
       
 alter table tests 
-       drop constraint UK14e9pu34lv8xrlxp774ctgga8;
+       drop constraint FK_tests_week_name;
       
 alter table lectures 
-       drop constraint UK205e2wdn267nuwqphqvpb4all;
+       drop constraint FK_lectures_week_index_order;
       
 alter table lectures 
-       drop constraint UKl37qgxi98qe6j4ah0duhn24he;
+       drop constraint FK_lectures_week_name;
 
 alter table lectures 
-       add constraint UKl37qgxi98qe6j4ah0duhn24he unique (course_id, week, index_order);
+       add constraint FK_lectures_courseId_week_index_order unique (course_id, week, index_order);
 
 alter table lectures 
-       add constraint UK205e2wdn267nuwqphqvpb4all unique (course_id, week, name);
+       add constraint FK_lectures_courseId_week_name unique (course_id, week, name);
 
 alter table tests 
-       add constraint UK14e9pu34lv8xrlxp774ctgga8 unique (course_id, week, index_order);
+       add constraint FK_tests_courseId_week_index_order unique (course_id, week, index_order);
 
 alter table tests 
-       add constraint UK1oyupuj94fo4yqwfdcl6yfi41 unique (course_id, week, name);
+       add constraint FK_tests_courseId_week_name unique (course_id, week, name);

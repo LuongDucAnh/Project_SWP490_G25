@@ -14,14 +14,14 @@
     );
 
     alter table students 
-       add constraint UKg4fwvutq09fjdlb4bb0byp7t unique (user_id);
+       add constraint FK_students_userId unique (user_id);
 
     alter table student_course_enrollments 
-       add constraint FK2ir93ssv9i26pms0i0ohpi5gl 
+       add constraint FK_student_course_enrollments_courses
        foreign key (course_id) 
        references courses;
 
     alter table student_course_enrollments 
-       add constraint FKetv96qjx3cj1lid5c3w9rfjqv 
+       add constraint FK_student_course_enrollments_students 
        foreign key (student_id) 
        references students;
