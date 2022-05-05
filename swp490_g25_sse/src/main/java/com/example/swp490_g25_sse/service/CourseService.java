@@ -25,7 +25,7 @@ public interface CourseService {
 
     Course createCourse(CourseDto courseDto, Course course);
 
-    List<Course> getCourses();
+    List<Course> getCourses();       
 
     List<CourseOverviewDto> overview(StudentCourseEnrollment enroll);
 

@@ -35,6 +35,32 @@
             </div> -->
 
             <div class="top-course">
+              <span>Danh sách các khóa học</span>
+            </div>
+            
+            <div class="course-list">
+              <th:block th:each="course : ${allCourses}">
+                <a th:href="@{/app/student/course/{id}(id=${course.id})}">
+                  <div class="course-card">
+                    <div class="course-card-img">
+                      <img th:src="${course.courseImgUrl}" class="course-img" />
+                    </div>
+                    <div class="course-card-owner-img">
+                      <img th:src="${course.teacher.user.imageURL}" class="owner-img" />
+                    </div>
+                    <div class="course-detail">
+                      <div class="owner-name" id="owner-name"
+                        th:text="${course.teacher.user.firstName} + ' ' + ${course.teacher.user.lastName}"></div>
+                      <p class="course-name" th:utext="${course?.courseTitle}"></p>
+                      <div class="course-views">                                             
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </th:block>
+            </div>
+            
+            <div class="top-course">
               <span>Top Khóa học có nhiều lượt học</span>
             </div>
 

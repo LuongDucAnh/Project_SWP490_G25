@@ -78,12 +78,22 @@ public class StudentController {
         CustomUserDetailsService userDetails = (CustomUserDetailsService) auth.getPrincipal();
         List<CourseDto> mostLearnCourses = courseService.getMostEnrolledCourses();
         List<CourseDto> bestFeedbackCourses = courseService.getBestFeedbackCourses();
+        List<Course> allCourses = courseService.getCourses();
+        List<CourseDto> allCoursesDtos = new ArrayList<>();
+        for (Course course : allCourses) {
+            CourseDto courseDto = modelMapper.map(course, CourseDto.class);
+            if (course.getTitle().length() > 20) {
+                courseDto.setCourseTitle(course.getTitle().substring(0, 20) + "...");
+            }
+            allCoursesDtos.add(courseDto);
+        }
         String userImgUrl = userDetails.getUser().getImageURL();
 
         model.addAttribute("userImgUrl", userImgUrl);
         model.addAttribute("userName", userDetails.getUser().getFirstName());
         model.addAttribute("mostLearnCourses", mostLearnCourses);
         model.addAttribute("bestFeedbackCourses", bestFeedbackCourses);
+        model.addAttribute("allCourses", allCoursesDtos);
         model.addAttribute("user", "student");
 
         // System.out.println(top4Course.getContent().get(0).getImageUrl());

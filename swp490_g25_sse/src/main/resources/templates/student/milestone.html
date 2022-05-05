@@ -57,7 +57,7 @@
                             Maria Anders</td>
                           <td th:text="${item.isFinished ? item.finishTime/60 + 'm' + item.finishTime%60 + 's' : '___'}"
                             id="finishTime"></td>
-                          <td th:text="${item.isFinished ? item.mark : '___'}">
+                          <td th:text="${item.isFinished ? item.mark + '%' : '___'} ">
                             Germany
                           </td>
                         </th:block>
