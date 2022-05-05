@@ -44,7 +44,6 @@ public class MainController {
 
     @Autowired
     JwtUtils jwtUtils;
-    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     private UserService userService;

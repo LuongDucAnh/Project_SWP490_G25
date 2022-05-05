@@ -7,8 +7,8 @@
     create table users (
        id bigint identity not null,
         email varchar(255),
-        first_name varchar(255),
-        last_name varchar(255),
+        first_name nvarchar(255),
+        last_name nvarchar(255),
         password varchar(255),
         primary key (id)
     );
@@ -30,3 +30,6 @@
        add constraint FK_users_roles_users 
        foreign key (user_id) 
        references users ON DELETE CASCADE;
+
+    INSERT INTO roles (name)
+    VALUES ('ROLE_ADMIN');

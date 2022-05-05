@@ -63,7 +63,7 @@
     alter table teachers 
        add constraint FK_teachers_users 
        foreign key (user_id) 
-       references users;
+       references users ON DELETE CASCADE;
 
     alter table tests 
        add constraint FK_tests_courses 

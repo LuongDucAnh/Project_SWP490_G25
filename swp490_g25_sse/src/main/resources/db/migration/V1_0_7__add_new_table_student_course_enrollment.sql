@@ -25,3 +25,8 @@
        add constraint FK_student_course_enrollments_students 
        foreign key (student_id) 
        references students;
+
+    alter table students 
+       add constraint FK_students_users 
+       foreign key (user_id) 
+       references users ON DELETE CASCADE;
